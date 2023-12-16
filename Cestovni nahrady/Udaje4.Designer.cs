@@ -1,16 +1,16 @@
 ﻿namespace Cestovni_nahrady
 {
-    partial class UdajeOCeste4Stravne
+    partial class Udaje4
     {
-        /// <summary>
-        /// Required designer variable.
+        /// <summary> 
+        /// Vyžaduje se proměnná návrháře.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
+        /// <summary> 
+        /// Uvolněte všechny používané prostředky.
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// <param name="disposing">hodnota true, když by se měl spravovaný prostředek odstranit; jinak false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,11 +20,11 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        #region Kód vygenerovaný pomocí Návrháře komponent
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
+        /// <summary> 
+        /// Metoda vyžadovaná pro podporu Návrháře - neupravovat
+        /// obsah této metody v editoru kódu.
         /// </summary>
         private void InitializeComponent()
         {
@@ -33,17 +33,15 @@
             this.labelPocetJidel = new System.Windows.Forms.Label();
             this.checkBoxBezplatneJidlo = new System.Windows.Forms.CheckBox();
             this.labelStravne = new System.Windows.Forms.Label();
-            this.buttonZpet = new System.Windows.Forms.Button();
-            this.buttonSpocitej = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPocetJidelZaDen)).BeginInit();
             this.SuspendLayout();
             // 
             // numericUpDownPocetJidelZaDen
             // 
-            this.numericUpDownPocetJidelZaDen.Location = new System.Drawing.Point(181, 109);
+            this.numericUpDownPocetJidelZaDen.Location = new System.Drawing.Point(189, 119);
             this.numericUpDownPocetJidelZaDen.Name = "numericUpDownPocetJidelZaDen";
             this.numericUpDownPocetJidelZaDen.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDownPocetJidelZaDen.TabIndex = 24;
+            this.numericUpDownPocetJidelZaDen.TabIndex = 29;
             // 
             // comboBoxStravne
             // 
@@ -52,72 +50,50 @@
             this.comboBoxStravne.Items.AddRange(new object[] {
             "Privátní sektor",
             "Veřejný sektor"});
-            this.comboBoxStravne.Location = new System.Drawing.Point(118, 18);
+            this.comboBoxStravne.Location = new System.Drawing.Point(126, 28);
             this.comboBoxStravne.Name = "comboBoxStravne";
             this.comboBoxStravne.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxStravne.TabIndex = 22;
+            this.comboBoxStravne.TabIndex = 27;
             // 
             // labelPocetJidel
             // 
             this.labelPocetJidel.AutoSize = true;
-            this.labelPocetJidel.Location = new System.Drawing.Point(19, 111);
+            this.labelPocetJidel.Location = new System.Drawing.Point(27, 121);
             this.labelPocetJidel.Name = "labelPocetJidel";
             this.labelPocetJidel.Size = new System.Drawing.Size(156, 13);
-            this.labelPocetJidel.TabIndex = 25;
+            this.labelPocetJidel.TabIndex = 30;
             this.labelPocetJidel.Text = "Počet bezplatných jídel za den:";
             // 
             // checkBoxBezplatneJidlo
             // 
             this.checkBoxBezplatneJidlo.AutoSize = true;
-            this.checkBoxBezplatneJidlo.Location = new System.Drawing.Point(22, 81);
+            this.checkBoxBezplatneJidlo.Location = new System.Drawing.Point(30, 91);
             this.checkBoxBezplatneJidlo.Name = "checkBoxBezplatneJidlo";
             this.checkBoxBezplatneJidlo.Size = new System.Drawing.Size(173, 17);
-            this.checkBoxBezplatneJidlo.TabIndex = 23;
+            this.checkBoxBezplatneJidlo.TabIndex = 28;
             this.checkBoxBezplatneJidlo.Text = "Bylo poskytnuto bezplatné jídlo";
             this.checkBoxBezplatneJidlo.UseVisualStyleBackColor = true;
             // 
             // labelStravne
             // 
             this.labelStravne.AutoSize = true;
-            this.labelStravne.Location = new System.Drawing.Point(29, 19);
+            this.labelStravne.Location = new System.Drawing.Point(37, 29);
             this.labelStravne.Name = "labelStravne";
             this.labelStravne.Size = new System.Drawing.Size(47, 13);
-            this.labelStravne.TabIndex = 21;
+            this.labelStravne.TabIndex = 26;
             this.labelStravne.Text = "Stravné:";
             // 
-            // buttonZpet
-            // 
-            this.buttonZpet.Location = new System.Drawing.Point(12, 319);
-            this.buttonZpet.Name = "buttonZpet";
-            this.buttonZpet.Size = new System.Drawing.Size(75, 23);
-            this.buttonZpet.TabIndex = 26;
-            this.buttonZpet.Text = "Zpět";
-            this.buttonZpet.UseVisualStyleBackColor = true;
-            // 
-            // buttonSpocitej
-            // 
-            this.buttonSpocitej.Location = new System.Drawing.Point(429, 319);
-            this.buttonSpocitej.Name = "buttonSpocitej";
-            this.buttonSpocitej.Size = new System.Drawing.Size(75, 23);
-            this.buttonSpocitej.TabIndex = 27;
-            this.buttonSpocitej.Text = "Vypočítej";
-            this.buttonSpocitej.UseVisualStyleBackColor = true;
-            // 
-            // UdajeOCeste4Stravne
+            // Udaje4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(516, 354);
-            this.Controls.Add(this.buttonSpocitej);
-            this.Controls.Add(this.buttonZpet);
             this.Controls.Add(this.numericUpDownPocetJidelZaDen);
             this.Controls.Add(this.comboBoxStravne);
             this.Controls.Add(this.labelPocetJidel);
             this.Controls.Add(this.checkBoxBezplatneJidlo);
             this.Controls.Add(this.labelStravne);
-            this.Name = "UdajeOCeste4Stravne";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "UdajeOCeste4Stravne";
+            this.Name = "Udaje4";
+            this.Size = new System.Drawing.Size(532, 393);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPocetJidelZaDen)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -131,7 +107,5 @@
         private System.Windows.Forms.Label labelPocetJidel;
         private System.Windows.Forms.CheckBox checkBoxBezplatneJidlo;
         private System.Windows.Forms.Label labelStravne;
-        private System.Windows.Forms.Button buttonZpet;
-        private System.Windows.Forms.Button buttonSpocitej;
     }
 }

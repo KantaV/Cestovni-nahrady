@@ -10,16 +10,13 @@ using System.Windows.Forms;
 
 namespace Cestovni_nahrady
 {
-    public partial class UdajeOCeste2Zahranici : Form
+    public partial class Udaje1 : UserControl
     {
-        public UdajeOCeste2Zahranici()
+        public Udaje1()
         {
             InitializeComponent();
-        }
-
-        private void numericUpDownPocetZemi_ValueChanged(object sender, EventArgs e)
-        {
-            zahranici1.Vygeneruj(int.Parse(numericUpDownPocetZemi.Value.ToString()));
+            comboBoxPrvniDenHodin.SelectedIndex = 0;
+            comboBoxPosledniDenHodin.SelectedIndex = 0;
         }
     }
 }

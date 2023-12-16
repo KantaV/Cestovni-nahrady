@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Cestovni_nahrady
 {
-    public partial class UdajeOCeste3PohonneHmoty : Form
+    public partial class Udaje3 : UserControl
     {
-        public UdajeOCeste3PohonneHmoty()
+        public Udaje3()
         {
             InitializeComponent();
             comboBoxTypPohonnychHmot.SelectedIndex = 0;

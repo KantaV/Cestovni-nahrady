@@ -46,17 +46,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UdajeOCeste3PohonneHmoty.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Udaje1.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UdajeOCeste3PohonneHmoty.Designer.cs">
-      <DependentUpon>UdajeOCeste3PohonneHmoty.cs</DependentUpon>
+    <Compile Include="Udaje1.Designer.cs">
+      <DependentUpon>Udaje1.cs</DependentUpon>
     </Compile>
-    <Compile Include="UdajeOCeste4Stravne.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Udaje2.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UdajeOCeste4Stravne.Designer.cs">
-      <DependentUpon>UdajeOCeste4Stravne.cs</DependentUpon>
+    <Compile Include="Udaje2.Designer.cs">
+      <DependentUpon>Udaje2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Udaje3.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Udaje3.Designer.cs">
+      <DependentUpon>Udaje3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Udaje4.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Udaje4.Designer.cs">
+      <DependentUpon>Udaje4.cs</DependentUpon>
     </Compile>
     <Compile Include="UvodniStranka.cs">
       <SubType>Form</SubType>
@@ -72,29 +84,23 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UdajeOCeste1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UdajeOCeste1.Designer.cs">
-      <DependentUpon>UdajeOCeste1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UdajeOCeste2Zahranici.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UdajeOCeste2Zahranici.Designer.cs">
-      <DependentUpon>UdajeOCeste2Zahranici.cs</DependentUpon>
-    </Compile>
     <Compile Include="Zahranici.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Zahranici.Designer.cs">
       <DependentUpon>Zahranici.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="UdajeOCeste3PohonneHmoty.resx">
-      <DependentUpon>UdajeOCeste3PohonneHmoty.cs</DependentUpon>
+    <EmbeddedResource Include="Udaje1.resx">
+      <DependentUpon>Udaje1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UdajeOCeste4Stravne.resx">
-      <DependentUpon>UdajeOCeste4Stravne.cs</DependentUpon>
+    <EmbeddedResource Include="Udaje2.resx">
+      <DependentUpon>Udaje2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Udaje3.resx">
+      <DependentUpon>Udaje3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Udaje4.resx">
+      <DependentUpon>Udaje4.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UvodniStranka.resx">
       <DependentUpon>UvodniStranka.cs</DependentUpon>
@@ -111,12 +117,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="UdajeOCeste1.resx">
-      <DependentUpon>UdajeOCeste1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UdajeOCeste2Zahranici.resx">
-      <DependentUpon>UdajeOCeste2Zahranici.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Zahranici.resx">
       <DependentUpon>Zahranici.cs</DependentUpon>
     </EmbeddedResource>

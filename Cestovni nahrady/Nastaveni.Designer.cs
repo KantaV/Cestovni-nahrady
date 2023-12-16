@@ -55,9 +55,9 @@
             this.labelPrivSektNastav.AutoSize = true;
             this.labelPrivSektNastav.Location = new System.Drawing.Point(12, 9);
             this.labelPrivSektNastav.Name = "labelPrivSektNastav";
-            this.labelPrivSektNastav.Size = new System.Drawing.Size(151, 13);
+            this.labelPrivSektNastav.Size = new System.Drawing.Size(149, 13);
             this.labelPrivSektNastav.TabIndex = 0;
-            this.labelPrivSektNastav.Text = "Nastavení primárního sektoru:";
+            this.labelPrivSektNastav.Text = "Nastavení privátního sektoru:";
             // 
             // labelPriv5az12Nastav
             // 

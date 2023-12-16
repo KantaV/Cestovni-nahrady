@@ -29,86 +29,109 @@
         private void InitializeComponent()
         {
             this.buttonNastaveni = new System.Windows.Forms.Button();
-            this.button1Debug = new System.Windows.Forms.Button();
-            this.button2NaDebug = new System.Windows.Forms.Button();
-            this.buttonNaDebug3 = new System.Windows.Forms.Button();
-            this.buttonNaDebug4 = new System.Windows.Forms.Button();
+            this.buttonStart = new System.Windows.Forms.Button();
+            this.buttonUzivatele = new System.Windows.Forms.Button();
+            this.panelMenu = new System.Windows.Forms.Panel();
+            this.buttonZpet = new System.Windows.Forms.Button();
+            this.buttonDalsi = new System.Windows.Forms.Button();
+            this.panelNavigacniBtny = new System.Windows.Forms.Panel();
+            this.panelMenu.SuspendLayout();
+            this.panelNavigacniBtny.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonNastaveni
             // 
-            this.buttonNastaveni.Location = new System.Drawing.Point(429, 319);
+            this.buttonNastaveni.Location = new System.Drawing.Point(49, 135);
             this.buttonNastaveni.Name = "buttonNastaveni";
-            this.buttonNastaveni.Size = new System.Drawing.Size(75, 23);
+            this.buttonNastaveni.Size = new System.Drawing.Size(155, 23);
             this.buttonNastaveni.TabIndex = 17;
             this.buttonNastaveni.Text = "Nastavení";
             this.buttonNastaveni.UseVisualStyleBackColor = true;
             this.buttonNastaveni.Click += new System.EventHandler(this.buttonNastaveni_Click);
             // 
-            // button1Debug
+            // buttonStart
             // 
-            this.button1Debug.Location = new System.Drawing.Point(176, 89);
-            this.button1Debug.Name = "button1Debug";
-            this.button1Debug.Size = new System.Drawing.Size(155, 23);
-            this.button1Debug.TabIndex = 40;
-            this.button1Debug.Text = "btn na debug uoc1";
-            this.button1Debug.UseVisualStyleBackColor = true;
-            this.button1Debug.Click += new System.EventHandler(this.button1Debug_Click);
+            this.buttonStart.Location = new System.Drawing.Point(49, 31);
+            this.buttonStart.Name = "buttonStart";
+            this.buttonStart.Size = new System.Drawing.Size(155, 23);
+            this.buttonStart.TabIndex = 40;
+            this.buttonStart.Text = "Nový výpočet";
+            this.buttonStart.UseVisualStyleBackColor = true;
+            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
             // 
-            // button2NaDebug
+            // buttonUzivatele
             // 
-            this.button2NaDebug.Location = new System.Drawing.Point(176, 129);
-            this.button2NaDebug.Name = "button2NaDebug";
-            this.button2NaDebug.Size = new System.Drawing.Size(156, 23);
-            this.button2NaDebug.TabIndex = 41;
-            this.button2NaDebug.Text = "btn na debug uoc2z";
-            this.button2NaDebug.UseVisualStyleBackColor = true;
-            this.button2NaDebug.Click += new System.EventHandler(this.button2NaDebug_Click);
+            this.buttonUzivatele.Location = new System.Drawing.Point(49, 84);
+            this.buttonUzivatele.Name = "buttonUzivatele";
+            this.buttonUzivatele.Size = new System.Drawing.Size(155, 23);
+            this.buttonUzivatele.TabIndex = 41;
+            this.buttonUzivatele.Text = "Uživatelé";
+            this.buttonUzivatele.UseVisualStyleBackColor = true;
             // 
-            // buttonNaDebug3
+            // panelMenu
             // 
-            this.buttonNaDebug3.Location = new System.Drawing.Point(176, 174);
-            this.buttonNaDebug3.Name = "buttonNaDebug3";
-            this.buttonNaDebug3.Size = new System.Drawing.Size(155, 23);
-            this.buttonNaDebug3.TabIndex = 42;
-            this.buttonNaDebug3.Text = "btn na debug uoc3ph";
-            this.buttonNaDebug3.UseVisualStyleBackColor = true;
-            this.buttonNaDebug3.Click += new System.EventHandler(this.buttonNaDebug3_Click);
+            this.panelMenu.Controls.Add(this.buttonStart);
+            this.panelMenu.Controls.Add(this.buttonNastaveni);
+            this.panelMenu.Controls.Add(this.buttonUzivatele);
+            this.panelMenu.Location = new System.Drawing.Point(172, 122);
+            this.panelMenu.Name = "panelMenu";
+            this.panelMenu.Size = new System.Drawing.Size(250, 201);
+            this.panelMenu.TabIndex = 42;
             // 
-            // buttonNaDebug4
+            // buttonZpet
             // 
-            this.buttonNaDebug4.Location = new System.Drawing.Point(176, 212);
-            this.buttonNaDebug4.Name = "buttonNaDebug4";
-            this.buttonNaDebug4.Size = new System.Drawing.Size(156, 23);
-            this.buttonNaDebug4.TabIndex = 43;
-            this.buttonNaDebug4.Text = "btn na debug uoc4s";
-            this.buttonNaDebug4.UseVisualStyleBackColor = true;
-            this.buttonNaDebug4.Click += new System.EventHandler(this.buttonNaDebug4_Click);
+            this.buttonZpet.Location = new System.Drawing.Point(3, 3);
+            this.buttonZpet.Name = "buttonZpet";
+            this.buttonZpet.Size = new System.Drawing.Size(75, 23);
+            this.buttonZpet.TabIndex = 43;
+            this.buttonZpet.Text = "Zpět";
+            this.buttonZpet.UseVisualStyleBackColor = true;
+            this.buttonZpet.Click += new System.EventHandler(this.buttonZpet_Click);
+            // 
+            // buttonDalsi
+            // 
+            this.buttonDalsi.Location = new System.Drawing.Point(502, 3);
+            this.buttonDalsi.Name = "buttonDalsi";
+            this.buttonDalsi.Size = new System.Drawing.Size(75, 23);
+            this.buttonDalsi.TabIndex = 44;
+            this.buttonDalsi.Text = "Další";
+            this.buttonDalsi.UseVisualStyleBackColor = true;
+            this.buttonDalsi.Click += new System.EventHandler(this.buttonDalsi_Click);
+            // 
+            // panelNavigacniBtny
+            // 
+            this.panelNavigacniBtny.Controls.Add(this.buttonDalsi);
+            this.panelNavigacniBtny.Controls.Add(this.buttonZpet);
+            this.panelNavigacniBtny.Location = new System.Drawing.Point(12, 395);
+            this.panelNavigacniBtny.Name = "panelNavigacniBtny";
+            this.panelNavigacniBtny.Size = new System.Drawing.Size(577, 30);
+            this.panelNavigacniBtny.TabIndex = 45;
             // 
             // UvodniStranka
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(516, 354);
-            this.Controls.Add(this.buttonNaDebug4);
-            this.Controls.Add(this.buttonNaDebug3);
-            this.Controls.Add(this.button2NaDebug);
-            this.Controls.Add(this.button1Debug);
-            this.Controls.Add(this.buttonNastaveni);
+            this.ClientSize = new System.Drawing.Size(601, 437);
+            this.Controls.Add(this.panelNavigacniBtny);
+            this.Controls.Add(this.panelMenu);
             this.Name = "UvodniStranka";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
+            this.panelMenu.ResumeLayout(false);
+            this.panelNavigacniBtny.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private System.Windows.Forms.Button buttonNastaveni;
-        private System.Windows.Forms.Button button1Debug;
-        private System.Windows.Forms.Button button2NaDebug;
-        private System.Windows.Forms.Button buttonNaDebug3;
-        private System.Windows.Forms.Button buttonNaDebug4;
+        private System.Windows.Forms.Button buttonStart;
+        private System.Windows.Forms.Button buttonUzivatele;
+        private System.Windows.Forms.Panel panelMenu;
+        private System.Windows.Forms.Button buttonZpet;
+        private System.Windows.Forms.Button buttonDalsi;
+        private System.Windows.Forms.Panel panelNavigacniBtny;
     }
 }
 

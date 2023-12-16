@@ -10,13 +10,12 @@ using System.Windows.Forms;
 
 namespace Cestovni_nahrady
 {
-    public partial class UdajeOCeste4Stravne : Form
+    public partial class Udaje4 : UserControl
     {
-        public UdajeOCeste4Stravne()
+        public Udaje4()
         {
             InitializeComponent();
             comboBoxStravne.SelectedIndex = 0;
-
         }
     }
 }

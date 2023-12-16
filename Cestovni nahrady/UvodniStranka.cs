@@ -15,42 +15,87 @@ namespace Cestovni_nahrady
         public UvodniStranka()
         {
             InitializeComponent();
-    
+            panelNavigacniBtny.Hide();
         }
 
+        private UserControl[] stranky = new UserControl[4];
+
+        private Udaje1 udaje1Stranka;
+        private Udaje2 udaje2Stranka;
+        private Udaje3 udaje3Stranka;
+        private Udaje4 udaje4Stranka;
+
+        private int indexStranky = 0;
+
+        private void buttonStart_Click(object sender, EventArgs e)
+        {
+            //Inicializace jednotlivych stranek a nastrkani jich do pole
+            udaje1Stranka = new Udaje1();
+            stranky[0] = udaje1Stranka;
+            this.Controls.Add(stranky[0]);
+            stranky[0].Hide();
+
+            udaje2Stranka = new Udaje2();
+            stranky[1] = udaje2Stranka;
+            this.Controls.Add(stranky[1]);
+            stranky[1].Hide();
+
+            udaje3Stranka = new Udaje3();
+            stranky[2] = udaje3Stranka;
+            this.Controls.Add(stranky[2]);
+            stranky[2].Hide();
+
+            udaje4Stranka = new Udaje4();
+            stranky[3] = udaje4Stranka;
+            this.Controls.Add(stranky[3]);
+            stranky[3].Hide();
+
+            //Schovat menu
+            panelMenu.Hide();
+            stranky[indexStranky].Show();
+            panelNavigacniBtny.Show();
+
+        }
         private void buttonNastaveni_Click(object sender, EventArgs e)
         {
             Nastaveni nastevni = new Nastaveni();
             nastevni.ShowDialog();
         }
 
-
-
-        //Buttony na otestovani jednotlivych formu nez je propojim, pozdeji smazat
-
-        private void button1Debug_Click(object sender, EventArgs e)
+        private void buttonZpet_Click(object sender, EventArgs e)
         {
-            UdajeOCeste1 udajeOCeste1 = new UdajeOCeste1();
-            udajeOCeste1.ShowDialog();
+            //Změna textu buttonu
+            if (buttonDalsi.Text != "Další") buttonDalsi.Text = "Další";
+            //Postarání se o samotné stránky
+            stranky[indexStranky].Hide();
+            if (indexStranky>0)
+            {
+                --indexStranky;
+                stranky[indexStranky].Show();
+            }
+            else
+            {
+                panelNavigacniBtny.Hide();
+                panelMenu.Show();
+            }
         }
 
-        private void button2NaDebug_Click(object sender, EventArgs e)
+        private void buttonDalsi_Click(object sender, EventArgs e)
         {
-            UdajeOCeste2Zahranici udajeOCeste2Zahranici = new UdajeOCeste2Zahranici();
-            udajeOCeste2Zahranici.ShowDialog();
+            if (indexStranky == stranky.Length-2)
+            {
+                //Změna textu buttonu
+                buttonDalsi.Text = "Vypočítej";
+            }
+            //Postarání se o samotné stránky
+            if (indexStranky < stranky.Length - 1)
+            {
+                stranky[indexStranky].Hide();
+                ++indexStranky;
+                stranky[indexStranky].Show();
+            }
         }
 
-        private void buttonNaDebug3_Click(object sender, EventArgs e)
-        {
-            UdajeOCeste3PohonneHmoty udajeOCeste3PohonneHmoty = new UdajeOCeste3PohonneHmoty();
-            udajeOCeste3PohonneHmoty.ShowDialog();
-        }
-
-        private void buttonNaDebug4_Click(object sender, EventArgs e)
-        {
-            UdajeOCeste4Stravne udajeOCeste4Stravne = new UdajeOCeste4Stravne();
-            udajeOCeste4Stravne.ShowDialog();
-        }
 
         /*
         * kam uživatel bude zadávat jednotlivé ceny z různých benzínek které navštívil protože

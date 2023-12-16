@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -26,6 +27,61 @@ namespace Cestovni_nahrady
         private Udaje4 udaje4Stranka;
 
         private int indexStranky = 0;
+
+        public TimeSpan CasVeState(Panel panel, out string nazevZeme)
+        {
+            nazevZeme = "";
+            TimeSpan cas = TimeSpan.Zero;
+            DateTime datumPrijezdu = DateTime.Now, casPrijezdu = DateTime.Now, datumOdjezdu = DateTime.Now, casOdjezdu = DateTime.Now;
+            for (int i = 0; i < panel.Controls.Count; i++)
+            {
+                //rozdelim si data protoze vim v jakem poradi jsem ovladaci prvky pridal tudiz s nimi podle toho mohu pracovat
+                if (panel.Controls[i] is ComboBox) nazevZeme = (panel.Controls[i] as ComboBox).Text;
+                if (panel.Controls[i] is DateTimePicker)
+                {
+                    switch (i)
+                    {
+                        case 1:
+                            datumPrijezdu = (panel.Controls[i] as DateTimePicker).Value;
+                            break;
+                        case 2:
+                            casPrijezdu = (panel.Controls[i] as DateTimePicker).Value;
+                            break;
+                        case 3:
+                            datumOdjezdu = (panel.Controls[i] as DateTimePicker).Value;
+                            break;
+                        case 4:
+                            casOdjezdu = (panel.Controls[i] as DateTimePicker).Value;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            TimeSpan prijezduTime = casPrijezdu.TimeOfDay;
+            TimeSpan odjezduTime = casOdjezdu.TimeOfDay;
+
+            //spojím čas i data s obou proměnných
+            datumPrijezdu = new DateTime(datumPrijezdu.Year, datumPrijezdu.Month, datumPrijezdu.Day, prijezduTime.Hours, prijezduTime.Minutes, prijezduTime.Seconds);
+            datumOdjezdu = new DateTime(datumOdjezdu.Year, datumOdjezdu.Month, datumOdjezdu.Day, odjezduTime.Hours, odjezduTime.Minutes, odjezduTime.Seconds);
+
+            if (datumOdjezdu >= datumPrijezdu)
+            {
+                cas = datumOdjezdu - datumPrijezdu;
+            }
+            else
+            {
+                MessageBox.Show("Datum návratu domů z pracovní cesty nemůže být před datem začátku!");
+            }
+
+           /* MessageBox.Show(nazevZeme+"\n" +
+                "prijezd " +datumPrijezdu+
+                "\ncas prijezd "+casPrijezdu+
+                "\nodjezd "+datumOdjezdu+
+                "\ncas odjezd "+casOdjezdu);*/
+            return cas;
+        }
 
         private void buttonStart_Click(object sender, EventArgs e)
         {
@@ -94,6 +150,41 @@ namespace Cestovni_nahrady
                 ++indexStranky;
                 stranky[indexStranky].Show();
             }
+            else
+            {
+                //Zde bude celý kód výpočtů
+
+                //Osobní údaje
+                string jmeno = udaje1Stranka.textBoxJmeno.Text;
+                string prijmeni = udaje1Stranka.textBoxPrijmeni.Text;
+                DateTime datNar = udaje1Stranka.dateTimePickerDatNar.Value;
+
+
+                //Zjistim kazdy navstiveny stat a delku pobytu v nem
+                NavstivenyStat[] navstiveneStaty = new NavstivenyStat[udaje2Stranka.pocet];
+                for (int i = 0; i < udaje2Stranka.zahranici.Controls.Count; i++)
+                {
+                    string nazevZeme = "";
+                    TimeSpan casVeState = TimeSpan.Zero;
+                    if (udaje2Stranka.zahranici.Controls[i] is Panel) casVeState = CasVeState((udaje2Stranka.zahranici.Controls[i] as Panel), out nazevZeme);
+                    navstiveneStaty[i] = new NavstivenyStat(nazevZeme, casVeState);
+
+
+                    //MessageBox.Show(navstiveneStaty[i].NazevStatu + " " + navstiveneStaty[i].CasVeState);
+                }
+
+                //Délka cesty
+                DateTime zacatekCesty = udaje1Stranka.dtpDatumZacatkuCesty.Value.Date + udaje1Stranka.dtpCasZacatkuCesty.Value.TimeOfDay;
+                DateTime konecCesty = udaje1Stranka.dtpDatumKonceCesty.Value+udaje1Stranka.dtpCasKonceCesty.Value.TimeOfDay;
+
+
+                //Rozdělení sektoru
+                string sektor;
+                if (udaje4Stranka.comboBoxStravneSektor.SelectedIndex == 0) sektor = "privatni";
+                else sektor = "verejny";
+
+
+            }
         }
 
 
@@ -113,6 +204,8 @@ namespace Cestovni_nahrady
         * https://www.uctovani.net/kalkulacka-zahranicni-cesty-stravne-kapesne.php
         * https://money.cz/novinky-a-tipy/mzdy-a-personalistika/cestovni-nahrady-2022-kolik-zaplatite-kdyz-zamestnance-vyslete-na-sluzebni-cestu/
         * https://www.mfcr.cz/cs/kontrola-a-regulace/legislativa/legislativni-dokumenty/2022/vyhlaska-c-462-2021-sb-49677
+        * https://blog.videolektor.cz/stravne-pri-soubehu-tuzemske-a-zahranicni-pracovni-cesty/
+        * https://ppropo.mpsv.cz/XXII23Cestovninahradyprizahranic
         */
     }
 }

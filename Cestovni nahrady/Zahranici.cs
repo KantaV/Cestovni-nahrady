@@ -19,6 +19,7 @@ namespace Cestovni_nahrady
 
         Panel panelZeme;
 
+
         string[] statyZeme = {
             "Afghánistán", "Albánie", "Alžírsko", "Andorra", "Angola", "Argentina", "Arménie", "Austrálie a Oceánie – ostrovní státy",
             "Ázerbájdžán", "Bahamy", "Bahrajn", "Bangladéš", "Belgie", "Belize", "Benin", "Bermudy", "Bělorusko", "Bhútán", "Bolívie",
@@ -40,53 +41,6 @@ namespace Cestovni_nahrady
             "Tanzanie", "Thajsko", "Tchaj-wan", "Togo", "Tunisko", "Turecko", "Turkmenistán", "Uganda", "Ukrajina", "Uruguay", "Uzbekistán",
             "Velká Británie", "Venezuela", "Vietnam", "Zambie", "Zimbabwe"
         };
-
-        private TimeSpan CasVeState(Panel panel)
-        {
-            TimeSpan cas = TimeSpan.Zero;
-            DateTime datumPrijezdu = DateTime.Now, casPrijezdu = DateTime.Now, datumOdjezdu = DateTime.Now, casOdjezdu = DateTime.Now;
-            for (int i = 0; i < panel.Controls.Count; i++)
-            {
-                if (panel.Controls[i] is DateTimePicker)
-                {
-                    switch (i)      //rozdelim si data
-                    {
-                        case 0:
-                            datumPrijezdu = (panel.Controls[i] as DateTimePicker).Value;
-                            ++i;
-                            break;
-                        case 1:
-                            casPrijezdu = (panel.Controls[i] as DateTimePicker).Value;
-                            ++i;
-                            break;
-                        case 2:
-                            datumOdjezdu = (panel.Controls[i] as DateTimePicker).Value;
-                            ++i;
-                            break;
-                        case 3:
-                            casOdjezdu = (panel.Controls[i] as DateTimePicker).Value;
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-                                      
-            TimeSpan prijezduTime = casPrijezdu.TimeOfDay;
-            TimeSpan odjezduTime = casOdjezdu.TimeOfDay;
-
-            //spojím čas i data s obou proměnných
-            datumPrijezdu = new DateTime(datumPrijezdu.Year, datumPrijezdu.Month, datumPrijezdu.Day, prijezduTime.Hours, prijezduTime.Minutes, prijezduTime.Seconds);
-            datumOdjezdu = new DateTime(datumOdjezdu.Year, datumOdjezdu.Month, datumOdjezdu.Day, odjezduTime.Hours, odjezduTime.Minutes, odjezduTime.Seconds);
-
-            cas = datumOdjezdu - datumPrijezdu;
-
-            /*MessageBox.Show("prijezd " +datumPrijezdu+
-                "\ncas prijezd "+casPrijezdu+
-                "\nodjezd "+datumOdjezdu+
-                "\ncas odjezd "+casOdjezdu);*/
-            return cas;
-        }
 
         public void Vygeneruj(int pocet)        //Vygeneruje ovládací prvky pro určitý počet navštívených zemí
         {
@@ -116,6 +70,8 @@ namespace Cestovni_nahrady
                 comboBoxVyberZeme.Size = new Size(250, 21);
                 comboBoxVyberZeme.TabIndex = 1;
                 comboBoxVyberZeme.Items.AddRange(statyZeme);
+                comboBoxVyberZeme.DropDownStyle = ComboBoxStyle.DropDownList;
+                comboBoxVyberZeme.SelectedIndex = 0;
                 // 
                 // label vyber zemi
                 // 
@@ -174,13 +130,8 @@ namespace Cestovni_nahrady
                 casOdjezdu.Size = new Size(200, 20);
                 casOdjezdu.TabIndex = 4;
 
-       
 
                 panelZeme.Controls.Add(comboBoxVyberZeme);
-                panelZeme.Controls.Add(labelVyberZeme);
-                panelZeme.Controls.Add(labelPrijezd);
-                panelZeme.Controls.Add(labelOdjezd);
-
 
                 panelZeme.Controls.Add(datumPrijezdu);
                 panelZeme.Controls.Add(casPrijezdu);
@@ -188,13 +139,15 @@ namespace Cestovni_nahrady
                 panelZeme.Controls.Add(datumOdjezdu);
                 panelZeme.Controls.Add(casOdjezdu);
 
+                panelZeme.Controls.Add(labelVyberZeme);
+                panelZeme.Controls.Add(labelPrijezd);
+                panelZeme.Controls.Add(labelOdjezd);
+
                 this.Controls.Add(panelZeme);
 
 
             }
 
         }
-   
-        
     }
 }

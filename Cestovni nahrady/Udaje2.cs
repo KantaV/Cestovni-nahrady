@@ -17,9 +17,14 @@ namespace Cestovni_nahrady
             InitializeComponent();
         }
 
+        public int pocet;
+        public UserControl zahranici;
+
         private void numericUpDownPocetZemi_ValueChanged(object sender, EventArgs e)
         {
-            zahranici1.Vygeneruj(int.Parse(numericUpDownPocetZemi.Value.ToString()));
+            pocet = int.Parse(numericUpDownPocetZemi.Value.ToString());
+            zahranici1.Vygeneruj(pocet);
+            zahranici = zahranici1;
         }
     }
 }

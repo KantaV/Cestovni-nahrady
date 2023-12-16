@@ -36,7 +36,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.Name = "Zahranici";
-            this.Size = new System.Drawing.Size(242, 227);
+            this.Size = new System.Drawing.Size(546, 393);
             this.ResumeLayout(false);
 
         }

@@ -15,7 +15,7 @@ namespace Cestovni_nahrady
         public Udaje4()
         {
             InitializeComponent();
-            comboBoxStravne.SelectedIndex = 0;
+            comboBoxStravneSektor.SelectedIndex = 0;
         }
     }
 }

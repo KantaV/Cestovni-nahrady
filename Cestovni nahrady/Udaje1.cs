@@ -15,8 +15,6 @@ namespace Cestovni_nahrady
         public Udaje1()
         {
             InitializeComponent();
-            comboBoxPrvniDenHodin.SelectedIndex = 0;
-            comboBoxPosledniDenHodin.SelectedIndex = 0;
         }
     }
 }

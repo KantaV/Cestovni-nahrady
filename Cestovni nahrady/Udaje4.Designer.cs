@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.numericUpDownPocetJidelZaDen = new System.Windows.Forms.NumericUpDown();
-            this.comboBoxStravne = new System.Windows.Forms.ComboBox();
+            this.comboBoxStravneSektor = new System.Windows.Forms.ComboBox();
             this.labelPocetJidel = new System.Windows.Forms.Label();
             this.checkBoxBezplatneJidlo = new System.Windows.Forms.CheckBox();
             this.labelStravne = new System.Windows.Forms.Label();
@@ -43,17 +43,17 @@
             this.numericUpDownPocetJidelZaDen.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownPocetJidelZaDen.TabIndex = 29;
             // 
-            // comboBoxStravne
+            // comboBoxStravneSektor
             // 
-            this.comboBoxStravne.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxStravne.FormattingEnabled = true;
-            this.comboBoxStravne.Items.AddRange(new object[] {
+            this.comboBoxStravneSektor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxStravneSektor.FormattingEnabled = true;
+            this.comboBoxStravneSektor.Items.AddRange(new object[] {
             "Privátní sektor",
             "Veřejný sektor"});
-            this.comboBoxStravne.Location = new System.Drawing.Point(126, 28);
-            this.comboBoxStravne.Name = "comboBoxStravne";
-            this.comboBoxStravne.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxStravne.TabIndex = 27;
+            this.comboBoxStravneSektor.Location = new System.Drawing.Point(126, 28);
+            this.comboBoxStravneSektor.Name = "comboBoxStravneSektor";
+            this.comboBoxStravneSektor.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxStravneSektor.TabIndex = 27;
             // 
             // labelPocetJidel
             // 
@@ -88,7 +88,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.numericUpDownPocetJidelZaDen);
-            this.Controls.Add(this.comboBoxStravne);
+            this.Controls.Add(this.comboBoxStravneSektor);
             this.Controls.Add(this.labelPocetJidel);
             this.Controls.Add(this.checkBoxBezplatneJidlo);
             this.Controls.Add(this.labelStravne);
@@ -101,11 +101,10 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.NumericUpDown numericUpDownPocetJidelZaDen;
-        private System.Windows.Forms.ComboBox comboBoxStravne;
         private System.Windows.Forms.Label labelPocetJidel;
-        private System.Windows.Forms.CheckBox checkBoxBezplatneJidlo;
         private System.Windows.Forms.Label labelStravne;
+        public System.Windows.Forms.NumericUpDown numericUpDownPocetJidelZaDen;
+        public System.Windows.Forms.ComboBox comboBoxStravneSektor;
+        public System.Windows.Forms.CheckBox checkBoxBezplatneJidlo;
     }
 }

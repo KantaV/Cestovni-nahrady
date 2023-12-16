@@ -28,90 +28,42 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.comboBoxPosledniDenHodin = new System.Windows.Forms.ComboBox();
-            this.comboBoxPrvniDenHodin = new System.Windows.Forms.ComboBox();
-            this.labelPosledniNaCeste = new System.Windows.Forms.Label();
-            this.labelPrvniNaCeste = new System.Windows.Forms.Label();
-            this.dtpKonecCesty = new System.Windows.Forms.DateTimePicker();
+            this.dtpDatumKonceCesty = new System.Windows.Forms.DateTimePicker();
             this.labelKonecCesty = new System.Windows.Forms.Label();
-            this.dtpZacatekCesty = new System.Windows.Forms.DateTimePicker();
+            this.dtpDatumZacatkuCesty = new System.Windows.Forms.DateTimePicker();
             this.labelZacatekCesty = new System.Windows.Forms.Label();
-            this.textBoxDatNar = new System.Windows.Forms.TextBox();
             this.labelDatNar = new System.Windows.Forms.Label();
             this.textBoxPrijmeni = new System.Windows.Forms.TextBox();
             this.labelPrijmeni = new System.Windows.Forms.Label();
             this.textBoxJmeno = new System.Windows.Forms.TextBox();
             this.labelJmeno = new System.Windows.Forms.Label();
+            this.dateTimePickerDatNar = new System.Windows.Forms.DateTimePicker();
+            this.dtpCasZacatkuCesty = new System.Windows.Forms.DateTimePicker();
+            this.dtpCasKonceCesty = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
-            // comboBoxPosledniDenHodin
+            // dtpDatumKonceCesty
             // 
-            this.comboBoxPosledniDenHodin.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxPosledniDenHodin.FormattingEnabled = true;
-            this.comboBoxPosledniDenHodin.Items.AddRange(new object[] {
-            "Méně než 5 hodin",
-            "5 až 12 hodin",
-            "12 až 18 hodin",
-            "18 a více hodin"});
-            this.comboBoxPosledniDenHodin.Location = new System.Drawing.Point(302, 269);
-            this.comboBoxPosledniDenHodin.Name = "comboBoxPosledniDenHodin";
-            this.comboBoxPosledniDenHodin.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxPosledniDenHodin.TabIndex = 52;
-            // 
-            // comboBoxPrvniDenHodin
-            // 
-            this.comboBoxPrvniDenHodin.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxPrvniDenHodin.FormattingEnabled = true;
-            this.comboBoxPrvniDenHodin.Items.AddRange(new object[] {
-            "Méně než 5 hodin",
-            "5 až 12 hodin",
-            "12 až 18 hodin",
-            "18 a více hodin"});
-            this.comboBoxPrvniDenHodin.Location = new System.Drawing.Point(302, 236);
-            this.comboBoxPrvniDenHodin.Name = "comboBoxPrvniDenHodin";
-            this.comboBoxPrvniDenHodin.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxPrvniDenHodin.TabIndex = 51;
-            // 
-            // labelPosledniNaCeste
-            // 
-            this.labelPosledniNaCeste.AutoSize = true;
-            this.labelPosledniNaCeste.Location = new System.Drawing.Point(74, 272);
-            this.labelPosledniNaCeste.Name = "labelPosledniNaCeste";
-            this.labelPosledniNaCeste.Size = new System.Drawing.Size(222, 13);
-            this.labelPosledniNaCeste.TabIndex = 54;
-            this.labelPosledniNaCeste.Text = "Počet hodin na cestě poslední pracovní den:";
-            // 
-            // labelPrvniNaCeste
-            // 
-            this.labelPrvniNaCeste.AutoSize = true;
-            this.labelPrvniNaCeste.Location = new System.Drawing.Point(74, 236);
-            this.labelPrvniNaCeste.Name = "labelPrvniNaCeste";
-            this.labelPrvniNaCeste.Size = new System.Drawing.Size(206, 13);
-            this.labelPrvniNaCeste.TabIndex = 53;
-            this.labelPrvniNaCeste.Text = "Počet hodin na cestě první pracovní den:";
-            // 
-            // dtpKonecCesty
-            // 
-            this.dtpKonecCesty.Location = new System.Drawing.Point(201, 183);
-            this.dtpKonecCesty.Name = "dtpKonecCesty";
-            this.dtpKonecCesty.Size = new System.Drawing.Size(200, 20);
-            this.dtpKonecCesty.TabIndex = 50;
+            this.dtpDatumKonceCesty.Location = new System.Drawing.Point(201, 293);
+            this.dtpDatumKonceCesty.Name = "dtpDatumKonceCesty";
+            this.dtpDatumKonceCesty.Size = new System.Drawing.Size(200, 20);
+            this.dtpDatumKonceCesty.TabIndex = 50;
             // 
             // labelKonecCesty
             // 
             this.labelKonecCesty.AutoSize = true;
-            this.labelKonecCesty.Location = new System.Drawing.Point(74, 184);
+            this.labelKonecCesty.Location = new System.Drawing.Point(74, 294);
             this.labelKonecCesty.Name = "labelKonecCesty";
             this.labelKonecCesty.Size = new System.Drawing.Size(112, 13);
             this.labelKonecCesty.TabIndex = 59;
             this.labelKonecCesty.Text = "Konec služební cesty:";
             // 
-            // dtpZacatekCesty
+            // dtpDatumZacatkuCesty
             // 
-            this.dtpZacatekCesty.Location = new System.Drawing.Point(201, 154);
-            this.dtpZacatekCesty.Name = "dtpZacatekCesty";
-            this.dtpZacatekCesty.Size = new System.Drawing.Size(200, 20);
-            this.dtpZacatekCesty.TabIndex = 49;
+            this.dtpDatumZacatkuCesty.Location = new System.Drawing.Point(201, 154);
+            this.dtpDatumZacatkuCesty.Name = "dtpDatumZacatkuCesty";
+            this.dtpDatumZacatkuCesty.Size = new System.Drawing.Size(200, 20);
+            this.dtpDatumZacatkuCesty.TabIndex = 49;
             // 
             // labelZacatekCesty
             // 
@@ -121,13 +73,6 @@
             this.labelZacatekCesty.Size = new System.Drawing.Size(121, 13);
             this.labelZacatekCesty.TabIndex = 58;
             this.labelZacatekCesty.Text = "Začátek služební cesty:";
-            // 
-            // textBoxDatNar
-            // 
-            this.textBoxDatNar.Location = new System.Drawing.Point(166, 99);
-            this.textBoxDatNar.Name = "textBoxDatNar";
-            this.textBoxDatNar.Size = new System.Drawing.Size(100, 20);
-            this.textBoxDatNar.TabIndex = 48;
             // 
             // labelDatNar
             // 
@@ -170,19 +115,40 @@
             this.labelJmeno.TabIndex = 55;
             this.labelJmeno.Text = "Jméno:";
             // 
+            // dateTimePickerDatNar
+            // 
+            this.dateTimePickerDatNar.Location = new System.Drawing.Point(166, 96);
+            this.dateTimePickerDatNar.Name = "dateTimePickerDatNar";
+            this.dateTimePickerDatNar.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePickerDatNar.TabIndex = 60;
+            // 
+            // dtpCasZacatkuCesty
+            // 
+            this.dtpCasZacatkuCesty.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtpCasZacatkuCesty.Location = new System.Drawing.Point(201, 180);
+            this.dtpCasZacatkuCesty.Name = "dtpCasZacatkuCesty";
+            this.dtpCasZacatkuCesty.Size = new System.Drawing.Size(200, 20);
+            this.dtpCasZacatkuCesty.TabIndex = 61;
+            // 
+            // dtpCasKonceCesty
+            // 
+            this.dtpCasKonceCesty.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtpCasKonceCesty.Location = new System.Drawing.Point(201, 319);
+            this.dtpCasKonceCesty.Name = "dtpCasKonceCesty";
+            this.dtpCasKonceCesty.Size = new System.Drawing.Size(200, 20);
+            this.dtpCasKonceCesty.TabIndex = 62;
+            // 
             // Udaje1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.comboBoxPosledniDenHodin);
-            this.Controls.Add(this.comboBoxPrvniDenHodin);
-            this.Controls.Add(this.labelPosledniNaCeste);
-            this.Controls.Add(this.labelPrvniNaCeste);
-            this.Controls.Add(this.dtpKonecCesty);
+            this.Controls.Add(this.dtpCasKonceCesty);
+            this.Controls.Add(this.dtpCasZacatkuCesty);
+            this.Controls.Add(this.dateTimePickerDatNar);
+            this.Controls.Add(this.dtpDatumKonceCesty);
             this.Controls.Add(this.labelKonecCesty);
-            this.Controls.Add(this.dtpZacatekCesty);
+            this.Controls.Add(this.dtpDatumZacatkuCesty);
             this.Controls.Add(this.labelZacatekCesty);
-            this.Controls.Add(this.textBoxDatNar);
             this.Controls.Add(this.labelDatNar);
             this.Controls.Add(this.textBoxPrijmeni);
             this.Controls.Add(this.labelPrijmeni);
@@ -196,20 +162,17 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ComboBox comboBoxPosledniDenHodin;
-        private System.Windows.Forms.ComboBox comboBoxPrvniDenHodin;
-        private System.Windows.Forms.Label labelPosledniNaCeste;
-        private System.Windows.Forms.Label labelPrvniNaCeste;
-        private System.Windows.Forms.DateTimePicker dtpKonecCesty;
         private System.Windows.Forms.Label labelKonecCesty;
-        private System.Windows.Forms.DateTimePicker dtpZacatekCesty;
         private System.Windows.Forms.Label labelZacatekCesty;
-        private System.Windows.Forms.TextBox textBoxDatNar;
         private System.Windows.Forms.Label labelDatNar;
-        private System.Windows.Forms.TextBox textBoxPrijmeni;
         private System.Windows.Forms.Label labelPrijmeni;
-        private System.Windows.Forms.TextBox textBoxJmeno;
         private System.Windows.Forms.Label labelJmeno;
+        public System.Windows.Forms.DateTimePicker dtpDatumKonceCesty;
+        public System.Windows.Forms.DateTimePicker dtpDatumZacatkuCesty;
+        public System.Windows.Forms.TextBox textBoxPrijmeni;
+        public System.Windows.Forms.TextBox textBoxJmeno;
+        public System.Windows.Forms.DateTimePicker dateTimePickerDatNar;
+        public System.Windows.Forms.DateTimePicker dtpCasZacatkuCesty;
+        public System.Windows.Forms.DateTimePicker dtpCasKonceCesty;
     }
 }

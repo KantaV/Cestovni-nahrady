@@ -77,7 +77,7 @@
         #endregion
 
         private Zahranici zahranici1;
-        private System.Windows.Forms.NumericUpDown numericUpDownPocetZemi;
         private System.Windows.Forms.Label labelPocetZemi;
+        public System.Windows.Forms.NumericUpDown numericUpDownPocetZemi;
     }
 }

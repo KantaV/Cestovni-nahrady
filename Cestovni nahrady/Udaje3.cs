@@ -19,5 +19,11 @@ namespace Cestovni_nahrady
             comboBoxPohonneHmotyZpsb.SelectedIndex = 0;
             comboBoxZpusobPrepravy.SelectedIndex = 0;
         }
+
+        private void comboBoxTypPohonnychHmot_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxTypPohonnychHmot.SelectedIndex == 3) labelSpotrebovano.Text = "Spotřebováno v kilowatthodinách:";
+            else labelSpotrebovano.Text = "Spotřebováno v litrech:";
+        }
     }
 }

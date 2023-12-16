@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NavstivenyStat.cs" />
+    <Compile Include="PohonneHmoty.cs" />
     <Compile Include="Udaje1.cs">
       <SubType>UserControl</SubType>
     </Compile>

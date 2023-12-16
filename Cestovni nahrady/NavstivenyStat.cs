@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cestovni_nahrady
 {
-    public class NavstivenyStat
+    internal class NavstivenyStat
     {
         private string nazevStatu="";
         private TimeSpan casVeState=TimeSpan.Zero;

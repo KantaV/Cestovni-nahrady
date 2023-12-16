@@ -170,7 +170,7 @@ namespace Cestovni_nahrady
                     navstiveneStaty[i] = new NavstivenyStat(nazevZeme, casVeState);
 
 
-                    //MessageBox.Show(navstiveneStaty[i].NazevStatu + " " + navstiveneStaty[i].CasVeState);
+                    MessageBox.Show(navstiveneStaty[i].NazevStatu + " " + navstiveneStaty[i].CasVeState);
                 }
 
                 //Délka cesty
@@ -183,6 +183,7 @@ namespace Cestovni_nahrady
                 if (udaje4Stranka.comboBoxStravneSektor.SelectedIndex == 0) sektor = "privatni";
                 else sektor = "verejny";
 
+                int najetychKm = int.Parse(udaje3Stranka.textBoxPocetNajetychKm.Text);
 
             }
         }

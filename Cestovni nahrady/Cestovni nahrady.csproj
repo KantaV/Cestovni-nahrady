@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="JidlaZaDen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="JidlaZaDen.Designer.cs">
+      <DependentUpon>JidlaZaDen.cs</DependentUpon>
+    </Compile>
     <Compile Include="NavstivenyStat.cs" />
     <Compile Include="PohonneHmoty.cs" />
     <Compile Include="Udaje1.cs">
@@ -92,6 +98,9 @@
     <Compile Include="Zahranici.Designer.cs">
       <DependentUpon>Zahranici.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="JidlaZaDen.resx">
+      <DependentUpon>JidlaZaDen.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Udaje1.resx">
       <DependentUpon>Udaje1.cs</DependentUpon>
     </EmbeddedResource>

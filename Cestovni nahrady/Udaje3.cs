@@ -16,7 +16,7 @@ namespace Cestovni_nahrady
         {
             InitializeComponent();
             comboBoxTypPohonnychHmot.SelectedIndex = 0;
-            comboBoxPohonneHmotyZpsb.SelectedIndex = 0;
+            comboBoxZpsbVypoctuPohHmot.SelectedIndex = 0;
             comboBoxZpusobPrepravy.SelectedIndex = 0;
         }
 
@@ -24,6 +24,22 @@ namespace Cestovni_nahrady
         {
             if (comboBoxTypPohonnychHmot.SelectedIndex == 3) labelSpotrebovano.Text = "Spotřebováno v kilowatthodinách:";
             else labelSpotrebovano.Text = "Spotřebováno v litrech:";
+        }
+
+        private void comboBoxZpsbVypoctuPohHmot_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxZpsbVypoctuPohHmot.SelectedIndex == 0)
+            {
+                comboBoxTypPohonnychHmot.Enabled = true;
+                numericUpDownSpotreba.Enabled = true;
+                textBoxPrumernaPohonneHmotyCena.Enabled = false;
+            }
+            else
+            {
+                comboBoxTypPohonnychHmot.Enabled = false;
+                numericUpDownSpotreba.Enabled = false;
+                textBoxPrumernaPohonneHmotyCena.Enabled = true;
+            }
         }
     }
 }

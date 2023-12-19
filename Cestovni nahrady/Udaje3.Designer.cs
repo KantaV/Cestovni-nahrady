@@ -28,32 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.comboBoxPohonneHmotyZpsb = new System.Windows.Forms.ComboBox();
+            this.comboBoxZpsbVypoctuPohHmot = new System.Windows.Forms.ComboBox();
             this.labelTypPohHmt = new System.Windows.Forms.Label();
             this.comboBoxZpusobPrepravy = new System.Windows.Forms.ComboBox();
             this.labelPrumerCena = new System.Windows.Forms.Label();
             this.textBoxPrumernaPohonneHmotyCena = new System.Windows.Forms.TextBox();
             this.comboBoxTypPohonnychHmot = new System.Windows.Forms.ComboBox();
-            this.labelPohonneHmoty = new System.Windows.Forms.Label();
+            this.labelZpusobVypoctu = new System.Windows.Forms.Label();
             this.labelCestoval = new System.Windows.Forms.Label();
             this.labelPocetKm = new System.Windows.Forms.Label();
             this.textBoxPocetNajetychKm = new System.Windows.Forms.TextBox();
             this.labelSpotrebovano = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.numericUpDownSpotreba = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSpotreba)).BeginInit();
             this.SuspendLayout();
             // 
-            // comboBoxPohonneHmotyZpsb
+            // comboBoxZpsbVypoctuPohHmot
             // 
-            this.comboBoxPohonneHmotyZpsb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxPohonneHmotyZpsb.FormattingEnabled = true;
-            this.comboBoxPohonneHmotyZpsb.Items.AddRange(new object[] {
+            this.comboBoxZpsbVypoctuPohHmot.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxZpsbVypoctuPohHmot.FormattingEnabled = true;
+            this.comboBoxZpsbVypoctuPohHmot.Items.AddRange(new object[] {
             "Dle zákona",
             "Dle účtenky"});
-            this.comboBoxPohonneHmotyZpsb.Location = new System.Drawing.Point(217, 95);
-            this.comboBoxPohonneHmotyZpsb.Name = "comboBoxPohonneHmotyZpsb";
-            this.comboBoxPohonneHmotyZpsb.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxPohonneHmotyZpsb.TabIndex = 55;
+            this.comboBoxZpsbVypoctuPohHmot.Location = new System.Drawing.Point(217, 95);
+            this.comboBoxZpsbVypoctuPohHmot.Name = "comboBoxZpsbVypoctuPohHmot";
+            this.comboBoxZpsbVypoctuPohHmot.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxZpsbVypoctuPohHmot.TabIndex = 55;
+            this.comboBoxZpsbVypoctuPohHmot.SelectedIndexChanged += new System.EventHandler(this.comboBoxZpsbVypoctuPohHmot_SelectedIndexChanged);
             // 
             // labelTypPohHmt
             // 
@@ -113,14 +114,14 @@
             this.comboBoxTypPohonnychHmot.TabIndex = 58;
             this.comboBoxTypPohonnychHmot.SelectedIndexChanged += new System.EventHandler(this.comboBoxTypPohonnychHmot_SelectedIndexChanged);
             // 
-            // labelPohonneHmoty
+            // labelZpusobVypoctu
             // 
-            this.labelPohonneHmoty.AutoSize = true;
-            this.labelPohonneHmoty.Location = new System.Drawing.Point(26, 95);
-            this.labelPohonneHmoty.Name = "labelPohonneHmoty";
-            this.labelPohonneHmoty.Size = new System.Drawing.Size(84, 13);
-            this.labelPohonneHmoty.TabIndex = 53;
-            this.labelPohonneHmoty.Text = "Pohonné hmoty:";
+            this.labelZpusobVypoctu.AutoSize = true;
+            this.labelZpusobVypoctu.Location = new System.Drawing.Point(26, 103);
+            this.labelZpusobVypoctu.Name = "labelZpusobVypoctu";
+            this.labelZpusobVypoctu.Size = new System.Drawing.Size(87, 13);
+            this.labelZpusobVypoctu.TabIndex = 53;
+            this.labelZpusobVypoctu.Text = "Způsob výpočtu:";
             // 
             // labelCestoval
             // 
@@ -156,32 +157,32 @@
             this.labelSpotrebovano.TabIndex = 60;
             this.labelSpotrebovano.Text = "Spotřebováno litrů:";
             // 
-            // numericUpDown1
+            // numericUpDownSpotreba
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(218, 229);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown1.TabIndex = 61;
+            this.numericUpDownSpotreba.Location = new System.Drawing.Point(218, 229);
+            this.numericUpDownSpotreba.Name = "numericUpDownSpotreba";
+            this.numericUpDownSpotreba.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDownSpotreba.TabIndex = 61;
             // 
             // Udaje3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.numericUpDownSpotreba);
             this.Controls.Add(this.labelSpotrebovano);
-            this.Controls.Add(this.comboBoxPohonneHmotyZpsb);
+            this.Controls.Add(this.comboBoxZpsbVypoctuPohHmot);
             this.Controls.Add(this.labelTypPohHmt);
             this.Controls.Add(this.comboBoxZpusobPrepravy);
             this.Controls.Add(this.labelPrumerCena);
             this.Controls.Add(this.textBoxPrumernaPohonneHmotyCena);
             this.Controls.Add(this.comboBoxTypPohonnychHmot);
-            this.Controls.Add(this.labelPohonneHmoty);
+            this.Controls.Add(this.labelZpusobVypoctu);
             this.Controls.Add(this.labelCestoval);
             this.Controls.Add(this.labelPocetKm);
             this.Controls.Add(this.textBoxPocetNajetychKm);
             this.Name = "Udaje3";
             this.Size = new System.Drawing.Size(532, 393);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSpotreba)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -190,15 +191,15 @@
         #endregion
         private System.Windows.Forms.Label labelTypPohHmt;
         private System.Windows.Forms.Label labelPrumerCena;
-        private System.Windows.Forms.Label labelPohonneHmoty;
+        private System.Windows.Forms.Label labelZpusobVypoctu;
         private System.Windows.Forms.Label labelCestoval;
         private System.Windows.Forms.Label labelPocetKm;
-        public System.Windows.Forms.ComboBox comboBoxPohonneHmotyZpsb;
+        public System.Windows.Forms.ComboBox comboBoxZpsbVypoctuPohHmot;
         public System.Windows.Forms.ComboBox comboBoxZpusobPrepravy;
         public System.Windows.Forms.TextBox textBoxPrumernaPohonneHmotyCena;
         public System.Windows.Forms.ComboBox comboBoxTypPohonnychHmot;
         public System.Windows.Forms.TextBox textBoxPocetNajetychKm;
         private System.Windows.Forms.Label labelSpotrebovano;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        public System.Windows.Forms.NumericUpDown numericUpDownSpotreba;
     }
 }

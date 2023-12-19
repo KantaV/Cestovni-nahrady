@@ -12,10 +12,29 @@ namespace Cestovni_nahrady
 {
     public partial class Udaje4 : UserControl
     {
+
         public Udaje4()
         {
             InitializeComponent();
+            checkBoxBezplatneJidlo.Checked = true;
             comboBoxStravneSektor.SelectedIndex = 0;
+        }
+
+        public void Vygeneruj(int pocet)
+        {
+            jidlaZaDen1.Vygeneruj(pocet);
+        }
+
+        private void checkBoxBezplatneJidlo_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxBezplatneJidlo.Checked)
+            {
+                jidlaZaDen1.Enabled = true;
+            }
+            else
+            {
+                jidlaZaDen1.Enabled = false;
+            }
         }
     }
 }

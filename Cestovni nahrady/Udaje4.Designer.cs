@@ -28,20 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.numericUpDownPocetJidelZaDen = new System.Windows.Forms.NumericUpDown();
             this.comboBoxStravneSektor = new System.Windows.Forms.ComboBox();
-            this.labelPocetJidel = new System.Windows.Forms.Label();
             this.checkBoxBezplatneJidlo = new System.Windows.Forms.CheckBox();
             this.labelStravne = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPocetJidelZaDen)).BeginInit();
+            this.jidlaZaDen1 = new Cestovni_nahrady.JidlaZaDen();
             this.SuspendLayout();
-            // 
-            // numericUpDownPocetJidelZaDen
-            // 
-            this.numericUpDownPocetJidelZaDen.Location = new System.Drawing.Point(189, 119);
-            this.numericUpDownPocetJidelZaDen.Name = "numericUpDownPocetJidelZaDen";
-            this.numericUpDownPocetJidelZaDen.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDownPocetJidelZaDen.TabIndex = 29;
             // 
             // comboBoxStravneSektor
             // 
@@ -55,24 +46,16 @@
             this.comboBoxStravneSektor.Size = new System.Drawing.Size(121, 21);
             this.comboBoxStravneSektor.TabIndex = 27;
             // 
-            // labelPocetJidel
-            // 
-            this.labelPocetJidel.AutoSize = true;
-            this.labelPocetJidel.Location = new System.Drawing.Point(27, 121);
-            this.labelPocetJidel.Name = "labelPocetJidel";
-            this.labelPocetJidel.Size = new System.Drawing.Size(156, 13);
-            this.labelPocetJidel.TabIndex = 30;
-            this.labelPocetJidel.Text = "Počet bezplatných jídel za den:";
-            // 
             // checkBoxBezplatneJidlo
             // 
             this.checkBoxBezplatneJidlo.AutoSize = true;
-            this.checkBoxBezplatneJidlo.Location = new System.Drawing.Point(30, 91);
+            this.checkBoxBezplatneJidlo.Location = new System.Drawing.Point(40, 67);
             this.checkBoxBezplatneJidlo.Name = "checkBoxBezplatneJidlo";
             this.checkBoxBezplatneJidlo.Size = new System.Drawing.Size(173, 17);
             this.checkBoxBezplatneJidlo.TabIndex = 28;
             this.checkBoxBezplatneJidlo.Text = "Bylo poskytnuto bezplatné jídlo";
             this.checkBoxBezplatneJidlo.UseVisualStyleBackColor = true;
+            this.checkBoxBezplatneJidlo.CheckedChanged += new System.EventHandler(this.checkBoxBezplatneJidlo_CheckedChanged);
             // 
             // labelStravne
             // 
@@ -83,28 +66,33 @@
             this.labelStravne.TabIndex = 26;
             this.labelStravne.Text = "Stravné:";
             // 
+            // jidlaZaDen1
+            // 
+            this.jidlaZaDen1.AutoScroll = true;
+            this.jidlaZaDen1.Location = new System.Drawing.Point(40, 110);
+            this.jidlaZaDen1.Name = "jidlaZaDen1";
+            this.jidlaZaDen1.Size = new System.Drawing.Size(445, 239);
+            this.jidlaZaDen1.TabIndex = 31;
+            // 
             // Udaje4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.numericUpDownPocetJidelZaDen);
+            this.Controls.Add(this.jidlaZaDen1);
             this.Controls.Add(this.comboBoxStravneSektor);
-            this.Controls.Add(this.labelPocetJidel);
             this.Controls.Add(this.checkBoxBezplatneJidlo);
             this.Controls.Add(this.labelStravne);
             this.Name = "Udaje4";
             this.Size = new System.Drawing.Size(532, 393);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPocetJidelZaDen)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Label labelPocetJidel;
         private System.Windows.Forms.Label labelStravne;
-        public System.Windows.Forms.NumericUpDown numericUpDownPocetJidelZaDen;
         public System.Windows.Forms.ComboBox comboBoxStravneSektor;
         public System.Windows.Forms.CheckBox checkBoxBezplatneJidlo;
+        private JidlaZaDen jidlaZaDen1;
     }
 }

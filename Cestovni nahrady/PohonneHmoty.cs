@@ -12,11 +12,30 @@ namespace Cestovni_nahrady
         private double cena;
         private double spotrebovano;
 
-        public PohonneHmoty(string pohonnaHmota, double cena, double spotrebovano)
+        public PohonneHmoty(string pohonnaHmota,double spotrebovano)
         {
             this.pohonnaHmota= pohonnaHmota;
-            this.cena = cena;
-            this.spotrebovano = spotrebovano;
+            this.spotrebovano= spotrebovano;
+            switch (pohonnaHmota)
+            {
+                case "Natural 95":
+                    this.cena = 41.2;
+                    break;
+                case "Natural 98":
+                    this.cena = 45.4;
+                    break;
+                case "Nafta":
+                    this.cena = 44.1;
+                    break;
+                case "Elektřina":
+                    this.cena = 6;
+                    break;
+                case "LPG (plyn)":
+                    this.cena = 0;        //Není zákonem uvedeno je potřeba doložit účtenku
+                    break;
+                default:
+                    break;
+            }
         }
 
         public double CenaZaPohonneHmoty()
@@ -30,7 +49,6 @@ namespace Cestovni_nahrady
             get { return pohonnaHmota;}
             set 
             { 
-                //Nastavim pohonnou hmotu a podle ni jeji cenu
                 pohonnaHmota = value;
                 switch (pohonnaHmota)
                 {

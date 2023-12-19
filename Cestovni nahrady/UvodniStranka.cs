@@ -140,6 +140,12 @@ namespace Cestovni_nahrady
         {
             if (indexStranky == stranky.Length-2)
             {
+                 //Aktivuje se při příchodu na poslední stránku
+                    DateTime zacatekCesty = udaje1Stranka.dtpDatumZacatkuCesty.Value.Date + udaje1Stranka.dtpCasZacatkuCesty.Value.TimeOfDay;
+                    DateTime konecCesty = udaje1Stranka.dtpDatumKonceCesty.Value + udaje1Stranka.dtpCasKonceCesty.Value.TimeOfDay;
+                    TimeSpan delkaCesty = konecCesty - zacatekCesty;
+                //Spočítání délky cesty abych získal počet dní
+                    udaje4Stranka.Vygeneruj(delkaCesty.Days);
                 //Změna textu buttonu
                 buttonDalsi.Text = "Vypočítej";
             }
@@ -164,6 +170,7 @@ namespace Cestovni_nahrady
                 NavstivenyStat[] navstiveneStaty = new NavstivenyStat[udaje2Stranka.pocet];
                 for (int i = 0; i < udaje2Stranka.zahranici.Controls.Count; i++)
                 {
+                   
                     string nazevZeme = "";
                     TimeSpan casVeState = TimeSpan.Zero;
                     if (udaje2Stranka.zahranici.Controls[i] is Panel) casVeState = CasVeState((udaje2Stranka.zahranici.Controls[i] as Panel), out nazevZeme);
@@ -173,9 +180,6 @@ namespace Cestovni_nahrady
                     MessageBox.Show(navstiveneStaty[i].NazevStatu + " " + navstiveneStaty[i].CasVeState);
                 }
 
-                //Délka cesty
-                DateTime zacatekCesty = udaje1Stranka.dtpDatumZacatkuCesty.Value.Date + udaje1Stranka.dtpCasZacatkuCesty.Value.TimeOfDay;
-                DateTime konecCesty = udaje1Stranka.dtpDatumKonceCesty.Value+udaje1Stranka.dtpCasKonceCesty.Value.TimeOfDay;
 
 
                 //Rozdělení sektoru
@@ -184,6 +188,8 @@ namespace Cestovni_nahrady
                 else sektor = "verejny";
 
                 int najetychKm = int.Parse(udaje3Stranka.textBoxPocetNajetychKm.Text);
+                PohonneHmoty pohonnaHmona = new PohonneHmoty(udaje3Stranka.comboBoxTypPohonnychHmot.Text, double.Parse(udaje3Stranka.numericUpDownSpotreba.Value.ToString()));
+
 
             }
         }

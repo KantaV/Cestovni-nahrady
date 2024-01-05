@@ -31,14 +31,38 @@ namespace Cestovni_nahrady
             if (comboBoxZpsbVypoctuPohHmot.SelectedIndex == 0)
             {
                 comboBoxTypPohonnychHmot.Enabled = true;
-                numericUpDownSpotreba.Enabled = true;
                 textBoxPrumernaPohonneHmotyCena.Enabled = false;
             }
             else
             {
                 comboBoxTypPohonnychHmot.Enabled = false;
-                numericUpDownSpotreba.Enabled = false;
                 textBoxPrumernaPohonneHmotyCena.Enabled = true;
+            }
+        }
+
+        private void comboBoxZpusobPrepravy_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(comboBoxZpusobPrepravy.SelectedIndex == 0)
+            {
+                comboBoxZpsbVypoctuPohHmot.Enabled = false;
+                comboBoxTypPohonnychHmot.Enabled = false;
+                numericUpDownSpotreba.Enabled = false;
+                textBoxPrumernaPohonneHmotyCena.Enabled = false;
+            }
+            else
+            {
+                comboBoxZpsbVypoctuPohHmot.Enabled = true;
+                numericUpDownSpotreba.Enabled = true;
+                if (comboBoxZpsbVypoctuPohHmot.SelectedIndex == 0)
+                {
+                    comboBoxTypPohonnychHmot.Enabled = true;
+                    textBoxPrumernaPohonneHmotyCena.Enabled = false;
+                }
+                else
+                {
+                    comboBoxTypPohonnychHmot.Enabled = false;
+                    textBoxPrumernaPohonneHmotyCena.Enabled = true;
+                }
             }
         }
     }

@@ -70,7 +70,7 @@
             this.comboBoxZpusobPrepravy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxZpusobPrepravy.FormattingEnabled = true;
             this.comboBoxZpusobPrepravy.Items.AddRange(new object[] {
-            "Služebním vozem",
+            "Služebním dopravním prostředkem",
             "Vlastním automobilem",
             "Vlastním automobilem s přivěsem",
             "Vlastní motorkou",
@@ -79,6 +79,7 @@
             this.comboBoxZpusobPrepravy.Name = "comboBoxZpusobPrepravy";
             this.comboBoxZpusobPrepravy.Size = new System.Drawing.Size(255, 21);
             this.comboBoxZpusobPrepravy.TabIndex = 54;
+            this.comboBoxZpusobPrepravy.SelectedIndexChanged += new System.EventHandler(this.comboBoxZpusobPrepravy_SelectedIndexChanged);
             // 
             // labelPrumerCena
             // 

@@ -45,6 +45,8 @@ namespace Cestovni_nahrady
 
         public double Cena { get { return cena; }}
 
+        public double Spotrebovano { get { return spotrebovano; }}
+
         public string PohonnaHmota {
             get { return pohonnaHmota;}
             set 

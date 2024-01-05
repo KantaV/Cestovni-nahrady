@@ -160,37 +160,99 @@ namespace Cestovni_nahrady
             {
                 //Zde bude celý kód výpočtů
 
-                //Osobní údaje
-                string jmeno = udaje1Stranka.textBoxJmeno.Text;
-                string prijmeni = udaje1Stranka.textBoxPrijmeni.Text;
-                DateTime datNar = udaje1Stranka.dateTimePickerDatNar.Value;
-
-
-                //Zjistim kazdy navstiveny stat a delku pobytu v nem
-                NavstivenyStat[] navstiveneStaty = new NavstivenyStat[udaje2Stranka.pocet];
-                for (int i = 0; i < udaje2Stranka.zahranici.Controls.Count; i++)
+                try
                 {
-                   
-                    string nazevZeme = "";
-                    TimeSpan casVeState = TimeSpan.Zero;
-                    if (udaje2Stranka.zahranici.Controls[i] is Panel) casVeState = CasVeState((udaje2Stranka.zahranici.Controls[i] as Panel), out nazevZeme);
-                    navstiveneStaty[i] = new NavstivenyStat(nazevZeme, casVeState);
+                    //Osobní údaje
+                    string jmeno = udaje1Stranka.textBoxJmeno.Text;
+                    string prijmeni = udaje1Stranka.textBoxPrijmeni.Text;
+                    DateTime datNar = udaje1Stranka.dateTimePickerDatNar.Value;
+
+                    bool tuzemskaCesta = true;
+
+                    NavstivenyStat[] navstiveneStaty = new NavstivenyStat[udaje2Stranka.pocet];
+                    //Ošetření počet států
+                    if (udaje2Stranka.numericUpDownPocetZemi.Value>0)
+                    {
+                        tuzemskaCesta = false;
+                        //Zjistim kazdy navstiveny stat a delku pobytu v nem
+                        for (int i = 0; i < udaje2Stranka.zahranici.Controls.Count; i++)
+                        {
+
+                            string nazevZeme = "";
+                            TimeSpan casVeState = TimeSpan.Zero;
+                            if (udaje2Stranka.zahranici.Controls[i] is Panel) casVeState = CasVeState((udaje2Stranka.zahranici.Controls[i] as Panel), out nazevZeme);
+                            navstiveneStaty[i] = new NavstivenyStat(nazevZeme, casVeState);
 
 
-                    MessageBox.Show(navstiveneStaty[i].NazevStatu + " " + navstiveneStaty[i].CasVeState);
+                            MessageBox.Show(navstiveneStaty[i].NazevStatu + " " + navstiveneStaty[i].CasVeState);
+                        }
+                    }
+            
+
+                    //Rozdělení sektoru
+                    string sektor;
+                    if (udaje4Stranka.comboBoxStravneSektor.SelectedIndex == 0) sektor = "privatni";
+                    else sektor = "verejny";
+
+                    double najetychKm = double.Parse(udaje3Stranka.textBoxPocetNajetychKm.Text);
+
+                    PohonneHmoty pohonnaHmota = new PohonneHmoty(udaje3Stranka.comboBoxTypPohonnychHmot.Text, double.Parse(udaje3Stranka.numericUpDownSpotreba.Value.ToString()));
+
+                    //Finální výpočty
+                    double vyplatitPenez = 0;
+                    if (tuzemskaCesta)
+                    {
+                        //Účtuji pohonné hmoty jedině pokud zaměstnanec cestoval svým vozem
+                        if (udaje3Stranka.comboBoxZpusobPrepravy.SelectedIndex != 0)
+                        {
+                            double zakladniNahrada = 5.2;
+                            switch (udaje3Stranka.comboBoxZpusobPrepravy.SelectedIndex)
+                            {
+                                case 1: //Vlastní automobil
+                                {
+                                    vyplatitPenez += zakladniNahrada * najetychKm;
+                                    break;
+                                }
+                                case 2: //Vlastní automobil s přívěsem
+                                {
+                                    vyplatitPenez += (zakladniNahrada * 1.15) * najetychKm;
+                                    break;
+                                }
+                                case 3: //Vlastní motorkou
+                                {
+                                    vyplatitPenez += 1.4 * najetychKm;
+                                    break;
+                                }
+                                case 4: //Vlastním nákladním vozem, autobusem, traktorem
+                                {
+                                    vyplatitPenez += (zakladniNahrada * 2) * najetychKm;
+                                    break;
+                                }
+                                default:
+                                    MessageBox.Show("Chyba");
+                                    break;
+                            }
+                            //Podle zákona
+                            if (udaje3Stranka.comboBoxZpsbVypoctuPohHmot.SelectedIndex == 0)
+                            {
+                                vyplatitPenez += pohonnaHmota.CenaZaPohonneHmoty();
+                                //MessageBox.Show(vyplatitPenez.ToString());
+                            }
+                            else  //Podle účtenky
+                            {
+                                double prumerCenaZUctenek = double.Parse(udaje3Stranka.textBoxPrumernaPohonneHmotyCena.Text);
+                                vyplatitPenez += prumerCenaZUctenek * pohonnaHmota.Spotrebovano;
+                                MessageBox.Show(vyplatitPenez.ToString());
+                            }
+                        }
+                        
+                    }
                 }
-
-
-
-                //Rozdělení sektoru
-                string sektor;
-                if (udaje4Stranka.comboBoxStravneSektor.SelectedIndex == 0) sektor = "privatni";
-                else sektor = "verejny";
-
-                int najetychKm = int.Parse(udaje3Stranka.textBoxPocetNajetychKm.Text);
-                PohonneHmoty pohonnaHmona = new PohonneHmoty(udaje3Stranka.comboBoxTypPohonnychHmot.Text, double.Parse(udaje3Stranka.numericUpDownSpotreba.Value.ToString()));
-
-
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
+               
             }
         }
 

@@ -52,6 +52,12 @@
     <Compile Include="JidlaZaDen.Designer.cs">
       <DependentUpon>JidlaZaDen.cs</DependentUpon>
     </Compile>
+    <Compile Include="Nastaveni.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Nastaveni.Designer.cs">
+      <DependentUpon>Nastaveni.cs</DependentUpon>
+    </Compile>
     <Compile Include="NavstivenyStat.cs" />
     <Compile Include="PohonneHmoty.cs" />
     <Compile Include="Udaje1.cs">
@@ -84,12 +90,6 @@
     <Compile Include="UvodniStranka.Designer.cs">
       <DependentUpon>UvodniStranka.cs</DependentUpon>
     </Compile>
-    <Compile Include="Nastaveni.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Nastaveni.Designer.cs">
-      <DependentUpon>Nastaveni.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Zahranici.cs">
@@ -100,6 +100,9 @@
     </Compile>
     <EmbeddedResource Include="JidlaZaDen.resx">
       <DependentUpon>JidlaZaDen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Nastaveni.resx">
+      <DependentUpon>Nastaveni.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Udaje1.resx">
       <DependentUpon>Udaje1.cs</DependentUpon>
@@ -115,9 +118,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UvodniStranka.resx">
       <DependentUpon>UvodniStranka.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Nastaveni.resx">
-      <DependentUpon>Nastaveni.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

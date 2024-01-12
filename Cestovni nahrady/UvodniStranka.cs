@@ -342,6 +342,7 @@ namespace Cestovni_nahrady
                                 }
                             }
                             //Stravne                       !!Rozpracovano!!
+                            //////////////////////////////////////////// je potreba dodelat
                             int hodinPrvniDen = 24 - zacatekCesty.Hour;
                             int hodinPosledniDen = 24 - konecCesty.Hour;
                             if (sektor=="privatni") //Privatni sektor
@@ -357,6 +358,7 @@ namespace Cestovni_nahrady
                                 else if (hodinPrvniDen >= 12) vyplatitPenez += verSekt12az18;
                                 else if (hodinPrvniDen >= 18) vyplatitPenez += verSekt18aVic;
                             }
+                            ////////////////////////////////////////////////////////////////
 
                         }
                         else //Zahraniční cesta

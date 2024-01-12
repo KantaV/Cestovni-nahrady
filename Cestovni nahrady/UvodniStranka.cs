@@ -18,6 +18,10 @@ namespace Cestovni_nahrady
         {
             InitializeComponent();
             panelNavigacniBtny.Hide();
+            //Nastavení musím inicializovat zde abych s ním mohl pracovat i pokud nastavení nebylo otevřeno
+            nastaveni = new Nastaveni();
+            this.Controls.Add(nastaveni);
+            nastaveni.Hide();
         }
 
         private UserControl[] stranky = new UserControl[4];
@@ -115,10 +119,7 @@ namespace Cestovni_nahrady
 
         }
         private void buttonNastaveni_Click(object sender, EventArgs e)
-        {
-            nastaveni= new Nastaveni();
-            this.Controls.Add(nastaveni);
-
+        {        
             panelMenu.Hide();
             nastaveni.Show();
             buttonDalsi.Text = "Uložit";
@@ -162,6 +163,10 @@ namespace Cestovni_nahrady
         private double verSekt12az18;
         private double verSekt18aVic;
 
+        private DateTime zacatekCesty;
+        private DateTime konecCesty;
+        private TimeSpan delkaCesty;
+
 
         private void buttonDalsi_Click(object sender, EventArgs e)
         {
@@ -193,9 +198,9 @@ namespace Cestovni_nahrady
                 if (indexStranky == stranky.Length - 2)
                 {
                     //Aktivuje se při příchodu na poslední stránku
-                    DateTime zacatekCesty = udaje1Stranka.dtpDatumZacatkuCesty.Value.Date + udaje1Stranka.dtpCasZacatkuCesty.Value.TimeOfDay;
-                    DateTime konecCesty = udaje1Stranka.dtpDatumKonceCesty.Value + udaje1Stranka.dtpCasKonceCesty.Value.TimeOfDay;
-                    TimeSpan delkaCesty = konecCesty - zacatekCesty;
+                    zacatekCesty = udaje1Stranka.dtpDatumZacatkuCesty.Value.Date + udaje1Stranka.dtpCasZacatkuCesty.Value.TimeOfDay;
+                    konecCesty = udaje1Stranka.dtpDatumKonceCesty.Value + udaje1Stranka.dtpCasKonceCesty.Value.TimeOfDay;
+                    delkaCesty = konecCesty - zacatekCesty;
                     //Spočítání délky cesty abych získal počet dní
                     udaje4Stranka.Vygeneruj(delkaCesty.Days);
                     //Změna textu buttonu
@@ -333,10 +338,30 @@ namespace Cestovni_nahrady
                                 {
                                     double prumerCenaZUctenek = double.Parse(udaje3Stranka.textBoxPrumernaPohonneHmotyCena.Text);
                                     vyplatitPenez += prumerCenaZUctenek * pohonnaHmota.Spotrebovano;
-                                    MessageBox.Show(vyplatitPenez.ToString());
+                                    //MessageBox.Show(vyplatitPenez.ToString());
                                 }
                             }
+                            //Stravne                       !!Rozpracovano!!
+                            int hodinPrvniDen = 24 - zacatekCesty.Hour;
+                            int hodinPosledniDen = 24 - konecCesty.Hour;
+                            if (sektor=="privatni") //Privatni sektor
+                            {
+                                if (hodinPrvniDen>=5) vyplatitPenez += priSekt5az12;
+                                else if (hodinPrvniDen>=12) vyplatitPenez += priSekt12az18;
+                                else if (hodinPrvniDen >= 18) vyplatitPenez += priSekt18aVic;
+                                MessageBox.Show("priv " + hodinPrvniDen);
+                            }
+                            else            //Verejny sektor
+                            {
+                                if (hodinPrvniDen >= 5) vyplatitPenez += verSekt5az12;
+                                else if (hodinPrvniDen >= 12) vyplatitPenez += verSekt12az18;
+                                else if (hodinPrvniDen >= 18) vyplatitPenez += verSekt18aVic;
+                            }
 
+                        }
+                        else //Zahraniční cesta
+                        {
+                            
                         }
                     }
                     catch (Exception exception)

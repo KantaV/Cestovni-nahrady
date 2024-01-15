@@ -10,10 +10,10 @@ using System.Windows.Forms;
 
 namespace Cestovni_nahrady
 {
-    public partial class Udaje4 : UserControl
+    public partial class UdajeStravne : UserControl
     {
 
-        public Udaje4()
+        public UdajeStravne()
         {
             InitializeComponent();
             checkBoxBezplatneJidlo.Checked = true;

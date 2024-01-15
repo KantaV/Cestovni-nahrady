@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Cestovni_nahrady
 {
-    public partial class Udaje2 : UserControl
+    public partial class UdajeOZahranicniCeste : UserControl
     {
-        public Udaje2()
+        public UdajeOZahranicniCeste()
         {
             InitializeComponent();
         }
@@ -20,7 +20,7 @@ namespace Cestovni_nahrady
         public int pocet;
         public UserControl zahranici;
 
-        private void numericUpDownPocetZemi_ValueChanged(object sender, EventArgs e)
+        private void numericUpDownPocetZemi_ValueChanged(object sender, EventArgs e)    //Přidat něco jako button s pluskem který bude přidávat a odebírat země
         {
             pocet = int.Parse(numericUpDownPocetZemi.Value.ToString());
             zahranici1.Vygeneruj(pocet);

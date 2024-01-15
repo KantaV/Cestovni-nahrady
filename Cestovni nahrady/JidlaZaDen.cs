@@ -30,7 +30,7 @@ namespace Cestovni_nahrady
 
                 NumericUpDown numericUpDownPocetJidel = new NumericUpDown();
                 numericUpDownPocetJidel.Size = new Size(120, 20);
-                numericUpDownPocetJidel.Location = new Point(175, 10 + (i * 30));
+                numericUpDownPocetJidel.Location = new Point(175, 5 + (i * 30));
 
                 this.Controls.Add(labelPocetJidel);
                 this.Controls.Add(numericUpDownPocetJidel);

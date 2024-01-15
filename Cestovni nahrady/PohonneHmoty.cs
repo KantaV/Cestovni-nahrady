@@ -12,7 +12,7 @@ namespace Cestovni_nahrady
         private double cena;
         private double spotrebovano;
 
-        public PohonneHmoty(string pohonnaHmota,double spotrebovano)
+        public PohonneHmoty(string pohonnaHmota,double spotrebovano)        //Později brát data odjinud
         {
             this.pohonnaHmota= pohonnaHmota;
             this.spotrebovano= spotrebovano;

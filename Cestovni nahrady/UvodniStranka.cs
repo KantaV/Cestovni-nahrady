@@ -26,10 +26,10 @@ namespace Cestovni_nahrady
 
         private UserControl[] stranky = new UserControl[4];
 
-        private Udaje1 udaje1Stranka;
-        private Udaje2 udaje2Stranka;
-        private Udaje3 udaje3Stranka;
-        private Udaje4 udaje4Stranka;
+        private UdajeOsobni udaje1Stranka;
+        private UdajeOZahranicniCeste udaje2Stranka;
+        private UdajePohonneHmoty udaje3Stranka;
+        private UdajeStravne udaje4Stranka;
         private Nastaveni nastaveni;
 
         private int indexStranky = 0;
@@ -92,22 +92,22 @@ namespace Cestovni_nahrady
         private void buttonStart_Click(object sender, EventArgs e)
         {
             //Inicializace jednotlivych stranek a nastrkani jich do pole
-            udaje1Stranka = new Udaje1();
+            udaje1Stranka = new UdajeOsobni();
             stranky[0] = udaje1Stranka;
             this.Controls.Add(stranky[0]);
             stranky[0].Hide();
 
-            udaje2Stranka = new Udaje2();
+            udaje2Stranka = new UdajeOZahranicniCeste();
             stranky[1] = udaje2Stranka;
             this.Controls.Add(stranky[1]);
             stranky[1].Hide();
 
-            udaje3Stranka = new Udaje3();
+            udaje3Stranka = new UdajePohonneHmoty();
             stranky[2] = udaje3Stranka;
             this.Controls.Add(stranky[2]);
             stranky[2].Hide();
 
-            udaje4Stranka = new Udaje4();
+            udaje4Stranka = new UdajeStravne();
             stranky[3] = udaje4Stranka;
             this.Controls.Add(stranky[3]);
             stranky[3].Hide();

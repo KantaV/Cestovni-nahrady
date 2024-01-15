@@ -1,6 +1,6 @@
 ﻿namespace Cestovni_nahrady
 {
-    partial class Udaje1
+    partial class UdajeOsobni
     {
         /// <summary> 
         /// Vyžaduje se proměnná návrháře.

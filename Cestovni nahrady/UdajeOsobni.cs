@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Cestovni_nahrady
 {
-    public partial class Udaje1 : UserControl
+    public partial class UdajeOsobni : UserControl
     {
-        public Udaje1()
+        public UdajeOsobni()
         {
             InitializeComponent();
         }

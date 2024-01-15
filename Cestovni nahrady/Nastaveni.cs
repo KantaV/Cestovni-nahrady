@@ -19,6 +19,8 @@ namespace Cestovni_nahrady
         {
             InitializeComponent();
 
+            ////Upozornit uživatele pokud se jeho nastavení nevejde do vytyčených hranic
+
             try
             {
                 //Načtení proběhne podle hodnot v souboru

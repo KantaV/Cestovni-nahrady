@@ -26,10 +26,10 @@ namespace Cestovni_nahrady
 
         private UserControl[] stranky = new UserControl[4];
 
-        private UdajeOsobni udaje1Stranka;
-        private UdajeOZahranicniCeste udaje2Stranka;
-        private UdajePohonneHmoty udaje3Stranka;
-        private UdajeStravne udaje4Stranka;
+        private UdajeOsobni udajeOsobni;
+        private UdajeOZahranicniCeste udajeZahranicniCesta;
+        private UdajePohonneHmoty udajePohonneHmoty;
+        private UdajeStravne udajeStravne;
         private Nastaveni nastaveni;
 
         private int indexStranky = 0;
@@ -65,6 +65,8 @@ namespace Cestovni_nahrady
                 }
             }
 
+            
+
             TimeSpan prijezduTime = casPrijezdu.TimeOfDay;
             TimeSpan odjezduTime = casOdjezdu.TimeOfDay;
 
@@ -89,26 +91,27 @@ namespace Cestovni_nahrady
             return cas;
         }
 
+
         private void buttonStart_Click(object sender, EventArgs e)
         {
             //Inicializace jednotlivych stranek a nastrkani jich do pole
-            udaje1Stranka = new UdajeOsobni();
-            stranky[0] = udaje1Stranka;
+            udajeOsobni = new UdajeOsobni();
+            stranky[0] = udajeOsobni;
             this.Controls.Add(stranky[0]);
             stranky[0].Hide();
 
-            udaje2Stranka = new UdajeOZahranicniCeste();
-            stranky[1] = udaje2Stranka;
+            udajeZahranicniCesta = new UdajeOZahranicniCeste();
+            stranky[1] = udajeZahranicniCesta;
             this.Controls.Add(stranky[1]);
             stranky[1].Hide();
 
-            udaje3Stranka = new UdajePohonneHmoty();
-            stranky[2] = udaje3Stranka;
+            udajePohonneHmoty = new UdajePohonneHmoty();
+            stranky[2] = udajePohonneHmoty;
             this.Controls.Add(stranky[2]);
             stranky[2].Hide();
 
-            udaje4Stranka = new UdajeStravne();
-            stranky[3] = udaje4Stranka;
+            udajeStravne = new UdajeStravne();
+            stranky[3] = udajeStravne;
             this.Controls.Add(stranky[3]);
             stranky[3].Hide();
 
@@ -198,11 +201,11 @@ namespace Cestovni_nahrady
                 if (indexStranky == stranky.Length - 2)
                 {
                     //Aktivuje se při příchodu na poslední stránku
-                    zacatekCesty = udaje1Stranka.dtpDatumZacatkuCesty.Value.Date + udaje1Stranka.dtpCasZacatkuCesty.Value.TimeOfDay;
-                    konecCesty = udaje1Stranka.dtpDatumKonceCesty.Value + udaje1Stranka.dtpCasKonceCesty.Value.TimeOfDay;
+                    zacatekCesty = udajeOsobni.dtpDatumZacatkuCesty.Value.Date + udajeOsobni.dtpCasZacatkuCesty.Value.TimeOfDay;
+                    konecCesty = udajeOsobni.dtpDatumKonceCesty.Value + udajeOsobni.dtpCasKonceCesty.Value.TimeOfDay;
                     delkaCesty = konecCesty - zacatekCesty;
                     //Spočítání délky cesty abych získal počet dní
-                    udaje4Stranka.Vygeneruj(delkaCesty.Days);
+                    udajeStravne.Vygeneruj(delkaCesty.Days+1);
                     //Změna textu buttonu
                     buttonDalsi.Text = "Vypočítej";
                 }
@@ -259,24 +262,24 @@ namespace Cestovni_nahrady
                     try
                     {
                         //Osobní údaje
-                        string jmeno = udaje1Stranka.textBoxJmeno.Text;
-                        string prijmeni = udaje1Stranka.textBoxPrijmeni.Text;
-                        DateTime datNar = udaje1Stranka.dateTimePickerDatNar.Value;
+                        string jmeno = udajeOsobni.textBoxJmeno.Text;
+                        string prijmeni = udajeOsobni.textBoxPrijmeni.Text;
+                        DateTime datNar = udajeOsobni.dateTimePickerDatNar.Value;
 
                         bool tuzemskaCesta = true;
 
-                        NavstivenyStat[] navstiveneStaty = new NavstivenyStat[udaje2Stranka.pocet];
+                        NavstivenyStat[] navstiveneStaty = new NavstivenyStat[udajeZahranicniCesta.pocet];
                         //Ošetření počet států
-                        if (udaje2Stranka.numericUpDownPocetZemi.Value > 0)
+                        if (udajeZahranicniCesta.numericUpDownPocetZemi.Value > 0)
                         {
                             tuzemskaCesta = false;
                             //Zjistim kazdy navstiveny stat a delku pobytu v nem
-                            for (int i = 0; i < udaje2Stranka.zahranici.Controls.Count; i++)
+                            for (int i = 0; i < udajeZahranicniCesta.zahranici.Controls.Count; i++)
                             {
 
                                 string nazevZeme = "";
                                 TimeSpan casVeState = TimeSpan.Zero;
-                                if (udaje2Stranka.zahranici.Controls[i] is Panel) casVeState = CasVeState((udaje2Stranka.zahranici.Controls[i] as Panel), out nazevZeme);
+                                if (udajeZahranicniCesta.zahranici.Controls[i] is Panel) casVeState = CasVeState((udajeZahranicniCesta.zahranici.Controls[i] as Panel), out nazevZeme);
                                 navstiveneStaty[i] = new NavstivenyStat(nazevZeme, casVeState);
 
 
@@ -287,22 +290,22 @@ namespace Cestovni_nahrady
 
                         //Rozdělení sektoru
                         string sektor;
-                        if (udaje4Stranka.comboBoxStravneSektor.SelectedIndex == 0) sektor = "privatni";
+                        if (udajeStravne.comboBoxStravneSektor.SelectedIndex == 0) sektor = "privatni";
                         else sektor = "verejny";
 
-                        double najetychKm = double.Parse(udaje3Stranka.textBoxPocetNajetychKm.Text);
+                        double najetychKm = double.Parse(udajePohonneHmoty.textBoxPocetNajetychKm.Text);
 
-                        PohonneHmoty pohonnaHmota = new PohonneHmoty(udaje3Stranka.comboBoxTypPohonnychHmot.Text, double.Parse(udaje3Stranka.numericUpDownSpotreba.Value.ToString()));
+                        PohonneHmoty pohonnaHmota = new PohonneHmoty(udajePohonneHmoty.comboBoxTypPohonnychHmot.Text, double.Parse(udajePohonneHmoty.numericUpDownSpotreba.Value.ToString()));
 
                         //Finální výpočty
                         double vyplatitPenez = 0;
                         if (tuzemskaCesta)
                         {
                             //Účtuji pohonné hmoty jedině pokud zaměstnanec cestoval svým vozem
-                            if (udaje3Stranka.comboBoxZpusobPrepravy.SelectedIndex != 0)
+                            if (udajePohonneHmoty.comboBoxZpusobPrepravy.SelectedIndex != 0)
                             {
                                 double zakladniNahrada = 5.2;
-                                switch (udaje3Stranka.comboBoxZpusobPrepravy.SelectedIndex)
+                                switch (udajePohonneHmoty.comboBoxZpusobPrepravy.SelectedIndex)
                                 {
                                     case 1: //Vlastní automobil
                                         {
@@ -329,35 +332,125 @@ namespace Cestovni_nahrady
                                         break;
                                 }
                                 //Podle zákona
-                                if (udaje3Stranka.comboBoxZpsbVypoctuPohHmot.SelectedIndex == 0)
+                                if (udajePohonneHmoty.comboBoxZpsbVypoctuPohHmot.SelectedIndex == 0)
                                 {
                                     vyplatitPenez += pohonnaHmota.CenaZaPohonneHmoty();
                                     //MessageBox.Show(vyplatitPenez.ToString());
                                 }
                                 else  //Podle účtenky
                                 {
-                                    double prumerCenaZUctenek = double.Parse(udaje3Stranka.textBoxPrumernaPohonneHmotyCena.Text);
+                                    double prumerCenaZUctenek = double.Parse(udajePohonneHmoty.textBoxPrumernaPohonneHmotyCena.Text);
                                     vyplatitPenez += prumerCenaZUctenek * pohonnaHmota.Spotrebovano;
                                     //MessageBox.Show(vyplatitPenez.ToString());
                                 }
                             }
-                            //Stravne                       !!Rozpracovano!!
-                            //////////////////////////////////////////// je potreba dodelat
-                            int hodinPrvniDen = 24 - zacatekCesty.Hour;
-                            int hodinPosledniDen = 24 - konecCesty.Hour;
-                            if (sektor=="privatni") //Privatni sektor
+                            //Stravne
+                            int hodinPrvniDen=0;
+                            int hodinPosledniDen=0;
+                            if (zacatekCesty.Date == konecCesty.Date)
                             {
-                                if (hodinPrvniDen>=5) vyplatitPenez += priSekt5az12;
-                                else if (hodinPrvniDen>=12) vyplatitPenez += priSekt12az18;
-                                else if (hodinPrvniDen >= 18) vyplatitPenez += priSekt18aVic;
-                                MessageBox.Show("priv " + hodinPrvniDen);
+                                hodinPrvniDen = konecCesty.Hour - zacatekCesty.Hour;
+                                hodinPosledniDen = 0;
                             }
-                            else            //Verejny sektor
+                            else
                             {
-                                if (hodinPrvniDen >= 5) vyplatitPenez += verSekt5az12;
-                                else if (hodinPrvniDen >= 12) vyplatitPenez += verSekt12az18;
-                                else if (hodinPrvniDen >= 18) vyplatitPenez += verSekt18aVic;
+                                hodinPrvniDen = 24 - zacatekCesty.Hour;
+                                hodinPosledniDen = 24 - konecCesty.Hour;
                             }
+                            int[] jidelZaDen;
+                            jidelZaDen = new int[delkaCesty.Days+1];
+                            int pocetNalezenychNumericUpDownu = 0;
+                            //Naplnim pole jidel za den, kazdy index pole je jeden den
+                            for (int i = 0; i < udajeStravne.jidlaZaDen1.Controls.Count; i++)
+                            {
+                                if (udajeStravne.jidlaZaDen1.Controls[i] is NumericUpDown)
+                                {
+                                    jidelZaDen[pocetNalezenychNumericUpDownu] =int.Parse((udajeStravne.jidlaZaDen1.Controls[i] as NumericUpDown).Value.ToString());
+                                    pocetNalezenychNumericUpDownu++;
+                                }
+                            }
+
+                            int den = 0;
+                            do
+                            {
+                                double zkratit=0;
+                                if (sektor == "privatni") //Privatni sektor
+                                {
+                                    if (den == 0)   //Při prvním dni
+                                    {
+                                        if (hodinPrvniDen >= 5)
+                                        {
+                                            zkratit = jidelZaDen[den] * 0.7;    //pri rozsahu 5 az 12 hodin se za kazde jidlo odecita 
+                                            if (zkratit > 1) zkratit = 1;       //70% stravneho
+                                            vyplatitPenez += priSekt5az12 - priSekt5az12 * zkratit;
+                                        }
+                                        else if (hodinPrvniDen >= 12)
+                                        {
+                                            zkratit = jidelZaDen[den] * 0.35;    //pri rozsahu 12 az 18 hodin se za kazde jidlo odecita 
+                                            if (zkratit > 1) zkratit = 1;       //35% stravneho
+                                            vyplatitPenez += priSekt12az18 - priSekt12az18 * zkratit;
+                                        }
+                                        else if (hodinPrvniDen >= 18)
+                                        {
+                                            zkratit = jidelZaDen[den] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
+                                            if (zkratit > 1) zkratit = 1;       //25% stravneho
+                                            vyplatitPenez += priSekt18aVic - priSekt12az18 * zkratit;
+                                        }
+                                    }
+                                    else if (den == delkaCesty.Days) //Při posledním dni
+                                    {
+                                        if (hodinPosledniDen >= 5)
+                                        {
+                                            zkratit = jidelZaDen[den] * 0.7;    //pri rozsahu 5 az 12 hodin se za kazde jidlo odecita 
+                                            if (zkratit > 1) zkratit = 1;       //70% stravneho
+                                            vyplatitPenez += priSekt5az12 - priSekt5az12 * zkratit;
+                                        }
+                                        else if (hodinPosledniDen >= 12)
+                                        {
+                                            zkratit = jidelZaDen[den] * 0.35;    //pri rozsahu 12 az 18 hodin se za kazde jidlo odecita 
+                                            if (zkratit > 1) zkratit = 1;       //35% stravneho
+                                            vyplatitPenez += priSekt12az18 - priSekt12az18 * zkratit;
+                                        }
+                                        else if (hodinPosledniDen >= 18)
+                                        {
+                                            zkratit = jidelZaDen[den] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
+                                            if (zkratit > 1) zkratit = 1;       //25% stravneho
+                                            vyplatitPenez += priSekt18aVic - priSekt12az18 * zkratit;
+                                        }
+                                    }
+                                    else    //Všechny ostatní "mezidny" (každý automaticky trvá 24 hodin)
+                                    {
+                                        zkratit = jidelZaDen[den] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
+                                        if (zkratit > 1) zkratit = 1;       //25% stravneho
+                                        vyplatitPenez += priSekt18aVic - priSekt12az18 * zkratit;
+                                    }
+                                    
+                                    //MessageBox.Show("priv " + hodinPrvniDen);
+                                }
+                                else     //Verejny sektor
+                                {
+                                    if (hodinPrvniDen >= 5)
+                                    {
+                                        zkratit = jidelZaDen[den] * 0.7;    
+                                        if (zkratit > 1) zkratit = 1;
+                                        vyplatitPenez += verSekt5az12-verSekt5az12*zkratit;
+                                    }
+                                    else if (hodinPrvniDen >= 12)
+                                    {
+                                        zkratit = jidelZaDen[den] * 0.35;   
+                                        if (zkratit > 1) zkratit = 1;
+                                        vyplatitPenez += verSekt12az18 - verSekt12az18 * zkratit;
+                                    }
+                                    else if (hodinPrvniDen >= 18)
+                                    {
+                                        zkratit = jidelZaDen[den] * 0.25; 
+                                        if (zkratit > 1) zkratit = 1;
+                                        vyplatitPenez += verSekt18aVic - verSekt18aVic * zkratit;
+                                    }
+                                }
+                                ++den;      //Posunu den
+                            } while (den<delkaCesty.Days+1);
+                            MessageBox.Show("Za stravne" + vyplatitPenez);
                             ////////////////////////////////////////////////////////////////
 
                         }

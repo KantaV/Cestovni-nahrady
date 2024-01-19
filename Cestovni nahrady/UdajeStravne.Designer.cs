@@ -74,7 +74,7 @@
             this.jidlaZaDen1.Size = new System.Drawing.Size(445, 239);
             this.jidlaZaDen1.TabIndex = 31;
             // 
-            // Udaje4
+            // UdajeStravne
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -82,7 +82,7 @@
             this.Controls.Add(this.comboBoxStravneSektor);
             this.Controls.Add(this.checkBoxBezplatneJidlo);
             this.Controls.Add(this.labelStravne);
-            this.Name = "Udaje4";
+            this.Name = "UdajeStravne";
             this.Size = new System.Drawing.Size(532, 393);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -93,6 +93,6 @@
         private System.Windows.Forms.Label labelStravne;
         public System.Windows.Forms.ComboBox comboBoxStravneSektor;
         public System.Windows.Forms.CheckBox checkBoxBezplatneJidlo;
-        private JidlaZaDen jidlaZaDen1;
+        public JidlaZaDen jidlaZaDen1;
     }
 }

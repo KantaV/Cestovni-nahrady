@@ -20,7 +20,7 @@ namespace Cestovni_nahrady
             InitializeComponent();
 
             ////Upozornit uživatele pokud se jeho nastavení nevejde do vytyčených hranic
-
+            ///////////////!!!!!!!!!Aktualizovat min a max hodnoty aby byly aktuální už mi je po novým roce posunuli lol
             try
             {
                 //Načtení proběhne podle hodnot v souboru

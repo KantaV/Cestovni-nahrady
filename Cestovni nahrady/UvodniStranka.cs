@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -34,11 +35,13 @@ namespace Cestovni_nahrady
 
         private int indexStranky = 0;
 
-        public TimeSpan CasVeState(Panel panel, out string nazevZeme)
+        public void CasVeState(Panel panel, out string nazevZeme, out DateTime datumPrijezdu,out DateTime datumOdjezdu)
         {
             nazevZeme = "";
             TimeSpan cas = TimeSpan.Zero;
-            DateTime datumPrijezdu = DateTime.Now, casPrijezdu = DateTime.Now, datumOdjezdu = DateTime.Now, casOdjezdu = DateTime.Now;
+            datumPrijezdu = DateTime.Now;
+            datumOdjezdu = DateTime.Now;
+            DateTime casPrijezdu = DateTime.Now, casOdjezdu = DateTime.Now;
             for (int i = 0; i < panel.Controls.Count; i++)
             {
                 //rozdelim si data protoze vim v jakem poradi jsem ovladaci prvky pridal tudiz s nimi podle toho mohu pracovat
@@ -65,7 +68,7 @@ namespace Cestovni_nahrady
                 }
             }
 
-            
+
 
             TimeSpan prijezduTime = casPrijezdu.TimeOfDay;
             TimeSpan odjezduTime = casOdjezdu.TimeOfDay;
@@ -74,21 +77,11 @@ namespace Cestovni_nahrady
             datumPrijezdu = new DateTime(datumPrijezdu.Year, datumPrijezdu.Month, datumPrijezdu.Day, prijezduTime.Hours, prijezduTime.Minutes, prijezduTime.Seconds);
             datumOdjezdu = new DateTime(datumOdjezdu.Year, datumOdjezdu.Month, datumOdjezdu.Day, odjezduTime.Hours, odjezduTime.Minutes, odjezduTime.Seconds);
 
-            if (datumOdjezdu >= datumPrijezdu)
-            {
-                cas = datumOdjezdu - datumPrijezdu;
-            }
-            else
-            {
-                MessageBox.Show("Datum návratu domů z pracovní cesty nemůže být před datem začátku!");
-            }
-
-           /* MessageBox.Show(nazevZeme+"\n" +
-                "prijezd " +datumPrijezdu+
-                "\ncas prijezd "+casPrijezdu+
-                "\nodjezd "+datumOdjezdu+
-                "\ncas odjezd "+casOdjezdu);*/
-            return cas;
+            /* MessageBox.Show(nazevZeme+"\n" +
+                 "prijezd " +datumPrijezdu+
+                 "\ncas prijezd "+casPrijezdu+
+                 "\nodjezd "+datumOdjezdu+
+                 "\ncas odjezd "+casOdjezdu);*/
         }
 
 
@@ -278,9 +271,10 @@ namespace Cestovni_nahrady
                             {
 
                                 string nazevZeme = "";
+                                DateTime prijezdDoZeme= DateTime.Now,odjezdZeZeme=DateTime.Now;
                                 TimeSpan casVeState = TimeSpan.Zero;
-                                if (udajeZahranicniCesta.zahranici.Controls[i] is Panel) casVeState = CasVeState((udajeZahranicniCesta.zahranici.Controls[i] as Panel), out nazevZeme);
-                                navstiveneStaty[i] = new NavstivenyStat(nazevZeme, casVeState);
+                                if (udajeZahranicniCesta.zahranici.Controls[i] is Panel) CasVeState((udajeZahranicniCesta.zahranici.Controls[i] as Panel), out nazevZeme,out prijezdDoZeme, out odjezdZeZeme);
+                                navstiveneStaty[i] = new NavstivenyStat(nazevZeme,prijezdDoZeme,odjezdZeZeme);
 
 
                                 MessageBox.Show(navstiveneStaty[i].NazevStatu + " " + navstiveneStaty[i].CasVeState);
@@ -296,6 +290,20 @@ namespace Cestovni_nahrady
                         double najetychKm = double.Parse(udajePohonneHmoty.textBoxPocetNajetychKm.Text);
 
                         PohonneHmoty pohonnaHmota = new PohonneHmoty(udajePohonneHmoty.comboBoxTypPohonnychHmot.Text, double.Parse(udajePohonneHmoty.numericUpDownSpotreba.Value.ToString()));
+
+                        int[] jidelZaDen;
+                        jidelZaDen = new int[delkaCesty.Days + 1];
+                        int pocetNalezenychNumericUpDownu = 0;
+                        //Naplnim pole jidel za den, kazdy index pole je jeden den
+                        for (int i = 0; i < udajeStravne.jidlaZaDen1.Controls.Count; i++)
+                        {
+                            if (udajeStravne.jidlaZaDen1.Controls[i] is NumericUpDown)
+                            {
+                                jidelZaDen[pocetNalezenychNumericUpDownu] = int.Parse((udajeStravne.jidlaZaDen1.Controls[i] as NumericUpDown).Value.ToString());
+                                pocetNalezenychNumericUpDownu++;
+                            }
+                        }
+                        double zkratit = 0;
 
                         //Finální výpočty
                         double vyplatitPenez = 0;
@@ -350,7 +358,7 @@ namespace Cestovni_nahrady
                             if (delkaCesty.TotalHours < 24) //Pokud cesta netrva pres 24 hodin ale neni v jeden den
                             {
                                 hodinPrvniDen = delkaCesty.Hours;
-                                MessageBox.Show(hodinPrvniDen.ToString());
+                                //MessageBox.Show(hodinPrvniDen.ToString());
                             }
                             else if (zacatekCesty.Date == konecCesty.Date)  //Pokud se jedna o jednodenni cestu
                             {
@@ -363,23 +371,10 @@ namespace Cestovni_nahrady
                                 hodinPosledniDen = konecCesty.Hour;
                             }
 
-                            int[] jidelZaDen;
-                            jidelZaDen = new int[delkaCesty.Days+1];
-                            int pocetNalezenychNumericUpDownu = 0;
-                            //Naplnim pole jidel za den, kazdy index pole je jeden den
-                            for (int i = 0; i < udajeStravne.jidlaZaDen1.Controls.Count; i++)
-                            {
-                                if (udajeStravne.jidlaZaDen1.Controls[i] is NumericUpDown)
-                                {
-                                    jidelZaDen[pocetNalezenychNumericUpDownu] =int.Parse((udajeStravne.jidlaZaDen1.Controls[i] as NumericUpDown).Value.ToString());
-                                    pocetNalezenychNumericUpDownu++;
-                                }
-                            }
 
                             int den = 0;
                             do
                             {
-                                double zkratit=0;
                                 if (sektor == "privatni") //Privatni sektor
                                 {
                                     if (den == 0)   //Při prvním dni
@@ -491,7 +486,59 @@ namespace Cestovni_nahrady
                         }
                         else //Zahraniční cesta
                         {
-                            
+                            TimeSpan casNezOpustilCesko = navstiveneStaty[0].DatumPrijezdu-zacatekCesty;
+                            //Nez opustim cesko probiha vypocet jako pro tuzemskou cestu
+                            if (sektor == "privatni") //Privatni sektor
+                            {
+
+                                if (casNezOpustilCesko.Hours >= 18)
+                                {
+                                    zkratit = jidelZaDen[0] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
+                                    if (zkratit > 1) zkratit = 1;       //25% stravneho
+                                    vyplatitPenez += priSekt18aVic - priSekt18aVic * zkratit;
+                                }
+                                else if (casNezOpustilCesko.Hours >= 12)
+                                {
+                                    zkratit = jidelZaDen[0] * 0.35;    //pri rozsahu 12 az 18 hodin se za kazde jidlo odecita 
+                                    if (zkratit > 1) zkratit = 1;       //35% stravneho
+                                    vyplatitPenez += priSekt12az18 - priSekt12az18 * zkratit;
+                                }
+                                else if (casNezOpustilCesko.Hours >= 5)
+                                {
+                                    zkratit = jidelZaDen[0] * 0.7;    //pri rozsahu 5 az 12 hodin se za kazde jidlo odecita 
+                                    if (zkratit > 1) zkratit = 1;       //70% stravneho
+                                    vyplatitPenez += priSekt5az12 - priSekt5az12 * zkratit;
+                                }
+                            }
+                            else     //Verejny sektor
+                            {
+                                if (casNezOpustilCesko.Hours >= 18)
+                                {
+                                    zkratit = jidelZaDen[0] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
+                                    if (zkratit > 1) zkratit = 1;       //25% stravneho
+                                    vyplatitPenez += verSekt18aVic - verSekt18aVic * zkratit;
+                                }
+                                else if (casNezOpustilCesko.Hours >= 12)
+                                {
+                                    zkratit = jidelZaDen[0] * 0.35;    //pri rozsahu 12 az 18 hodin se za kazde jidlo odecita 
+                                    if (zkratit > 1) zkratit = 1;       //35% stravneho
+                                    vyplatitPenez += verSekt12az18 - verSekt12az18 * zkratit;
+                                }
+                                else if (casNezOpustilCesko.Hours >= 5)
+                                {
+                                    zkratit = jidelZaDen[0] * 0.7;    //pri rozsahu 5 az 12 hodin se za kazde jidlo odecita 
+                                    if (zkratit > 1) zkratit = 1;       //70% stravneho
+                                    vyplatitPenez += verSekt5az12 - verSekt5az12 * zkratit;
+                                }
+                            }
+                            foreach (NavstivenyStat navstivenyStat in navstiveneStaty)
+                            {
+
+                            }
+
+
+
+
                         }
                     }
                     catch (Exception exception)

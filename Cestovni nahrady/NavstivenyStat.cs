@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Cestovni_nahrady
 {
@@ -10,6 +11,8 @@ namespace Cestovni_nahrady
     {
         private string nazevStatu="";
         private TimeSpan casVeState=TimeSpan.Zero;
+        private DateTime datumPrijezdu=DateTime.Now;
+        private DateTime datumOdjezdu=DateTime.Now;
 
         public string NazevStatu
         {
@@ -23,10 +26,31 @@ namespace Cestovni_nahrady
             set { casVeState = value;}
         }
 
-        public NavstivenyStat(string nazevStatu, TimeSpan casVeState)
+        public DateTime DatumPrijezdu
+        {
+            get { return datumPrijezdu;}
+            set { datumPrijezdu = value;}
+        }
+
+        public DateTime DatumOdjezdu
+        {
+            get { return datumOdjezdu;}
+            set { datumOdjezdu = value;}
+        }
+
+        public NavstivenyStat(string nazevStatu, DateTime datumPrijezdu, DateTime datumOdjezdu)
         {
             this.nazevStatu = nazevStatu;
-            this.casVeState = casVeState;
+            this.datumPrijezdu = datumPrijezdu;
+            this.datumOdjezdu = datumOdjezdu;
+            if (datumOdjezdu >= datumPrijezdu)
+            {
+                this.casVeState = datumOdjezdu - datumPrijezdu;
+            }
+            else
+            {
+                MessageBox.Show("Datum návratu domů z pracovní cesty nemůže být před datem začátku!");
+            }
         }
     }
 }

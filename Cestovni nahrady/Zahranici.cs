@@ -42,6 +42,7 @@ namespace Cestovni_nahrady
             "Velká Británie", "Venezuela", "Vietnam", "Zambie", "Zimbabwe"
         };
 
+
         public void Vygeneruj(int pocet)        //Vygeneruje ovládací prvky pro určitý počet navštívených zemí
         {
             this.Controls.Clear();

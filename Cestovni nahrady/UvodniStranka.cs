@@ -274,10 +274,9 @@ namespace Cestovni_nahrady
                                 DateTime prijezdDoZeme= DateTime.Now,odjezdZeZeme=DateTime.Now;
                                 TimeSpan casVeState = TimeSpan.Zero;
                                 if (udajeZahranicniCesta.zahranici.Controls[i] is Panel) CasVeState((udajeZahranicniCesta.zahranici.Controls[i] as Panel), out nazevZeme,out prijezdDoZeme, out odjezdZeZeme);
-                                navstiveneStaty[i] = new NavstivenyStat(nazevZeme,prijezdDoZeme,odjezdZeZeme);
-
-
-                                MessageBox.Show(navstiveneStaty[i].NazevStatu + " " + navstiveneStaty[i].CasVeState);
+                                string[] stringUdajeOState = nazevZeme.Split(' ');
+                                navstiveneStaty[i] = new NavstivenyStat(stringUdajeOState[0],int.Parse(stringUdajeOState[stringUdajeOState.Length-2]),stringUdajeOState[stringUdajeOState.Length-1],prijezdDoZeme,odjezdZeZeme);
+                                MessageBox.Show(navstiveneStaty[i].NazevStatu + " " + navstiveneStaty[i].CasVeState) ;
                             }
                         }
 
@@ -553,16 +552,11 @@ namespace Cestovni_nahrady
         }
 
 
+
+
         /*
         * kam uživatel bude zadávat jednotlivé ceny z různých benzínek které navštívil protože
         * pokud navšívil více benzínek bere se pro výpočet aritmetický průměr
-        * 
-        * 
-        * přidat nastavení pro majitele firmy aby mohl nastavit kolik bude vyplácet za stravné
-        * 
-        * přidat form kterej vytovori pocet dni s vyberem poctu jidla podle poctu dni
-        * 
-        * mozna smazat radiobuttony s poctama hodin a proste to pocitat
         * 
         * upravit max hodnotu v nastavovani u numericupanddownu
         * 

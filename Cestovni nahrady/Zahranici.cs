@@ -4,8 +4,10 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows.Forms;
 
 namespace Cestovni_nahrady
@@ -15,32 +17,67 @@ namespace Cestovni_nahrady
         public Zahranici()
         {
             InitializeComponent();
+            StazeniDat();
+        }
+
+        List<string> staty;
+
+        private void StazeniDat()
+        {
+            string url = "https://www.mfcr.cz/cs/kontrola-a-regulace/legislativa/legislativni-dokumenty/2022/vyhlaska-c-462-2021-sb-49677";
+
+            // Stežení obsahu webu
+            string htmlObsah = DownloadHtml(url);
+            staty = ParseHtml(htmlObsah);
+        }
+
+        private static string DownloadHtml(string url)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                return client.GetStringAsync(url).Result;
+            }
+        }
+
+        private static List<string> ParseHtml(string htmlContent)
+        {
+            List<string> staty = new List<string>();
+
+            HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
+            doc.OptionDefaultStreamEncoding = Encoding.UTF8;
+            doc.LoadHtml(htmlContent);
+
+            // Vyberu elementy z webu s tagem <tr>
+            var castiWebu = doc.DocumentNode.SelectNodes("//tr");
+
+            if (castiWebu != null)
+            {
+                foreach (var node in castiWebu)
+                {
+                    // Vyberu jednotlive objekty z webu pomoci hledani stylu
+                    string nazevStatu = HttpUtility.HtmlDecode(node.SelectSingleNode(".//td[@class='leftAlign']")?.InnerText?.Trim());
+                    string mena = HttpUtility.HtmlDecode(node.SelectSingleNode(".//td[@class='centerAlign']")?.InnerText?.Trim());
+
+                    string styleTag = node.SelectSingleNode(".//td[@class='centerAlign'][@style='white-space:nowrap']")?.InnerText?.Trim();
+
+                    int cenaStatu;
+                    // Naplnim promennou, pokud nastane selhani nastavi se na 0
+                    if (!int.TryParse(styleTag, out cenaStatu))
+                    {
+                        cenaStatu = 0; // or any other default value
+                    }
+
+                    // Kontrola jestli se naslo jmeno statu
+                    if (!string.IsNullOrEmpty(nazevStatu))
+                    {
+                        staty.Add(nazevStatu + " " + cenaStatu + " " + mena);
+                    }
+                }
+            }
+            return staty;
         }
 
         Panel panelZeme;
-
-
-        string[] statyZeme = {
-            "Afghánistán", "Albánie", "Alžírsko", "Andorra", "Angola", "Argentina", "Arménie", "Austrálie a Oceánie – ostrovní státy",
-            "Ázerbájdžán", "Bahamy", "Bahrajn", "Bangladéš", "Belgie", "Belize", "Benin", "Bermudy", "Bělorusko", "Bhútán", "Bolívie",
-            "Bosna a Hercegovina", "Botswana", "Brazílie", "Brunej", "Bulharsko", "Burkina Faso", "Burundi", "Čad", "Černá Hora", "Čína",
-            "Dánsko", "Džibutsko", "Egypt", "Ekvádor", "Eritrea", "Estonsko", "Etiopie", "Filipíny", "Finsko", "Francie", "Francouzská Guyana",
-            "Gabon", "Gambie", "Ghana", "Gibraltar", "Gruzie", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Honduras", "Hongkong",
-            "Chile", "Chorvatsko", "Indie", "Indonésie", "Irák", "Írán", "Irsko", "Island", "Itálie, Vatikán a San Marino", "Izrael",
-            "Japonsko", "Jemen", "Jihoafrická republika", "Jižní Súdán", "Jordánsko", "Kambodža", "Kamerun", "Kanada", "Kapverdy",
-            "Karibik – ostrovní státy", "Katar", "Kazachstán", "Keňa", "Kolumbie", "Komory", "Konžská republika (Brazzaville)",
-            "Konžská demokratická republika (Kinshasa)", "Korejská lidově demokratická republika", "Korejská republika", "Kosovo",
-            "Kostarika", "Kuba", "Kuvajt", "Kypr", "Kyrgyzstán", "Laos", "Lesotho", "Libanon", "Libérie", "Libye", "Lichtenštejnsko",
-            "Litva", "Lotyšsko", "Lucembursko", "Macao", "Madagaskar", "Maďarsko", "Malajsie", "Malawi", "Maledivy", "Mali", "Malta",
-            "Maroko", "Mauretánie", "Mauricius", "Mexiko", "Moldavsko", "Monako", "Mongolsko", "Mosambik", "Myanmar (Barma)", "Namibie",
-            "Německo", "Nepál", "Niger", "Nigérie", "Nikaragua", "Nizozemsko", "Norsko", "Nový Zéland", "Omán", "Pákistán", "Panama",
-            "Paraguay", "Peru", "Pobřeží Slonoviny", "Polsko", "Portugalsko a Azory", "Rakousko", "Rovníková Guinea", "Rumunsko", "Rusko",
-            "Rwanda", "Řecko", "Salvador", "Saúdská Arábie", "Senegal", "Severní Makedonie", "Seychely", "Sierra Leone", "Singapur",
-            "Spojené arabské emiráty", "Slovensko", "Slovinsko", "Somálsko", "Spojené státy americké", "Srbsko", "Srí Lanka", "Středoafrická republika",
-            "Súdán", "Surinam", "Svatý Tomáš a Princův ostrov", "Svazijsko", "Sýrie", "Španělsko", "Švédsko", "Švýcarsko", "Tádžikistán",
-            "Tanzanie", "Thajsko", "Tchaj-wan", "Togo", "Tunisko", "Turecko", "Turkmenistán", "Uganda", "Ukrajina", "Uruguay", "Uzbekistán",
-            "Velká Británie", "Venezuela", "Vietnam", "Zambie", "Zimbabwe"
-        };
 
 
         public void Vygeneruj(int pocet)        //Vygeneruje ovládací prvky pro určitý počet navštívených zemí
@@ -70,7 +107,7 @@ namespace Cestovni_nahrady
                 comboBoxVyberZeme.Name = "comboBox1";
                 comboBoxVyberZeme.Size = new Size(250, 21);
                 comboBoxVyberZeme.TabIndex = 1;
-                comboBoxVyberZeme.Items.AddRange(statyZeme);
+                comboBoxVyberZeme.Items.AddRange(staty.ToArray());
                 comboBoxVyberZeme.DropDownStyle = ComboBoxStyle.DropDownList;
                 comboBoxVyberZeme.SelectedIndex = 0;
                 // 

@@ -302,10 +302,10 @@ namespace Cestovni_nahrady
                                 pocetNalezenychNumericUpDownu++;
                             }
                         }
-                        double zkratit = 0;
 
                         //Finální výpočty
-                        double vyplatitPenez = 0;
+                        double cenaZaPohonneHmoty = 0;
+                        double zkratit = 0;
                         if (tuzemskaCesta)
                         {
                             //Účtuji pohonné hmoty jedině pokud zaměstnanec cestoval svým vozem
@@ -316,22 +316,22 @@ namespace Cestovni_nahrady
                                 {
                                     case 1: //Vlastní automobil
                                         {
-                                            vyplatitPenez += zakladniNahrada * najetychKm;
+                                            cenaZaPohonneHmoty += zakladniNahrada * najetychKm;
                                             break;
                                         }
                                     case 2: //Vlastní automobil s přívěsem
                                         {
-                                            vyplatitPenez += (zakladniNahrada * 1.15) * najetychKm;
+                                            cenaZaPohonneHmoty += (zakladniNahrada * 1.15) * najetychKm;
                                             break;
                                         }
                                     case 3: //Vlastní motorkou
                                         {
-                                            vyplatitPenez += 1.4 * najetychKm;
+                                            cenaZaPohonneHmoty += 1.4 * najetychKm;
                                             break;
                                         }
                                     case 4: //Vlastním nákladním vozem, autobusem, traktorem
                                         {
-                                            vyplatitPenez += (zakladniNahrada * 2) * najetychKm;
+                                            cenaZaPohonneHmoty += (zakladniNahrada * 2) * najetychKm;
                                             break;
                                         }
                                     default:
@@ -341,202 +341,115 @@ namespace Cestovni_nahrady
                                 //Podle zákona
                                 if (udajePohonneHmoty.comboBoxZpsbVypoctuPohHmot.SelectedIndex == 0)
                                 {
-                                    vyplatitPenez += pohonnaHmota.CenaZaPohonneHmoty();
+                                    cenaZaPohonneHmoty += pohonnaHmota.CenaZaPohonneHmoty();
                                     //MessageBox.Show(vyplatitPenez.ToString());
                                 }
                                 else  //Podle účtenky
                                 {
                                     double prumerCenaZUctenek = double.Parse(udajePohonneHmoty.textBoxPrumernaPohonneHmotyCena.Text);
-                                    vyplatitPenez += prumerCenaZUctenek * pohonnaHmota.Spotrebovano;
+                                    cenaZaPohonneHmoty += prumerCenaZUctenek * pohonnaHmota.Spotrebovano;
                                     //MessageBox.Show(vyplatitPenez.ToString());
                                 }
                             }
-                            //Stravne
-                            int hodinPrvniDen=0;
-                            int hodinPosledniDen=0;
-                            if (delkaCesty.TotalHours < 24) //Pokud cesta netrva pres 24 hodin ale neni v jeden den
-                            {
-                                hodinPrvniDen = delkaCesty.Hours;
-                                //MessageBox.Show(hodinPrvniDen.ToString());
-                            }
-                            else if (zacatekCesty.Date == konecCesty.Date)  //Pokud se jedna o jednodenni cestu
-                            {
-                                hodinPrvniDen = konecCesty.Hour - zacatekCesty.Hour;
-                                hodinPosledniDen = 0;
-                            }
-                            else                    //Cesta delsi nez 1 den
-                            {
-                                hodinPrvniDen = 24 - zacatekCesty.Hour;
-                                hodinPosledniDen = konecCesty.Hour;
-                            }
-
-
-                            int den = 0;
-                            do
-                            {
-                                if (sektor == "privatni") //Privatni sektor
-                                {
-                                    if (den == 0)   //Při prvním dni
-                                    {
-                                        if (hodinPrvniDen >= 18)
-                                        {
-                                            zkratit = jidelZaDen[den] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
-                                            if (zkratit > 1) zkratit = 1;       //25% stravneho
-                                            vyplatitPenez += priSekt18aVic - priSekt18aVic * zkratit;
-                                        }
-                                        else if (hodinPrvniDen >= 12)
-                                        {
-                                            zkratit = jidelZaDen[den] * 0.35;    //pri rozsahu 12 az 18 hodin se za kazde jidlo odecita 
-                                            if (zkratit > 1) zkratit = 1;       //35% stravneho
-                                            vyplatitPenez += priSekt12az18 - priSekt12az18 * zkratit;
-                                        }
-                                        else if (hodinPrvniDen >= 5)
-                                        {
-                                            zkratit = jidelZaDen[den] * 0.7;    //pri rozsahu 5 az 12 hodin se za kazde jidlo odecita 
-                                            if (zkratit > 1) zkratit = 1;       //70% stravneho
-                                            vyplatitPenez += priSekt5az12 - priSekt5az12 * zkratit;
-                                        }
-                                    }
-                                    else if (den == delkaCesty.Days) //Při posledním dni, pouze pokud je více dní
-                                    {
-                                        if (hodinPosledniDen >= 18)
-                                        {
-                                            zkratit = jidelZaDen[den] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
-                                            if (zkratit > 1) zkratit = 1;       //25% stravneho
-                                            vyplatitPenez += priSekt18aVic - priSekt18aVic * zkratit;
-                                        }
-                                        else if (hodinPosledniDen >= 12)
-                                        {
-                                            zkratit = jidelZaDen[den] * 0.35;    //pri rozsahu 12 az 18 hodin se za kazde jidlo odecita 
-                                            if (zkratit > 1) zkratit = 1;       //35% stravneho
-                                            vyplatitPenez += priSekt12az18 - priSekt12az18 * zkratit;
-                                        }
-                                        else if (hodinPosledniDen >= 5)
-                                        {
-                                            zkratit = jidelZaDen[den] * 0.7;    //pri rozsahu 5 az 12 hodin se za kazde jidlo odecita 
-                                            if (zkratit > 1) zkratit = 1;       //70% stravneho
-                                            vyplatitPenez += priSekt5az12 - priSekt5az12 * zkratit;
-                                        }
-                                    }
-                                    else    //Všechny ostatní "mezidny" (každý automaticky trvá 24 hodin)
-                                    {
-                                        zkratit = jidelZaDen[den] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
-                                        if (zkratit > 1) zkratit = 1;       //25% stravneho
-                                        vyplatitPenez += priSekt18aVic - priSekt18aVic * zkratit;
-                                    }
-                                    
-                                }
-                                else     //Verejny sektor
-                                {
-                                    if (den == 0)   //Při prvním dni
-                                    {
-                                        if (hodinPrvniDen >= 18)
-                                        {
-                                            zkratit = jidelZaDen[den] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
-                                            if (zkratit > 1) zkratit = 1;       //25% stravneho
-                                            vyplatitPenez += verSekt18aVic - verSekt18aVic * zkratit;
-                                        }
-                                        else if (hodinPrvniDen >= 12)
-                                        {
-                                            zkratit = jidelZaDen[den] * 0.35;    //pri rozsahu 12 az 18 hodin se za kazde jidlo odecita 
-                                            if (zkratit > 1) zkratit = 1;       //35% stravneho
-                                            vyplatitPenez += verSekt12az18 - verSekt12az18 * zkratit;
-                                        }
-                                        else if (hodinPrvniDen >= 5)
-                                        {
-                                            zkratit = jidelZaDen[den] * 0.7;    //pri rozsahu 5 az 12 hodin se za kazde jidlo odecita 
-                                            if (zkratit > 1) zkratit = 1;       //70% stravneho
-                                            vyplatitPenez += verSekt5az12 - verSekt5az12 * zkratit;
-                                        }
-                                    }
-                                    else if (den == delkaCesty.Days) //Při posledním dni, pouze pokud je více dní
-                                    {
-                                        if (hodinPosledniDen >= 18)
-                                        {
-                                            zkratit = jidelZaDen[den] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
-                                            if (zkratit > 1) zkratit = 1;       //25% stravneho
-                                            vyplatitPenez += verSekt18aVic - verSekt18aVic * zkratit;
-                                        }
-                                        else if (hodinPosledniDen >= 12)
-                                        {
-                                            zkratit = jidelZaDen[den] * 0.35;    //pri rozsahu 12 az 18 hodin se za kazde jidlo odecita 
-                                            if (zkratit > 1) zkratit = 1;       //35% stravneho
-                                            vyplatitPenez += verSekt12az18 - verSekt12az18 * zkratit;
-                                        }
-                                        else if (hodinPosledniDen >= 5)
-                                        {
-                                            zkratit = jidelZaDen[den] * 0.7;    //pri rozsahu 5 az 12 hodin se za kazde jidlo odecita 
-                                            if (zkratit > 1) zkratit = 1;       //70% stravneho
-                                            vyplatitPenez += verSekt5az12 - verSekt5az12 * zkratit;
-                                        }
-                                    }
-                                    else    //Všechny ostatní "mezidny" (každý automaticky trvá 24 hodin)
-                                    {
-                                        zkratit = jidelZaDen[den] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
-                                        if (zkratit > 1) zkratit = 1;       //25% stravneho
-                                        vyplatitPenez += verSekt18aVic - verSekt18aVic * zkratit;
-                                    }
-
-                                }
-                                ++den;      //Posunu den
-                            } while (den<delkaCesty.Days+1);
-                            MessageBox.Show("Za stravne" + vyplatitPenez);
+                            double cenaZaStravne= CenaZaTuzemskouCestu(zacatekCesty, konecCesty, sektor, jidelZaDen, priSekt5az12,
+                                priSekt12az18, priSekt18aVic, verSekt5az12, verSekt12az18, verSekt18aVic);
+                            MessageBox.Show("Proplatit" + cenaZaPohonneHmoty+cenaZaStravne);
 
                         }
                         else //Zahraniční cesta
                         {
                             TimeSpan casNezOpustilCesko = navstiveneStaty[0].DatumPrijezdu-zacatekCesty;
-                            //Nez opustim cesko probiha vypocet jako pro tuzemskou cestu
-                            if (sektor == "privatni") //Privatni sektor
+                            //Nez dojede do zahranici
+                            double cenaZaTuzemskeSttavne = CenaZaTuzemskouCestu(zacatekCesty, navstiveneStaty[0].DatumPrijezdu, sektor,
+                                jidelZaDen,priSekt5az12,priSekt12az18,priSekt18aVic,verSekt5az12,verSekt12az18,verSekt18aVic);
+                            int denCelkove = casNezOpustilCesko.Days;
+                            int hodinPrvniDen = 0;
+                            int hodinPosledniDen = 0;
+                            double cenaZaZahranicniStravne = 0;
+
+
+                            //Vypocet mozna neni presny idk nesedi to podle kalkulacky z internetu
+                            for (int i = 0; i < navstiveneStaty.Length; i++)
                             {
+                                if (navstiveneStaty[i].DatumPrijezdu.Date == navstiveneStaty[i].DatumOdjezdu.Date)  //Pokud se jedna o jednodenni cestu
+                                {
+                                    hodinPrvniDen = navstiveneStaty[i].DatumOdjezdu.Hour - navstiveneStaty[i].DatumPrijezdu.Hour;
+                                    hodinPosledniDen = 0;
+                                }
+                                else     //Cesta delsi nez 1 den
+                                {
+                                    hodinPrvniDen = 24 - navstiveneStaty[i].DatumPrijezdu.Hour;
+                                    hodinPosledniDen = navstiveneStaty[i].DatumOdjezdu.Hour;
+                                }
 
-                                if (casNezOpustilCesko.Hours >= 18)
+                                double zakladniSazba;
+                                int den = 0;            //ZKRACOVANI ZATIM NEBUDE FUNGOVAT!!
+                                do
                                 {
-                                    zkratit = jidelZaDen[0] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
-                                    if (zkratit > 1) zkratit = 1;       //25% stravneho
-                                    vyplatitPenez += priSekt18aVic - priSekt18aVic * zkratit;
-                                }
-                                else if (casNezOpustilCesko.Hours >= 12)
-                                {
-                                    zkratit = jidelZaDen[0] * 0.35;    //pri rozsahu 12 az 18 hodin se za kazde jidlo odecita 
-                                    if (zkratit > 1) zkratit = 1;       //35% stravneho
-                                    vyplatitPenez += priSekt12az18 - priSekt12az18 * zkratit;
-                                }
-                                else if (casNezOpustilCesko.Hours >= 5)
-                                {
-                                    zkratit = jidelZaDen[0] * 0.7;    //pri rozsahu 5 az 12 hodin se za kazde jidlo odecita 
-                                    if (zkratit > 1) zkratit = 1;       //70% stravneho
-                                    vyplatitPenez += priSekt5az12 - priSekt5az12 * zkratit;
-                                }
+                                    if (den == 0)   //Při prvním dni
+                                    {
+                                        if (hodinPrvniDen > 18)
+                                        {
+                                            zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno;
+                                            zkratit = jidelZaDen[den] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
+                                            if (zkratit > 1) zkratit = 1;       //25% stravneho
+                                            cenaZaZahranicniStravne += zakladniSazba - zakladniSazba * zkratit;
+                                        }
+                                        else if (hodinPrvniDen > 12)
+                                        {
+                                            zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno*(2/3);
+
+                                            zkratit = jidelZaDen[den] * 0.35;    //pri rozsahu 12 az 18 hodin se za kazde jidlo odecita 
+                                            if (zkratit > 1) zkratit = 1;       //35% stravneho
+                                            cenaZaZahranicniStravne += zakladniSazba - zakladniSazba * zkratit;
+                                        }
+                                        else if (hodinPrvniDen > 1)
+                                        {
+                                            zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno*(1/3);
+                                            zkratit = jidelZaDen[den] * 0.7;    //pri rozsahu 5 az 12 hodin se za kazde jidlo odecita 
+                                            if (zkratit > 1) zkratit = 1;       //70% stravneho
+                                            cenaZaZahranicniStravne += zakladniSazba - zakladniSazba * zkratit;
+                                        }
+                                    }
+                                    else if (den == navstiveneStaty[i].CasVeState.Days) //Při posledním dni, pouze pokud je více dní
+                                    {
+                                        if (hodinPosledniDen > 18)
+                                        {
+                                            zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno;
+                                            zkratit = jidelZaDen[den] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
+                                            if (zkratit > 1) zkratit = 1;       //25% stravneho
+                                            cenaZaZahranicniStravne += zakladniSazba - zakladniSazba * zkratit;
+                                        }
+                                        else if (hodinPosledniDen > 12)
+                                        {
+                                            zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno * (2 / 3);
+                                            zkratit = jidelZaDen[den] * 0.35;    //pri rozsahu 12 az 18 hodin se za kazde jidlo odecita 
+                                            if (zkratit > 1) zkratit = 1;       //35% stravneho
+                                            cenaZaZahranicniStravne += zakladniSazba - zakladniSazba * zkratit;
+                                        }
+                                        else if (hodinPosledniDen > 5)
+                                        {
+                                            zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno * (1 / 3);
+                                            zkratit = jidelZaDen[den] * 0.7;    //pri rozsahu 5 az 12 hodin se za kazde jidlo odecita 
+                                            if (zkratit > 1) zkratit = 1;       //70% stravneho
+                                            cenaZaZahranicniStravne += zakladniSazba - zakladniSazba * zkratit;
+                                        }
+                                    }
+                                    else    //Všechny ostatní "mezidny" (každý automaticky trvá 24 hodin)
+                                    {
+                                        zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno;
+                                        zkratit = jidelZaDen[den] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
+                                        if (zkratit > 1) zkratit = 1;       //25% stravneho
+                                        cenaZaZahranicniStravne += zakladniSazba - zakladniSazba * zkratit;
+                                    }
+                                    ++den;      //Posunu den
+                                } while (den < navstiveneStaty[i].CasVeState.Days + 1);
                             }
-                            else     //Verejny sektor
-                            {
-                                if (casNezOpustilCesko.Hours >= 18)
-                                {
-                                    zkratit = jidelZaDen[0] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
-                                    if (zkratit > 1) zkratit = 1;       //25% stravneho
-                                    vyplatitPenez += verSekt18aVic - verSekt18aVic * zkratit;
-                                }
-                                else if (casNezOpustilCesko.Hours >= 12)
-                                {
-                                    zkratit = jidelZaDen[0] * 0.35;    //pri rozsahu 12 az 18 hodin se za kazde jidlo odecita 
-                                    if (zkratit > 1) zkratit = 1;       //35% stravneho
-                                    vyplatitPenez += verSekt12az18 - verSekt12az18 * zkratit;
-                                }
-                                else if (casNezOpustilCesko.Hours >= 5)
-                                {
-                                    zkratit = jidelZaDen[0] * 0.7;    //pri rozsahu 5 az 12 hodin se za kazde jidlo odecita 
-                                    if (zkratit > 1) zkratit = 1;       //70% stravneho
-                                    vyplatitPenez += verSekt5az12 - verSekt5az12 * zkratit;
-                                }
-                            }
-                            foreach (NavstivenyStat navstivenyStat in navstiveneStaty)
-                            {
+                            MessageBox.Show(cenaZaZahranicniStravne.ToString());
 
-                            }
-
-
-
+                            //Pote co bude dojizdet ze zahranici
+                            cenaZaTuzemskeSttavne += CenaZaTuzemskouCestu(navstiveneStaty[navstiveneStaty.Length-1].DatumOdjezdu, konecCesty, sektor,
+                            jidelZaDen, priSekt5az12, priSekt12az18, priSekt18aVic, verSekt5az12, verSekt12az18, verSekt18aVic);
 
                         }
                     }
@@ -551,6 +464,145 @@ namespace Cestovni_nahrady
            
         }
 
+        private double CenaZaTuzemskouCestu(DateTime zacatekTuzemskeCesty,
+           DateTime konecTuzemskeCesty, string sektor, int[] jidelZaDen,
+           double priSekt5az12,double priSekt12az18, double priSekt18aVic,
+           double verSekt5az12, double verSekt12az18, double verSekt18aVic)
+        {
+            //Stravne
+            TimeSpan delkaCesty = konecTuzemskeCesty - zacatekTuzemskeCesty;
+            int hodinPrvniDen = 0;
+            int hodinPosledniDen = 0;
+            double vyplatitPenez = 0;
+            if (delkaCesty.TotalHours < 24) //Pokud cesta netrva pres 24 hodin ale neni v jeden den
+            {
+                hodinPrvniDen = delkaCesty.Hours;
+                //MessageBox.Show(hodinPrvniDen.ToString());
+            }
+            else if (zacatekTuzemskeCesty.Date == konecTuzemskeCesty.Date)  //Pokud se jedna o jednodenni cestu
+            {
+                hodinPrvniDen = konecTuzemskeCesty.Hour - zacatekTuzemskeCesty.Hour;
+                hodinPosledniDen = 0;
+            }
+            else                    //Cesta delsi nez 1 den
+            {
+                hodinPrvniDen = 24 - zacatekTuzemskeCesty.Hour;
+                hodinPosledniDen = konecTuzemskeCesty.Hour;
+            }
+
+
+            int den = 0;
+            double zkratit = 0;
+            do
+            {
+                if (sektor == "privatni") //Privatni sektor
+                {
+                    if (den == 0)   //Při prvním dni
+                    {
+                        if (hodinPrvniDen >= 18)
+                        {
+                            zkratit = jidelZaDen[den] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
+                            if (zkratit > 1) zkratit = 1;       //25% stravneho
+                            vyplatitPenez += priSekt18aVic - priSekt18aVic * zkratit;
+                        }
+                        else if (hodinPrvniDen >= 12)
+                        {
+                            zkratit = jidelZaDen[den] * 0.35;    //pri rozsahu 12 az 18 hodin se za kazde jidlo odecita 
+                            if (zkratit > 1) zkratit = 1;       //35% stravneho
+                            vyplatitPenez += priSekt12az18 - priSekt12az18 * zkratit;
+                        }
+                        else if (hodinPrvniDen >= 5)
+                        {
+                            zkratit = jidelZaDen[den] * 0.7;    //pri rozsahu 5 az 12 hodin se za kazde jidlo odecita 
+                            if (zkratit > 1) zkratit = 1;       //70% stravneho
+                            vyplatitPenez += priSekt5az12 - priSekt5az12 * zkratit;
+                        }
+                    }
+                    else if (den == delkaCesty.Days) //Při posledním dni, pouze pokud je více dní
+                    {
+                        if (hodinPosledniDen >= 18)
+                        {
+                            zkratit = jidelZaDen[den] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
+                            if (zkratit > 1) zkratit = 1;       //25% stravneho
+                            vyplatitPenez += priSekt18aVic - priSekt18aVic * zkratit;
+                        }
+                        else if (hodinPosledniDen >= 12)
+                        {
+                            zkratit = jidelZaDen[den] * 0.35;    //pri rozsahu 12 az 18 hodin se za kazde jidlo odecita 
+                            if (zkratit > 1) zkratit = 1;       //35% stravneho
+                            vyplatitPenez += priSekt12az18 - priSekt12az18 * zkratit;
+                        }
+                        else if (hodinPosledniDen >= 5)
+                        {
+                            zkratit = jidelZaDen[den] * 0.7;    //pri rozsahu 5 az 12 hodin se za kazde jidlo odecita 
+                            if (zkratit > 1) zkratit = 1;       //70% stravneho
+                            vyplatitPenez += priSekt5az12 - priSekt5az12 * zkratit;
+                        }
+                    }
+                    else    //Všechny ostatní "mezidny" (každý automaticky trvá 24 hodin)
+                    {
+                        zkratit = jidelZaDen[den] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
+                        if (zkratit > 1) zkratit = 1;       //25% stravneho
+                        vyplatitPenez += priSekt18aVic - priSekt18aVic * zkratit;
+                    }
+
+                }
+                else     //Verejny sektor
+                {
+                    if (den == 0)   //Při prvním dni
+                    {
+                        if (hodinPrvniDen >= 18)
+                        {
+                            zkratit = jidelZaDen[den] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
+                            if (zkratit > 1) zkratit = 1;       //25% stravneho
+                            vyplatitPenez += verSekt18aVic - verSekt18aVic * zkratit;
+                        }
+                        else if (hodinPrvniDen >= 12)
+                        {
+                            zkratit = jidelZaDen[den] * 0.35;    //pri rozsahu 12 az 18 hodin se za kazde jidlo odecita 
+                            if (zkratit > 1) zkratit = 1;       //35% stravneho
+                            vyplatitPenez += verSekt12az18 - verSekt12az18 * zkratit;
+                        }
+                        else if (hodinPrvniDen >= 5)
+                        {
+                            zkratit = jidelZaDen[den] * 0.7;    //pri rozsahu 5 az 12 hodin se za kazde jidlo odecita 
+                            if (zkratit > 1) zkratit = 1;       //70% stravneho
+                            vyplatitPenez += verSekt5az12 - verSekt5az12 * zkratit;
+                        }
+                    }
+                    else if (den == delkaCesty.Days) //Při posledním dni, pouze pokud je více dní
+                    {
+                        if (hodinPosledniDen >= 18)
+                        {
+                            zkratit = jidelZaDen[den] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
+                            if (zkratit > 1) zkratit = 1;       //25% stravneho
+                            vyplatitPenez += verSekt18aVic - verSekt18aVic * zkratit;
+                        }
+                        else if (hodinPosledniDen >= 12)
+                        {
+                            zkratit = jidelZaDen[den] * 0.35;    //pri rozsahu 12 az 18 hodin se za kazde jidlo odecita 
+                            if (zkratit > 1) zkratit = 1;       //35% stravneho
+                            vyplatitPenez += verSekt12az18 - verSekt12az18 * zkratit;
+                        }
+                        else if (hodinPosledniDen >= 5)
+                        {
+                            zkratit = jidelZaDen[den] * 0.7;    //pri rozsahu 5 az 12 hodin se za kazde jidlo odecita 
+                            if (zkratit > 1) zkratit = 1;       //70% stravneho
+                            vyplatitPenez += verSekt5az12 - verSekt5az12 * zkratit;
+                        }
+                    }
+                    else    //Všechny ostatní "mezidny" (každý automaticky trvá 24 hodin)
+                    {
+                        zkratit = jidelZaDen[den] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
+                        if (zkratit > 1) zkratit = 1;       //25% stravneho
+                        vyplatitPenez += verSekt18aVic - verSekt18aVic * zkratit;
+                    }
+
+                }
+                ++den;      //Posunu den
+            } while (den < delkaCesty.Days + 1);
+            return vyplatitPenez;
+        }
 
 
 

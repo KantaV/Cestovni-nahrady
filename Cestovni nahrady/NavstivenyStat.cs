@@ -43,7 +43,7 @@ namespace Cestovni_nahrady
             set { datumOdjezdu = value;}
         }
 
-        public double CeZaDenVeStatePrevedeno
+        public double CenaZaDenVeStatePrevedeno
         {
             get { return cenaZaDenVeStatePrevedeno; }
         }

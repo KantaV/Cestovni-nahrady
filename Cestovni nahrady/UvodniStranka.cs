@@ -23,6 +23,9 @@ namespace Cestovni_nahrady
             nastaveni = new Nastaveni();
             this.Controls.Add(nastaveni);
             nastaveni.Hide();
+            uzivatele = new Uzivatele();
+            this.Controls.Add(uzivatele);
+            uzivatele.Hide();
         }
 
         private UserControl[] stranky = new UserControl[4];
@@ -32,6 +35,7 @@ namespace Cestovni_nahrady
         private UdajePohonneHmoty udajePohonneHmoty;
         private UdajeStravne udajeStravne;
         private Nastaveni nastaveni;
+        private Uzivatele uzivatele;
 
         private int indexStranky = 0;
 
@@ -114,8 +118,20 @@ namespace Cestovni_nahrady
             panelNavigacniBtny.Show();
 
         }
+
+        private void buttonUzivatele_Click(object sender, EventArgs e)
+        {
+            uzivatele=new Uzivatele();
+            this.Controls.Add(uzivatele);
+            panelMenu.Hide();
+            panelNavigacniBtny.Show();
+            buttonDalsi.Hide();
+        }
+
         private void buttonNastaveni_Click(object sender, EventArgs e)
-        {        
+        {
+            nastaveni = new Nastaveni();
+            this.Controls.Add(nastaveni);
             panelMenu.Hide();
             nastaveni.Show();
             buttonDalsi.Text = "Uložit";
@@ -124,7 +140,14 @@ namespace Cestovni_nahrady
 
         private void buttonZpet_Click(object sender, EventArgs e)
         {
-            if (nastaveni.Visible)  //Funkce buttonu pro obsluhovani nastaveni
+            if (uzivatele.Visible)
+            {
+                panelMenu.Show();
+                uzivatele.Hide();
+                panelNavigacniBtny.Hide();
+                buttonDalsi.Show();
+            }
+            else if (nastaveni.Visible)  //Funkce buttonu pro obsluhovani nastaveni
             {
                 nastaveni.Hide();
                 panelNavigacniBtny.Hide();
@@ -603,6 +626,8 @@ namespace Cestovni_nahrady
             } while (den < delkaCesty.Days + 1);
             return vyplatitPenez;
         }
+
+
 
 
 

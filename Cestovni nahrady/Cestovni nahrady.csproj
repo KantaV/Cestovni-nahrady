@@ -96,6 +96,13 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Uzivatel.cs" />
+    <Compile Include="Uzivatele.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Uzivatele.Designer.cs">
+      <DependentUpon>Uzivatele.cs</DependentUpon>
+    </Compile>
     <Compile Include="Zahranici.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -132,6 +139,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Uzivatele.resx">
+      <DependentUpon>Uzivatele.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Zahranici.resx">
       <DependentUpon>Zahranici.cs</DependentUpon>
     </EmbeddedResource>

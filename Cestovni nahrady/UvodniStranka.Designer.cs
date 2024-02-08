@@ -67,6 +67,7 @@
             this.buttonUzivatele.TabIndex = 41;
             this.buttonUzivatele.Text = "Uživatelé";
             this.buttonUzivatele.UseVisualStyleBackColor = true;
+            this.buttonUzivatele.Click += new System.EventHandler(this.buttonUzivatele_Click);
             // 
             // panelMenu
             // 

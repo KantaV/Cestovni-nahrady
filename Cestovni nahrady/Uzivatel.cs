@@ -13,19 +13,19 @@ namespace Cestovni_nahrady
         private bool tuzemskaCesta;
         private double cenaZaTuzemskouCestu;
         private double cenaZaZahranicniCestu;
-        private NavstivenyStat[] navstiveneStaty;
+        private string navstiveneStaty;
 
         public string Jmeno { get { return jmeno; } }
         public string Prijmeni { get { return prijmeni; } }
         public bool TuzemskaCesta { get { return tuzemskaCesta; } }
         public double CenaZaTuzemskouCestu { get { return cenaZaTuzemskouCestu; } }
         public double CenaZaZahranicniCestu { get { return cenaZaZahranicniCestu; } }
-        public NavstivenyStat[] NavstiveneStaty { get { return navstiveneStaty; } }
+        public string NavstiveneStaty { get { return navstiveneStaty; } }
 
         public double CelkemProplatit {get { return cenaZaTuzemskouCestu + cenaZaZahranicniCestu; } }
 
         public Uzivatel(string jmeno, string prijmeni, bool tuzemskaCesta, double
-            cenaZaTuzemskouCestu, double cenaZaZahranicniCestu, NavstivenyStat[] navstiveneStaty)
+            cenaZaTuzemskouCestu, double cenaZaZahranicniCestu, string navstiveneStaty)
         {
             this.jmeno = jmeno;
             this.prijmeni = prijmeni;

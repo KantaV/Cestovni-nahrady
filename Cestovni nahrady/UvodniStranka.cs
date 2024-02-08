@@ -391,7 +391,6 @@ namespace Cestovni_nahrady
                             double cenaZaZahranicniStravne = 0;
 
 
-                            //Vypocet mozna neni presny idk nesedi to podle kalkulacky z internetu
                             for (int i = 0; i < navstiveneStaty.Length; i++)
                             {
                                 if (navstiveneStaty[i].DatumPrijezdu.Date == navstiveneStaty[i].DatumOdjezdu.Date)  //Pokud se jedna o jednodenni cestu
@@ -405,8 +404,9 @@ namespace Cestovni_nahrady
                                     hodinPosledniDen = navstiveneStaty[i].DatumOdjezdu.Hour;
                                 }
 
-                                double zakladniSazba;
+                                double zakladniSazba=0;
                                 int den = 0;            //ZKRACOVANI ZATIM NEBUDE FUNGOVAT!!
+                                zkratit = 0;
                                 do
                                 {
                                     if (den == 0)   //Při prvním dni
@@ -414,23 +414,23 @@ namespace Cestovni_nahrady
                                         if (hodinPrvniDen > 18)
                                         {
                                             zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno;
-                                            zkratit = jidelZaDen[den] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
+                                            zkratit = jidelZaDen[denCelkove] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
                                             if (zkratit > 1) zkratit = 1;       //25% stravneho
                                             cenaZaZahranicniStravne += zakladniSazba - zakladniSazba * zkratit;
                                         }
                                         else if (hodinPrvniDen > 12)
                                         {
-                                            zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno*(2/3);
+                                            zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno*((double)2 /3);
 
-                                            zkratit = jidelZaDen[den] * 0.35;    //pri rozsahu 12 az 18 hodin se za kazde jidlo odecita 
+                                            zkratit = jidelZaDen[denCelkove] * 0.35;    //pri rozsahu 12 az 18 hodin se za kazde jidlo odecita 
                                             if (zkratit > 1) zkratit = 1;       //35% stravneho
                                             cenaZaZahranicniStravne += zakladniSazba - zakladniSazba * zkratit;
                                         }
                                         else if (hodinPrvniDen > 1)
                                         {
-                                            zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno*(1/3);
-                                            zkratit = jidelZaDen[den] * 0.7;    //pri rozsahu 5 az 12 hodin se za kazde jidlo odecita 
-                                            if (zkratit > 1) zkratit = 1;       //70% stravneho
+                                            zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno*((double)1/3);
+                                            zkratit = jidelZaDen[denCelkove] * 0.7;    //pri rozsahu 5 az 12 hodin se za kazde jidlo odecita 
+                                            if(zkratit > 1) zkratit = 1;       //70% stravneho
                                             cenaZaZahranicniStravne += zakladniSazba - zakladniSazba * zkratit;
                                         }
                                     }
@@ -439,21 +439,21 @@ namespace Cestovni_nahrady
                                         if (hodinPosledniDen > 18)
                                         {
                                             zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno;
-                                            zkratit = jidelZaDen[den] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
+                                            zkratit = jidelZaDen[denCelkove] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
                                             if (zkratit > 1) zkratit = 1;       //25% stravneho
                                             cenaZaZahranicniStravne += zakladniSazba - zakladniSazba * zkratit;
                                         }
                                         else if (hodinPosledniDen > 12)
                                         {
-                                            zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno * (2 / 3);
-                                            zkratit = jidelZaDen[den] * 0.35;    //pri rozsahu 12 az 18 hodin se za kazde jidlo odecita 
+                                            zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno * ((double)2 / 3);
+                                            zkratit = jidelZaDen[denCelkove] * 0.35;    //pri rozsahu 12 az 18 hodin se za kazde jidlo odecita 
                                             if (zkratit > 1) zkratit = 1;       //35% stravneho
                                             cenaZaZahranicniStravne += zakladniSazba - zakladniSazba * zkratit;
                                         }
                                         else if (hodinPosledniDen > 5)
                                         {
-                                            zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno * (1 / 3);
-                                            zkratit = jidelZaDen[den] * 0.7;    //pri rozsahu 5 az 12 hodin se za kazde jidlo odecita 
+                                            zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno * ((double)1 / 3);
+                                            zkratit = jidelZaDen[denCelkove] * 0.7;    //pri rozsahu 5 az 12 hodin se za kazde jidlo odecita 
                                             if (zkratit > 1) zkratit = 1;       //70% stravneho
                                             cenaZaZahranicniStravne += zakladniSazba - zakladniSazba * zkratit;
                                         }
@@ -461,11 +461,12 @@ namespace Cestovni_nahrady
                                     else    //Všechny ostatní "mezidny" (každý automaticky trvá 24 hodin)
                                     {
                                         zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno;
-                                        zkratit = jidelZaDen[den] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
+                                        zkratit = jidelZaDen[denCelkove] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
                                         if (zkratit > 1) zkratit = 1;       //25% stravneho
                                         cenaZaZahranicniStravne += zakladniSazba - zakladniSazba * zkratit;
                                     }
                                     ++den;      //Posunu den
+                                    ++denCelkove;
                                 } while (den < navstiveneStaty[i].CasVeState.Days + 1);
                             }
                             MessageBox.Show(cenaZaZahranicniStravne.ToString());
@@ -474,6 +475,17 @@ namespace Cestovni_nahrady
                             cenaZaTuzemskeSttavne += CenaZaTuzemskouCestu(navstiveneStaty[navstiveneStaty.Length-1].DatumOdjezdu, konecCesty, sektor,
                             jidelZaDen, priSekt5az12, priSekt12az18, priSekt18aVic, verSekt5az12, verSekt12az18, verSekt18aVic);
 
+                            string staty = "";
+                            foreach (NavstivenyStat stat in navstiveneStaty)
+                            {
+                                staty+= stat.NazevStatu+" ";
+                            }
+
+                            using (StreamWriter sw=new StreamWriter("uzivatele.txt",true))
+                            {
+                                sw.WriteLine(jmeno + ";" + prijmeni + ";" + tuzemskaCesta + ";" + cenaZaTuzemskeSttavne + ";" +
+                                    cenaZaZahranicniStravne + ";" + staty + ";" + (cenaZaTuzemskeSttavne + cenaZaZahranicniStravne));
+                            }
                         }
                     }
                     catch (Exception exception)

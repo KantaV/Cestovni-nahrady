@@ -41,7 +41,7 @@
             // labelNadpisJmeno
             // 
             this.labelNadpisJmeno.AutoSize = true;
-            this.labelNadpisJmeno.Location = new System.Drawing.Point(3, 59);
+            this.labelNadpisJmeno.Location = new System.Drawing.Point(50, 55);
             this.labelNadpisJmeno.Name = "labelNadpisJmeno";
             this.labelNadpisJmeno.Size = new System.Drawing.Size(41, 13);
             this.labelNadpisJmeno.TabIndex = 0;
@@ -50,7 +50,7 @@
             // labelNadpisPrijmeni
             // 
             this.labelNadpisPrijmeni.AutoSize = true;
-            this.labelNadpisPrijmeni.Location = new System.Drawing.Point(3, 81);
+            this.labelNadpisPrijmeni.Location = new System.Drawing.Point(50, 77);
             this.labelNadpisPrijmeni.Name = "labelNadpisPrijmeni";
             this.labelNadpisPrijmeni.Size = new System.Drawing.Size(51, 13);
             this.labelNadpisPrijmeni.TabIndex = 1;
@@ -59,7 +59,7 @@
             // labelNadpisTuzemskaCesta
             // 
             this.labelNadpisTuzemskaCesta.AutoSize = true;
-            this.labelNadpisTuzemskaCesta.Location = new System.Drawing.Point(3, 104);
+            this.labelNadpisTuzemskaCesta.Location = new System.Drawing.Point(50, 100);
             this.labelNadpisTuzemskaCesta.Name = "labelNadpisTuzemskaCesta";
             this.labelNadpisTuzemskaCesta.Size = new System.Drawing.Size(88, 13);
             this.labelNadpisTuzemskaCesta.TabIndex = 2;
@@ -68,7 +68,7 @@
             // labelNadpisCenaZaTuzemskouCestu
             // 
             this.labelNadpisCenaZaTuzemskouCestu.AutoSize = true;
-            this.labelNadpisCenaZaTuzemskouCestu.Location = new System.Drawing.Point(3, 126);
+            this.labelNadpisCenaZaTuzemskouCestu.Location = new System.Drawing.Point(50, 122);
             this.labelNadpisCenaZaTuzemskouCestu.Name = "labelNadpisCenaZaTuzemskouCestu";
             this.labelNadpisCenaZaTuzemskouCestu.Size = new System.Drawing.Size(115, 13);
             this.labelNadpisCenaZaTuzemskouCestu.TabIndex = 3;
@@ -77,7 +77,7 @@
             // labelNadpisZahranicniCestaCena
             // 
             this.labelNadpisZahranicniCestaCena.AutoSize = true;
-            this.labelNadpisZahranicniCestaCena.Location = new System.Drawing.Point(3, 150);
+            this.labelNadpisZahranicniCestaCena.Location = new System.Drawing.Point(50, 146);
             this.labelNadpisZahranicniCestaCena.Name = "labelNadpisZahranicniCestaCena";
             this.labelNadpisZahranicniCestaCena.Size = new System.Drawing.Size(118, 13);
             this.labelNadpisZahranicniCestaCena.TabIndex = 4;
@@ -86,7 +86,7 @@
             // labelNadpisNavstiveneStaty
             // 
             this.labelNadpisNavstiveneStaty.AutoSize = true;
-            this.labelNadpisNavstiveneStaty.Location = new System.Drawing.Point(3, 174);
+            this.labelNadpisNavstiveneStaty.Location = new System.Drawing.Point(50, 170);
             this.labelNadpisNavstiveneStaty.Name = "labelNadpisNavstiveneStaty";
             this.labelNadpisNavstiveneStaty.Size = new System.Drawing.Size(91, 13);
             this.labelNadpisNavstiveneStaty.TabIndex = 5;
@@ -95,7 +95,7 @@
             // labelNadpisCelkem
             // 
             this.labelNadpisCelkem.AutoSize = true;
-            this.labelNadpisCelkem.Location = new System.Drawing.Point(3, 199);
+            this.labelNadpisCelkem.Location = new System.Drawing.Point(50, 195);
             this.labelNadpisCelkem.Name = "labelNadpisCelkem";
             this.labelNadpisCelkem.Size = new System.Drawing.Size(85, 13);
             this.labelNadpisCelkem.TabIndex = 6;

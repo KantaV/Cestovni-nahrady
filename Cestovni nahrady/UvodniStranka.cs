@@ -383,7 +383,7 @@ namespace Cestovni_nahrady
                         {
                             TimeSpan casNezOpustilCesko = navstiveneStaty[0].DatumPrijezdu-zacatekCesty;
                             //Nez dojede do zahranici
-                            double cenaZaTuzemskeSttavne = CenaZaTuzemskouCestu(zacatekCesty, navstiveneStaty[0].DatumPrijezdu, sektor,
+                            double cenaZaTuzemskeStravne = CenaZaTuzemskouCestu(zacatekCesty, navstiveneStaty[0].DatumPrijezdu, sektor,
                                 jidelZaDen,priSekt5az12,priSekt12az18,priSekt18aVic,verSekt5az12,verSekt12az18,verSekt18aVic);
                             int denCelkove = casNezOpustilCesko.Days;
                             int hodinPrvniDen = 0;
@@ -472,20 +472,30 @@ namespace Cestovni_nahrady
                             MessageBox.Show(cenaZaZahranicniStravne.ToString());
 
                             //Pote co bude dojizdet ze zahranici
-                            cenaZaTuzemskeSttavne += CenaZaTuzemskouCestu(navstiveneStaty[navstiveneStaty.Length-1].DatumOdjezdu, konecCesty, sektor,
+                            cenaZaTuzemskeStravne += CenaZaTuzemskouCestu(navstiveneStaty[navstiveneStaty.Length-1].DatumOdjezdu, konecCesty, sektor,
                             jidelZaDen, priSekt5az12, priSekt12az18, priSekt18aVic, verSekt5az12, verSekt12az18, verSekt18aVic);
 
                             string staty = "";
                             foreach (NavstivenyStat stat in navstiveneStaty)
                             {
-                                staty+= stat.NazevStatu+" ";
+                                staty+= stat.NazevStatu+", ";
+                            }
+                            char[] koncoveZnaky = { ' ', ',' };
+                            staty = staty.Trim(koncoveZnaky);
+
+                            using (FileStream fs = new FileStream("uzivatele.dat", FileMode.Create, FileAccess.Write))
+                            {
+                                BinaryWriter bw = new BinaryWriter(fs);
+                                bw.Write(jmeno);
+                                bw.Write(prijmeni);
+                                bw.Write(tuzemskaCesta);
+                                bw.Write(cenaZaTuzemskeStravne);
+                                bw.Write(cenaZaZahranicniStravne);
+                                bw.Write(staty);
+                                double cenaCelkem = cenaZaTuzemskeStravne + cenaZaZahranicniStravne;
+                                bw.Write(cenaCelkem);
                             }
 
-                            using (StreamWriter sw=new StreamWriter("uzivatele.txt",true))
-                            {
-                                sw.WriteLine(jmeno + ";" + prijmeni + ";" + tuzemskaCesta + ";" + cenaZaTuzemskeSttavne + ";" +
-                                    cenaZaZahranicniStravne + ";" + staty + ";" + (cenaZaTuzemskeSttavne + cenaZaZahranicniStravne));
-                            }
                         }
                     }
                     catch (Exception exception)

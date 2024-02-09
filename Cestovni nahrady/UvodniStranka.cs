@@ -123,6 +123,7 @@ namespace Cestovni_nahrady
         {
             uzivatele=new Uzivatele();
             this.Controls.Add(uzivatele);
+            uzivatele.Show();
             panelMenu.Hide();
             panelNavigacniBtny.Show();
             buttonDalsi.Hide();
@@ -329,6 +330,9 @@ namespace Cestovni_nahrady
                         //Finální výpočty
                         double cenaZaPohonneHmoty = 0;
                         double zkratit = 0;
+                        string staty="";
+                        double cenaZaTuzemskouCestu=0;
+                        double cenaZaZahranicniStravne=0;
                         if (tuzemskaCesta)
                         {
                             //Účtuji pohonné hmoty jedině pokud zaměstnanec cestoval svým vozem
@@ -376,19 +380,19 @@ namespace Cestovni_nahrady
                             }
                             double cenaZaStravne= CenaZaTuzemskouCestu(zacatekCesty, konecCesty, sektor, jidelZaDen, priSekt5az12,
                                 priSekt12az18, priSekt18aVic, verSekt5az12, verSekt12az18, verSekt18aVic);
-                            MessageBox.Show("Proplatit" + cenaZaPohonneHmoty+cenaZaStravne);
-
+                            //MessageBox.Show("Proplatit" + cenaZaPohonneHmoty+cenaZaStravne);
+                            cenaZaTuzemskouCestu = cenaZaPohonneHmoty + cenaZaStravne;
                         }
                         else //Zahraniční cesta
                         {
                             TimeSpan casNezOpustilCesko = navstiveneStaty[0].DatumPrijezdu-zacatekCesty;
                             //Nez dojede do zahranici
-                            double cenaZaTuzemskeStravne = CenaZaTuzemskouCestu(zacatekCesty, navstiveneStaty[0].DatumPrijezdu, sektor,
+                            cenaZaTuzemskouCestu = CenaZaTuzemskouCestu(zacatekCesty, navstiveneStaty[0].DatumPrijezdu, sektor,
                                 jidelZaDen,priSekt5az12,priSekt12az18,priSekt18aVic,verSekt5az12,verSekt12az18,verSekt18aVic);
                             int denCelkove = casNezOpustilCesko.Days;
                             int hodinPrvniDen = 0;
                             int hodinPosledniDen = 0;
-                            double cenaZaZahranicniStravne = 0;
+                            cenaZaZahranicniStravne = 0;
 
 
                             for (int i = 0; i < navstiveneStaty.Length; i++)
@@ -405,7 +409,7 @@ namespace Cestovni_nahrady
                                 }
 
                                 double zakladniSazba=0;
-                                int den = 0;            //ZKRACOVANI ZATIM NEBUDE FUNGOVAT!!
+                                int den = 0;            
                                 zkratit = 0;
                                 do
                                 {
@@ -469,13 +473,13 @@ namespace Cestovni_nahrady
                                     ++denCelkove;
                                 } while (den < navstiveneStaty[i].CasVeState.Days + 1);
                             }
-                            MessageBox.Show(cenaZaZahranicniStravne.ToString());
+                           //MessageBox.Show(cenaZaZahranicniStravne.ToString());
 
                             //Pote co bude dojizdet ze zahranici
-                            cenaZaTuzemskeStravne += CenaZaTuzemskouCestu(navstiveneStaty[navstiveneStaty.Length-1].DatumOdjezdu, konecCesty, sektor,
+                            cenaZaTuzemskouCestu += CenaZaTuzemskouCestu(navstiveneStaty[navstiveneStaty.Length-1].DatumOdjezdu, konecCesty, sektor,
                             jidelZaDen, priSekt5az12, priSekt12az18, priSekt18aVic, verSekt5az12, verSekt12az18, verSekt18aVic);
 
-                            string staty = "";
+                            staty = "";
                             foreach (NavstivenyStat stat in navstiveneStaty)
                             {
                                 staty+= stat.NazevStatu+", ";
@@ -483,20 +487,30 @@ namespace Cestovni_nahrady
                             char[] koncoveZnaky = { ' ', ',' };
                             staty = staty.Trim(koncoveZnaky);
 
-                            using (FileStream fs = new FileStream("uzivatele.dat", FileMode.Create, FileAccess.Write))
-                            {
-                                BinaryWriter bw = new BinaryWriter(fs);
-                                bw.Write(jmeno);
-                                bw.Write(prijmeni);
-                                bw.Write(tuzemskaCesta);
-                                bw.Write(cenaZaTuzemskeStravne);
-                                bw.Write(cenaZaZahranicniStravne);
-                                bw.Write(staty);
-                                double cenaCelkem = cenaZaTuzemskeStravne + cenaZaZahranicniStravne;
-                                bw.Write(cenaCelkem);
-                            }
-
+                   
                         }
+
+                        using (FileStream fs = new FileStream("uzivatele.dat", FileMode.Create, FileAccess.Write))
+                        {
+                            BinaryWriter bw = new BinaryWriter(fs);
+                            bw.Write(jmeno);
+                            bw.Write(prijmeni);
+                            bw.Write(tuzemskaCesta);
+                            bw.Write(cenaZaTuzemskouCestu);
+                            bw.Write(cenaZaZahranicniStravne);
+                            bw.Write(staty);
+                            double cenaCelkem = cenaZaTuzemskouCestu + cenaZaZahranicniStravne;
+                            bw.Write(cenaCelkem);
+                        }
+
+                        stranky[indexStranky].Hide();
+                        uzivatele = new Uzivatele();
+                        this.Controls.Add(uzivatele);
+                        uzivatele.Show();
+                        panelMenu.Hide();
+                        panelNavigacniBtny.Show();
+                        buttonDalsi.Hide();
+
                     }
                     catch (Exception exception)
                     {

@@ -53,22 +53,22 @@ namespace Cestovni_nahrady
 
                         Label labelCenaZaTuzCestu = new Label();
                         labelCenaZaTuzCestu.AutoSize = true;
-                        labelCenaZaTuzCestu.Text = "Cena za tuzemskou cestu: " + br.ReadDouble();
+                        labelCenaZaTuzCestu.Text = "Cena za tuzemskou cestu: " + br.ReadDouble() + " Kč";
                         labelCenaZaTuzCestu.Location = new Point(0, 90 + (i * 35));
 
                         Label labelCenaZaZahCestu = new Label();
                         labelCenaZaZahCestu.AutoSize = true;
-                        labelCenaZaZahCestu.Text = "Cena za zahraniční cestu: " + br.ReadDouble();
+                        labelCenaZaZahCestu.Text = "Cena za zahraniční cestu: " + br.ReadDouble()+" Kč";
                         labelCenaZaZahCestu.Location = new Point(0, 120 + (i * 35));
 
                         Label labelNavstivStaty = new Label();
                         labelNavstivStaty.AutoSize = true;
-                        labelNavstivStaty.Text = "Navštívené státy: " + br.ReadString();
+                        labelNavstivStaty.Text = "Navštívené zahraniční státy: " + br.ReadString();
                         labelNavstivStaty.Location = new Point(0, 150 + (i * 35));
 
                         Label labelCenaCelkem = new Label();
                         labelCenaCelkem.AutoSize = true;
-                        labelCenaCelkem.Text = "Celková cena: " + br.ReadDouble();
+                        labelCenaCelkem.Text = "Celková cena: " + br.ReadDouble()+" Kč";
                         labelCenaCelkem.Location = new Point(0, 180 + (i * 35));
                         ++i;
 

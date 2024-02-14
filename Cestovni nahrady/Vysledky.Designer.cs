@@ -1,6 +1,6 @@
 ﻿namespace Cestovni_nahrady
 {
-    partial class Uzivatele
+    partial class Vysledky
     {
         /// <summary> 
         /// Vyžaduje se proměnná návrháře.
@@ -35,11 +35,11 @@
             // 
             this.labelNadpisUzivetele.AutoSize = true;
             this.labelNadpisUzivetele.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.labelNadpisUzivetele.Location = new System.Drawing.Point(206, 12);
+            this.labelNadpisUzivetele.Location = new System.Drawing.Point(181, 24);
             this.labelNadpisUzivetele.Name = "labelNadpisUzivetele";
-            this.labelNadpisUzivetele.Size = new System.Drawing.Size(120, 29);
+            this.labelNadpisUzivetele.Size = new System.Drawing.Size(197, 29);
             this.labelNadpisUzivetele.TabIndex = 7;
-            this.labelNadpisUzivetele.Text = "Uživatelé";
+            this.labelNadpisUzivetele.Text = "Spočítané cesty";
             // 
             // Uzivatele
             // 

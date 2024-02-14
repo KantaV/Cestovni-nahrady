@@ -75,7 +75,7 @@
             "Vlastním automobilem s přivěsem",
             "Vlastní motorkou",
             "Vlastním nákladním vozem, autobusem, traktorem"});
-            this.comboBoxZpusobPrepravy.Location = new System.Drawing.Point(83, 67);
+            this.comboBoxZpusobPrepravy.Location = new System.Drawing.Point(83, 24);
             this.comboBoxZpusobPrepravy.Name = "comboBoxZpusobPrepravy";
             this.comboBoxZpusobPrepravy.Size = new System.Drawing.Size(255, 21);
             this.comboBoxZpusobPrepravy.TabIndex = 54;
@@ -127,7 +127,7 @@
             // labelCestoval
             // 
             this.labelCestoval.AutoSize = true;
-            this.labelCestoval.Location = new System.Drawing.Point(26, 70);
+            this.labelCestoval.Location = new System.Drawing.Point(26, 27);
             this.labelCestoval.Name = "labelCestoval";
             this.labelCestoval.Size = new System.Drawing.Size(51, 13);
             this.labelCestoval.TabIndex = 52;
@@ -136,7 +136,7 @@
             // labelPocetKm
             // 
             this.labelPocetKm.AutoSize = true;
-            this.labelPocetKm.Location = new System.Drawing.Point(26, 30);
+            this.labelPocetKm.Location = new System.Drawing.Point(26, 72);
             this.labelPocetKm.Name = "labelPocetKm";
             this.labelPocetKm.Size = new System.Drawing.Size(98, 13);
             this.labelPocetKm.TabIndex = 51;
@@ -144,7 +144,7 @@
             // 
             // textBoxPocetNajetychKm
             // 
-            this.textBoxPocetNajetychKm.Location = new System.Drawing.Point(127, 27);
+            this.textBoxPocetNajetychKm.Location = new System.Drawing.Point(217, 69);
             this.textBoxPocetNajetychKm.Name = "textBoxPocetNajetychKm";
             this.textBoxPocetNajetychKm.Size = new System.Drawing.Size(100, 20);
             this.textBoxPocetNajetychKm.TabIndex = 50;
@@ -165,7 +165,7 @@
             this.numericUpDownSpotreba.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownSpotreba.TabIndex = 61;
             // 
-            // Udaje3
+            // UdajePohonneHmoty
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -181,7 +181,7 @@
             this.Controls.Add(this.labelCestoval);
             this.Controls.Add(this.labelPocetKm);
             this.Controls.Add(this.textBoxPocetNajetychKm);
-            this.Name = "Udaje3";
+            this.Name = "UdajePohonneHmoty";
             this.Size = new System.Drawing.Size(532, 393);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSpotreba)).EndInit();
             this.ResumeLayout(false);

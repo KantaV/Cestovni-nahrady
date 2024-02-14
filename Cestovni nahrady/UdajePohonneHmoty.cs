@@ -24,26 +24,43 @@ namespace Cestovni_nahrady
         {
             if (comboBoxTypPohonnychHmot.SelectedIndex == 3) labelSpotrebovano.Text = "Spotřebováno v kilowatthodinách:";
             else labelSpotrebovano.Text = "Spotřebováno v litrech:";
+            if (comboBoxTypPohonnychHmot.SelectedIndex == 4)    //index 4 je LPG plyn
+            {
+                comboBoxZpsbVypoctuPohHmot.SelectedIndex = 1;
+                comboBoxZpsbVypoctuPohHmot.Enabled= false;
+                textBoxPrumernaPohonneHmotyCena.Enabled = true;
+            }
+            else
+            {
+                comboBoxZpsbVypoctuPohHmot.Enabled= true;
+                textBoxPrumernaPohonneHmotyCena.Enabled = false;
+                comboBoxZpsbVypoctuPohHmot.SelectedIndex = 0;
+            }
         }
 
         private void comboBoxZpsbVypoctuPohHmot_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBoxZpsbVypoctuPohHmot.SelectedIndex == 0)
+            if(comboBoxTypPohonnychHmot.SelectedIndex != 4)
             {
-                comboBoxTypPohonnychHmot.Enabled = true;
-                textBoxPrumernaPohonneHmotyCena.Enabled = false;
+                if (comboBoxZpsbVypoctuPohHmot.SelectedIndex == 0)
+                {
+                    comboBoxTypPohonnychHmot.Enabled = true;
+                    textBoxPrumernaPohonneHmotyCena.Enabled = false;
+                }
+                else
+                {
+                    comboBoxTypPohonnychHmot.Enabled = false;
+                    textBoxPrumernaPohonneHmotyCena.Enabled = true;
+                }
             }
-            else
-            {
-                comboBoxTypPohonnychHmot.Enabled = false;
-                textBoxPrumernaPohonneHmotyCena.Enabled = true;
-            }
+      
         }
 
         private void comboBoxZpusobPrepravy_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(comboBoxZpusobPrepravy.SelectedIndex == 0)
             {
+                textBoxPocetNajetychKm.Enabled= false;
                 comboBoxZpsbVypoctuPohHmot.Enabled = false;
                 comboBoxTypPohonnychHmot.Enabled = false;
                 numericUpDownSpotreba.Enabled = false;
@@ -51,6 +68,7 @@ namespace Cestovni_nahrady
             }
             else
             {
+                textBoxPocetNajetychKm.Enabled = true;
                 comboBoxZpsbVypoctuPohHmot.Enabled = true;
                 numericUpDownSpotreba.Enabled = true;
                 if (comboBoxZpsbVypoctuPohHmot.SelectedIndex == 0)

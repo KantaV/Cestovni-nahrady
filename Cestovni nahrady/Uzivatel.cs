@@ -10,6 +10,7 @@ namespace Cestovni_nahrady
     {
         private string jmeno;
         private string prijmeni;
+        private DateTime datumNarozeni;
         private bool tuzemskaCesta;
         private double cenaZaTuzemskouCestu;
         private double cenaZaZahranicniCestu;
@@ -17,6 +18,7 @@ namespace Cestovni_nahrady
 
         public string Jmeno { get { return jmeno; } }
         public string Prijmeni { get { return prijmeni; } }
+        public DateTime DatumNarozeni { get { return datumNarozeni; } }
         public bool TuzemskaCesta { get { return tuzemskaCesta; } }
         public double CenaZaTuzemskouCestu { get { return cenaZaTuzemskouCestu; } }
         public double CenaZaZahranicniCestu { get { return cenaZaZahranicniCestu; } }
@@ -24,11 +26,12 @@ namespace Cestovni_nahrady
 
         public double CelkemProplatit {get { return cenaZaTuzemskouCestu + cenaZaZahranicniCestu; } }
 
-        public Uzivatel(string jmeno, string prijmeni, bool tuzemskaCesta, double
+        public Uzivatel(string jmeno, string prijmeni,DateTime datumNarozeni, bool tuzemskaCesta, double
             cenaZaTuzemskouCestu, double cenaZaZahranicniCestu, string navstiveneStaty)
         {
             this.jmeno = jmeno;
             this.prijmeni = prijmeni;
+            this.datumNarozeni = datumNarozeni;
             this.tuzemskaCesta = tuzemskaCesta;
             this.cenaZaTuzemskouCestu = cenaZaTuzemskouCestu;
             this.cenaZaZahranicniCestu = cenaZaZahranicniCestu;

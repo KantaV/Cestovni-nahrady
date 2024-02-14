@@ -30,7 +30,7 @@
         {
             this.buttonNastaveni = new System.Windows.Forms.Button();
             this.buttonStart = new System.Windows.Forms.Button();
-            this.buttonUzivatele = new System.Windows.Forms.Button();
+            this.buttonSpocitaneCesty = new System.Windows.Forms.Button();
             this.panelMenu = new System.Windows.Forms.Panel();
             this.buttonZpet = new System.Windows.Forms.Button();
             this.buttonDalsi = new System.Windows.Forms.Button();
@@ -59,21 +59,21 @@
             this.buttonStart.UseVisualStyleBackColor = true;
             this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
             // 
-            // buttonUzivatele
+            // buttonSpocitaneCesty
             // 
-            this.buttonUzivatele.Location = new System.Drawing.Point(49, 84);
-            this.buttonUzivatele.Name = "buttonUzivatele";
-            this.buttonUzivatele.Size = new System.Drawing.Size(155, 23);
-            this.buttonUzivatele.TabIndex = 41;
-            this.buttonUzivatele.Text = "Uživatelé";
-            this.buttonUzivatele.UseVisualStyleBackColor = true;
-            this.buttonUzivatele.Click += new System.EventHandler(this.buttonUzivatele_Click);
+            this.buttonSpocitaneCesty.Location = new System.Drawing.Point(49, 84);
+            this.buttonSpocitaneCesty.Name = "buttonSpocitaneCesty";
+            this.buttonSpocitaneCesty.Size = new System.Drawing.Size(155, 23);
+            this.buttonSpocitaneCesty.TabIndex = 41;
+            this.buttonSpocitaneCesty.Text = "Spočítané cesty";
+            this.buttonSpocitaneCesty.UseVisualStyleBackColor = true;
+            this.buttonSpocitaneCesty.Click += new System.EventHandler(this.buttonSpocitaneCesty_Click);
             // 
             // panelMenu
             // 
             this.panelMenu.Controls.Add(this.buttonStart);
             this.panelMenu.Controls.Add(this.buttonNastaveni);
-            this.panelMenu.Controls.Add(this.buttonUzivatele);
+            this.panelMenu.Controls.Add(this.buttonSpocitaneCesty);
             this.panelMenu.Location = new System.Drawing.Point(172, 122);
             this.panelMenu.Name = "panelMenu";
             this.panelMenu.Size = new System.Drawing.Size(250, 201);
@@ -128,7 +128,7 @@
         #endregion
         private System.Windows.Forms.Button buttonNastaveni;
         private System.Windows.Forms.Button buttonStart;
-        private System.Windows.Forms.Button buttonUzivatele;
+        private System.Windows.Forms.Button buttonSpocitaneCesty;
         private System.Windows.Forms.Panel panelMenu;
         private System.Windows.Forms.Button buttonZpet;
         private System.Windows.Forms.Button buttonDalsi;

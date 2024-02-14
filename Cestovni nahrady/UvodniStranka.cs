@@ -23,9 +23,9 @@ namespace Cestovni_nahrady
             nastaveni = new Nastaveni();
             this.Controls.Add(nastaveni);
             nastaveni.Hide();
-            uzivatele = new Uzivatele();
-            this.Controls.Add(uzivatele);
-            uzivatele.Hide();
+            vysledky = new Vysledky();
+            this.Controls.Add(vysledky);
+            vysledky.Hide();
         }
 
         private UserControl[] stranky = new UserControl[4];
@@ -35,7 +35,7 @@ namespace Cestovni_nahrady
         private UdajePohonneHmoty udajePohonneHmoty;
         private UdajeStravne udajeStravne;
         private Nastaveni nastaveni;
-        private Uzivatele uzivatele;
+        private Vysledky vysledky;
 
         private int indexStranky = 0;
 
@@ -119,14 +119,14 @@ namespace Cestovni_nahrady
 
         }
 
-        private void buttonUzivatele_Click(object sender, EventArgs e)
+        private void buttonSpocitaneCesty_Click(object sender, EventArgs e)
         {
-            uzivatele=new Uzivatele();
-            this.Controls.Add(uzivatele);
-            uzivatele.Show();
+            vysledky = new Vysledky();
+            this.Controls.Add(vysledky);
+            vysledky.Show();
             panelMenu.Hide();
             panelNavigacniBtny.Show();
-            buttonDalsi.Hide();
+            buttonDalsi.Text = "Vymazat vše";
         }
 
         private void buttonNastaveni_Click(object sender, EventArgs e)
@@ -141,11 +141,12 @@ namespace Cestovni_nahrady
 
         private void buttonZpet_Click(object sender, EventArgs e)
         {
-            if (uzivatele.Visible)
+            if (vysledky.Visible)
             {
                 panelMenu.Show();
-                uzivatele.Hide();
+                vysledky.Hide();
                 panelNavigacniBtny.Hide();
+                buttonDalsi.Text = "Další";
                 buttonDalsi.Show();
             }
             else if (nastaveni.Visible)  //Funkce buttonu pro obsluhovani nastaveni
@@ -190,7 +191,11 @@ namespace Cestovni_nahrady
 
         private void buttonDalsi_Click(object sender, EventArgs e)
         {
-            if (nastaveni.Visible)  //Funkce pro ulozeni nastaveni
+            if(vysledky.Visible)
+            {
+                vysledky.VymazVse();
+            }
+            else if (nastaveni.Visible)  //Funkce pro ulozeni nastaveni
             {
 
                 //Zapsat nastaveni do souboru aby hodnoty zustaly i po vypnuti aplikace
@@ -310,10 +315,7 @@ namespace Cestovni_nahrady
                         if (udajeStravne.comboBoxStravneSektor.SelectedIndex == 0) sektor = "privatni";
                         else sektor = "verejny";
 
-                        double najetychKm = double.Parse(udajePohonneHmoty.textBoxPocetNajetychKm.Text);
-
-                        PohonneHmoty pohonnaHmota = new PohonneHmoty(udajePohonneHmoty.comboBoxTypPohonnychHmot.Text, double.Parse(udajePohonneHmoty.numericUpDownSpotreba.Value.ToString()));
-
+                        PohonneHmoty pohonnaHmota;
                         int[] jidelZaDen;
                         jidelZaDen = new int[delkaCesty.Days + 1];
                         int pocetNalezenychNumericUpDownu = 0;
@@ -322,7 +324,8 @@ namespace Cestovni_nahrady
                         {
                             if (udajeStravne.jidlaZaDen1.Controls[i] is NumericUpDown)
                             {
-                                jidelZaDen[pocetNalezenychNumericUpDownu] = int.Parse((udajeStravne.jidlaZaDen1.Controls[i] as NumericUpDown).Value.ToString());
+                                if (udajeStravne.checkBoxBezplatneJidlo.Checked) jidelZaDen[pocetNalezenychNumericUpDownu] = int.Parse((udajeStravne.jidlaZaDen1.Controls[i] as NumericUpDown).Value.ToString());
+                                else jidelZaDen[pocetNalezenychNumericUpDownu] = 0;
                                 pocetNalezenychNumericUpDownu++;
                             }
                         }
@@ -338,6 +341,19 @@ namespace Cestovni_nahrady
                             //Účtuji pohonné hmoty jedině pokud zaměstnanec cestoval svým vozem
                             if (udajePohonneHmoty.comboBoxZpusobPrepravy.SelectedIndex != 0)
                             {
+                                double najetychKm = double.Parse(udajePohonneHmoty.textBoxPocetNajetychKm.Text);
+
+                                //Podle zákona
+                                if (udajePohonneHmoty.comboBoxZpsbVypoctuPohHmot.SelectedIndex == 0)
+                                {
+                                    pohonnaHmota = new PohonneHmoty(udajePohonneHmoty.comboBoxTypPohonnychHmot.Text,
+                                    double.Parse(udajePohonneHmoty.numericUpDownSpotreba.Value.ToString()));
+                                }
+                                else  //Podle účtenky
+                                {
+                                    pohonnaHmota = new PohonneHmoty(double.Parse(udajePohonneHmoty.numericUpDownSpotreba.Value.ToString()),
+                                    double.Parse(udajePohonneHmoty.textBoxPrumernaPohonneHmotyCena.Text));
+                                }
                                 double zakladniNahrada = 5.6;
                                 switch (udajePohonneHmoty.comboBoxZpusobPrepravy.SelectedIndex)
                                 {
@@ -365,23 +381,47 @@ namespace Cestovni_nahrady
                                         MessageBox.Show("Chyba");
                                         break;
                                 }
-                                //Podle zákona
-                                if (udajePohonneHmoty.comboBoxZpsbVypoctuPohHmot.SelectedIndex == 0)
-                                {
-                                    cenaZaPohonneHmoty += pohonnaHmota.CenaZaPohonneHmoty();
-                                    //MessageBox.Show(vyplatitPenez.ToString());
-                                }
-                                else  //Podle účtenky
-                                {
-                                    double prumerCenaZUctenek = double.Parse(udajePohonneHmoty.textBoxPrumernaPohonneHmotyCena.Text);
-                                    cenaZaPohonneHmoty += prumerCenaZUctenek * pohonnaHmota.Spotrebovano;
-                                    //MessageBox.Show(vyplatitPenez.ToString());
-                                }
+                                cenaZaPohonneHmoty += pohonnaHmota.CenaZaPohonneHmoty();
+                                //MessageBox.Show(cenaZaPohonneHmoty.ToString());
                             }
                             double cenaZaStravne= CenaZaTuzemskouCestu(zacatekCesty, konecCesty, sektor, jidelZaDen, priSekt5az12,
                                 priSekt12az18, priSekt18aVic, verSekt5az12, verSekt12az18, verSekt18aVic);
                             //MessageBox.Show("Proplatit" + cenaZaPohonneHmoty+cenaZaStravne);
                             cenaZaTuzemskouCestu = cenaZaPohonneHmoty + cenaZaStravne;
+
+                            try
+                            {
+                                using (FileStream fs = new FileStream("uzivatele.dat", FileMode.Append, FileAccess.Write))
+                                {
+                                    BinaryWriter bw = new BinaryWriter(fs);
+                                    bw.Write(jmeno);
+                                    bw.Write(prijmeni);
+                                    bw.Write(datNar.Date.ToString("d.M.yyyy"));
+                                    bw.Write(tuzemskaCesta);
+                                    bw.Write(cenaZaTuzemskouCestu);
+                                    bw.Write((double)0);
+                                    bw.Write("Žádné");
+                                    double cenaCelkem = cenaZaTuzemskouCestu + cenaZaZahranicniStravne;
+                                    bw.Write(cenaCelkem);
+                                }
+                            }
+                            catch (FileNotFoundException)
+                            {
+                                using (FileStream fs = new FileStream("uzivatele.dat", FileMode.Create, FileAccess.Write))
+                                {
+                                    BinaryWriter bw = new BinaryWriter(fs);
+                                    bw.Write(jmeno);
+                                    bw.Write(prijmeni);
+                                    bw.Write(datNar.Date.ToString("d.M.yyyy"));
+                                    bw.Write(tuzemskaCesta);
+                                    bw.Write(cenaZaTuzemskouCestu);
+                                    bw.Write((double)0);
+                                    bw.Write("Žádné");
+                                    double cenaCelkem = cenaZaTuzemskouCestu + cenaZaZahranicniStravne;
+                                    bw.Write(cenaCelkem);
+                                }
+                            }
+
                         }
                         else //Zahraniční cesta
                         {
@@ -487,29 +527,50 @@ namespace Cestovni_nahrady
                             char[] koncoveZnaky = { ' ', ',' };
                             staty = staty.Trim(koncoveZnaky);
 
-                   
-                        }
 
-                        using (FileStream fs = new FileStream("uzivatele.dat", FileMode.Create, FileAccess.Write))
-                        {
-                            BinaryWriter bw = new BinaryWriter(fs);
-                            bw.Write(jmeno);
-                            bw.Write(prijmeni);
-                            bw.Write(tuzemskaCesta);
-                            bw.Write(cenaZaTuzemskouCestu);
-                            bw.Write(cenaZaZahranicniStravne);
-                            bw.Write(staty);
-                            double cenaCelkem = cenaZaTuzemskouCestu + cenaZaZahranicniStravne;
-                            bw.Write(cenaCelkem);
+                            try
+                            {
+                                using (FileStream fs = new FileStream("uzivatele.dat", FileMode.Append, FileAccess.Write))
+                                {
+                                    BinaryWriter bw = new BinaryWriter(fs);
+                                    bw.Write(jmeno);
+                                    bw.Write(prijmeni);
+                                    bw.Write(datNar.Date.ToString("d.M.yyyy"));
+                                    bw.Write(tuzemskaCesta);
+                                    bw.Write(cenaZaTuzemskouCestu);
+                                    bw.Write(cenaZaZahranicniStravne);
+                                    bw.Write(staty);
+                                    double cenaCelkem = cenaZaTuzemskouCestu + cenaZaZahranicniStravne;
+                                    bw.Write(cenaCelkem);
+                                }
+                            }
+                            catch (FileNotFoundException)
+                            {
+                                using (FileStream fs = new FileStream("uzivatele.dat", FileMode.Create, FileAccess.Write))
+                                {
+                                    BinaryWriter bw = new BinaryWriter(fs);
+                                    bw.Write(jmeno);
+                                    bw.Write(prijmeni);
+                                    bw.Write(datNar.Date.ToString("d.M.yyyy"));
+                                    bw.Write(tuzemskaCesta);
+                                    bw.Write(cenaZaTuzemskouCestu);
+                                    bw.Write(cenaZaZahranicniStravne);
+                                    bw.Write(staty);
+                                    double cenaCelkem = cenaZaTuzemskouCestu + cenaZaZahranicniStravne;
+                                    bw.Write(cenaCelkem);
+                                }
+                            }
                         }
 
                         stranky[indexStranky].Hide();
-                        uzivatele = new Uzivatele();
-                        this.Controls.Add(uzivatele);
-                        uzivatele.Show();
+                        indexStranky = 0;
+                        vysledky = new Vysledky(true);
+                        this.Controls.Add(vysledky);
+                        vysledky.Show();
                         panelMenu.Hide();
                         panelNavigacniBtny.Show();
                         buttonDalsi.Hide();
+                        buttonDalsi.Text = "Další";
 
                     }
                     catch (Exception exception)
@@ -662,6 +723,8 @@ namespace Cestovni_nahrady
             } while (den < delkaCesty.Days + 1);
             return vyplatitPenez;
         }
+
+
 
 
 

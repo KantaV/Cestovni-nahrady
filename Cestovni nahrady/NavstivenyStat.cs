@@ -15,9 +15,10 @@ namespace Cestovni_nahrady
         private string mena = "";
         private int cenaZaDenVeStateVZahrMene = 0;
         private TimeSpan casVeState=TimeSpan.Zero;
-        private DateTime datumPrijezdu=DateTime.Now;
-        private DateTime datumOdjezdu=DateTime.Now;
+        private DateTime datumCasPrijezdu=DateTime.Now;
+        private DateTime datumCasOdjedzu=DateTime.Now;
         private double cenaZaDenVeStatePrevedeno = 0;
+        private bool udajeJsouSpravne;
 
         public string NazevStatu
         {
@@ -31,16 +32,16 @@ namespace Cestovni_nahrady
             set { casVeState = value;}
         }
 
-        public DateTime DatumPrijezdu
+        public DateTime DatumCasPrijedzu
         {
-            get { return datumPrijezdu;}
-            set { datumPrijezdu = value;}
+            get { return datumCasPrijezdu;}
+            set { datumCasPrijezdu = value;}
         }
 
-        public DateTime DatumOdjezdu
+        public DateTime DatumCasOdjezdu
         {
-            get { return datumOdjezdu;}
-            set { datumOdjezdu = value;}
+            get { return datumCasOdjedzu;}
+            set { datumCasOdjedzu = value;}
         }
 
         public double CenaZaDenVeStatePrevedeno
@@ -48,15 +49,21 @@ namespace Cestovni_nahrady
             get { return cenaZaDenVeStatePrevedeno; }
         }
 
+        public bool UdajeJsouSpravne
+        {
+            get { return udajeJsouSpravne; }
+        }
+
         public NavstivenyStat(string nazevStatu,  int cena, string mena, DateTime datumPrijezdu, DateTime datumOdjezdu)
         {
             this.nazevStatu = nazevStatu;
             this.cenaZaDenVeStateVZahrMene = cena;
             this.mena = mena;
-            this.datumPrijezdu = datumPrijezdu;
-            this.datumOdjezdu = datumOdjezdu;
-            if (datumOdjezdu >= datumPrijezdu)
+            this.datumCasPrijezdu = datumPrijezdu;
+            this.datumCasOdjedzu = datumOdjezdu;
+            if (datumOdjezdu > datumPrijezdu)
             {
+                udajeJsouSpravne = true;
                 this.casVeState = datumOdjezdu - datumPrijezdu;
                 switch (mena)
                 {
@@ -93,7 +100,8 @@ namespace Cestovni_nahrady
             }
             else
             {
-                MessageBox.Show("Datum návratu domů z pracovní cesty nemůže být před datem začátku!");
+                udajeJsouSpravne = false;
+                MessageBox.Show("Datum odjezdu ze země "+nazevStatu+ " nemůže být před jeho příjezdem!");
             }
         }
 

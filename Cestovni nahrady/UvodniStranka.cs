@@ -39,12 +39,11 @@ namespace Cestovni_nahrady
 
         private int indexStranky = 0;
 
-        public void CasVeState(Panel panel, out string nazevZeme, out DateTime datumPrijezdu,out DateTime datumOdjezdu)
+        public void CasVeState(Panel panel, out string nazevZeme, out DateTime datumCasPrijezdu,out DateTime datumCasOdjezdu)
         {
             nazevZeme = "";
-            TimeSpan cas = TimeSpan.Zero;
-            datumPrijezdu = DateTime.Now;
-            datumOdjezdu = DateTime.Now;
+            datumCasPrijezdu = DateTime.Now;
+            datumCasOdjezdu = DateTime.Now;
             DateTime casPrijezdu = DateTime.Now, casOdjezdu = DateTime.Now;
             for (int i = 0; i < panel.Controls.Count; i++)
             {
@@ -55,13 +54,13 @@ namespace Cestovni_nahrady
                     switch (i)
                     {
                         case 1:
-                            datumPrijezdu = (panel.Controls[i] as DateTimePicker).Value;
+                            datumCasPrijezdu = (panel.Controls[i] as DateTimePicker).Value;
                             break;
                         case 2:
                             casPrijezdu = (panel.Controls[i] as DateTimePicker).Value;
                             break;
                         case 3:
-                            datumOdjezdu = (panel.Controls[i] as DateTimePicker).Value;
+                            datumCasOdjezdu = (panel.Controls[i] as DateTimePicker).Value;
                             break;
                         case 4:
                             casOdjezdu = (panel.Controls[i] as DateTimePicker).Value;
@@ -78,8 +77,8 @@ namespace Cestovni_nahrady
             TimeSpan odjezduTime = casOdjezdu.TimeOfDay;
 
             //spojím čas i data s obou proměnných
-            datumPrijezdu = new DateTime(datumPrijezdu.Year, datumPrijezdu.Month, datumPrijezdu.Day, prijezduTime.Hours, prijezduTime.Minutes, prijezduTime.Seconds);
-            datumOdjezdu = new DateTime(datumOdjezdu.Year, datumOdjezdu.Month, datumOdjezdu.Day, odjezduTime.Hours, odjezduTime.Minutes, odjezduTime.Seconds);
+            datumCasPrijezdu = new DateTime(datumCasPrijezdu.Year, datumCasPrijezdu.Month, datumCasPrijezdu.Day, prijezduTime.Hours, prijezduTime.Minutes, prijezduTime.Seconds);
+            datumCasOdjezdu = new DateTime(datumCasOdjezdu.Year, datumCasOdjezdu.Month, datumCasOdjezdu.Day, odjezduTime.Hours, odjezduTime.Minutes, odjezduTime.Seconds);
 
             /* MessageBox.Show(nazevZeme+"\n" +
                  "prijezd " +datumPrijezdu+
@@ -188,6 +187,9 @@ namespace Cestovni_nahrady
         private DateTime konecCesty;
         private TimeSpan delkaCesty;
 
+        NavstivenyStat[] navstiveneStaty;
+        bool tuzemskaCesta = true;
+        bool dataJsouSpravne = true;
 
         private void buttonDalsi_Click(object sender, EventArgs e)
         {
@@ -220,23 +222,84 @@ namespace Cestovni_nahrady
             }
             else                //Pro obsluhovani vypoctu a udajovych stranek
             {
-                if (indexStranky == stranky.Length - 2)
+                dataJsouSpravne = true;
+                if (indexStranky == 0)
                 {
-                    //Aktivuje se při příchodu na poslední stránku
+                    //Aktivuje se při příchodu na druhou stránku
                     zacatekCesty = udajeOsobni.dtpDatumZacatkuCesty.Value.Date + udajeOsobni.dtpCasZacatkuCesty.Value.TimeOfDay;
                     konecCesty = udajeOsobni.dtpDatumKonceCesty.Value.Date + udajeOsobni.dtpCasKonceCesty.Value.TimeOfDay;
+                    udajeZahranicniCesta.labelCelkZacatekCesty.Text ="Celkový začátek cesty: "+ zacatekCesty.ToString();
+                    udajeZahranicniCesta.labelCelkKonecCesty.Text ="Celkový konec cesty: "+ konecCesty.ToString();
+                }
+                else if (indexStranky ==1)
+                {
+                    //Aktivuje se při příchodu na třetí stránku
+                    navstiveneStaty = new NavstivenyStat[udajeZahranicniCesta.pocet];
+                    //Ošetření počet států
+                    if (udajeZahranicniCesta.numericUpDownPocetZemi.Value > 0)
+                    {
+                        tuzemskaCesta = false;
+                        string nazevZeme = "";
+                        DateTime prijezdDoZeme = DateTime.Now, odjezdZeZeme = DateTime.Now;
+                        if (udajeZahranicniCesta.zahranici.Controls[0] is Panel) CasVeState((udajeZahranicniCesta.zahranici.Controls[0] as Panel), out nazevZeme, out prijezdDoZeme, out odjezdZeZeme);
+                        string[] stringUdajeOState = nazevZeme.Split(' ');
+                        navstiveneStaty[0] = new NavstivenyStat(stringUdajeOState[0], int.Parse(stringUdajeOState[stringUdajeOState.Length - 2]), stringUdajeOState[stringUdajeOState.Length - 1], prijezdDoZeme, odjezdZeZeme);
+                        MessageBox.Show(navstiveneStaty[0].NazevStatu + " " + navstiveneStaty[0].CasVeState);
+
+                        //Otestuju příjezd do první zahraniční země
+                        if (zacatekCesty > navstiveneStaty[0].DatumCasPrijedzu)
+                        {
+                            dataJsouSpravne = false;
+                            MessageBox.Show("Datum příjezdu do země " + navstiveneStaty[0].NazevStatu + " nemůže být před ÚPLNÝM začátkem cesty!");
+                        }
+
+                        //Zjistim kazdy navstiveny stat a delku pobytu v nem
+                        for (int i = 1; i < udajeZahranicniCesta.zahranici.Controls.Count; i++)
+                        {
+                            nazevZeme = "";
+                            prijezdDoZeme = DateTime.Now;
+                            odjezdZeZeme = DateTime.Now;
+                            if (udajeZahranicniCesta.zahranici.Controls[i] is Panel) CasVeState((udajeZahranicniCesta.zahranici.Controls[i] as Panel), out nazevZeme, out prijezdDoZeme, out odjezdZeZeme);
+                            stringUdajeOState = nazevZeme.Split(' ');
+                            navstiveneStaty[i] = new NavstivenyStat(stringUdajeOState[0], int.Parse(stringUdajeOState[stringUdajeOState.Length - 2]), stringUdajeOState[stringUdajeOState.Length - 1], prijezdDoZeme, odjezdZeZeme);
+                            if (!navstiveneStaty[i].UdajeJsouSpravne) dataJsouSpravne = false;
+                            if (navstiveneStaty[i - 1].DatumCasOdjezdu > navstiveneStaty[i].DatumCasPrijedzu)
+                            {
+                                dataJsouSpravne = false;
+                                MessageBox.Show("Příjezd do " + navstiveneStaty[i].NazevStatu + " nemůže být před odjezdem z " + navstiveneStaty[i - 1].NazevStatu);
+                            }
+                            
+                            MessageBox.Show(navstiveneStaty[i].NazevStatu + " " + navstiveneStaty[i].CasVeState);
+                        }
+
+                        //Otestuju odjezd z poslední zahraniční země
+                        if (konecCesty < navstiveneStaty[navstiveneStaty.Length-1].DatumCasOdjezdu)
+                        {
+                            dataJsouSpravne = false;
+                            MessageBox.Show("Datum odjezdu ze země " + navstiveneStaty[navstiveneStaty.Length-1].NazevStatu + " nemůže být po ÚPLNÉM konci cesty!");
+                        }
+                    }
+                }
+                else if (indexStranky == 2)
+                {
+                    //Aktivuje se při příchodu na poslední stránku
+
                     delkaCesty = konecCesty - zacatekCesty;
                     //Spočítání délky cesty abych získal počet dní
                     udajeStravne.Vygeneruj(delkaCesty.Days+1);
                     //Změna textu buttonu
                     buttonDalsi.Text = "Vypočítej";
                 }
-                //Postarání se o samotné stránky
+
                 if (indexStranky < stranky.Length - 1)
                 {
-                    stranky[indexStranky].Hide();
-                    ++indexStranky;
-                    stranky[indexStranky].Show();
+                    //Testuji zda jdou data zadána správně a pokud ne, nepustím uživatele dál
+                    if (dataJsouSpravne)
+                    {
+                        stranky[indexStranky].Hide();
+                        ++indexStranky;
+                        stranky[indexStranky].Show();
+                    }
                 }
                 else
                 {
@@ -287,27 +350,6 @@ namespace Cestovni_nahrady
                         string jmeno = udajeOsobni.textBoxJmeno.Text;
                         string prijmeni = udajeOsobni.textBoxPrijmeni.Text;
                         DateTime datNar = udajeOsobni.dateTimePickerDatNar.Value;
-
-                        bool tuzemskaCesta = true;
-
-                        NavstivenyStat[] navstiveneStaty = new NavstivenyStat[udajeZahranicniCesta.pocet];
-                        //Ošetření počet států
-                        if (udajeZahranicniCesta.numericUpDownPocetZemi.Value > 0)
-                        {
-                            tuzemskaCesta = false;
-                            //Zjistim kazdy navstiveny stat a delku pobytu v nem
-                            for (int i = 0; i < udajeZahranicniCesta.zahranici.Controls.Count; i++)
-                            {
-
-                                string nazevZeme = "";
-                                DateTime prijezdDoZeme= DateTime.Now,odjezdZeZeme=DateTime.Now;
-                                TimeSpan casVeState = TimeSpan.Zero;
-                                if (udajeZahranicniCesta.zahranici.Controls[i] is Panel) CasVeState((udajeZahranicniCesta.zahranici.Controls[i] as Panel), out nazevZeme,out prijezdDoZeme, out odjezdZeZeme);
-                                string[] stringUdajeOState = nazevZeme.Split(' ');
-                                navstiveneStaty[i] = new NavstivenyStat(stringUdajeOState[0],int.Parse(stringUdajeOState[stringUdajeOState.Length-2]),stringUdajeOState[stringUdajeOState.Length-1],prijezdDoZeme,odjezdZeZeme);
-                                MessageBox.Show(navstiveneStaty[i].NazevStatu + " " + navstiveneStaty[i].CasVeState) ;
-                            }
-                        }
 
 
                         //Rozdělení sektoru
@@ -425,10 +467,11 @@ namespace Cestovni_nahrady
                         }
                         else //Zahraniční cesta
                         {
-                            TimeSpan casNezOpustilCesko = navstiveneStaty[0].DatumPrijezdu-zacatekCesty;
+                            TimeSpan casNezOpustilCesko = navstiveneStaty[0].DatumCasPrijedzu-zacatekCesty;
                             //Nez dojede do zahranici
-                            cenaZaTuzemskouCestu = CenaZaTuzemskouCestu(zacatekCesty, navstiveneStaty[0].DatumPrijezdu, sektor,
+                            cenaZaTuzemskouCestu = CenaZaTuzemskouCestu(zacatekCesty, navstiveneStaty[0].DatumCasPrijedzu, sektor,
                                 jidelZaDen,priSekt5az12,priSekt12az18,priSekt18aVic,verSekt5az12,verSekt12az18,verSekt18aVic);
+
                             int denCelkove = casNezOpustilCesko.Days;
                             int hodinPrvniDen = 0;
                             int hodinPosledniDen = 0;
@@ -437,22 +480,23 @@ namespace Cestovni_nahrady
 
                             for (int i = 0; i < navstiveneStaty.Length; i++)
                             {
-                                if (navstiveneStaty[i].DatumPrijezdu.Date == navstiveneStaty[i].DatumOdjezdu.Date)  //Pokud se jedna o jednodenni cestu
+                                if (navstiveneStaty[i].DatumCasPrijedzu.Date == navstiveneStaty[i].DatumCasOdjezdu.Date)  //Pokud se jedna o jednodenni cestu
                                 {
-                                    hodinPrvniDen = navstiveneStaty[i].DatumOdjezdu.Hour - navstiveneStaty[i].DatumPrijezdu.Hour;
+                                    hodinPrvniDen = navstiveneStaty[i].DatumCasOdjezdu.Hour - navstiveneStaty[i].DatumCasPrijedzu.Hour;
                                     hodinPosledniDen = 0;
                                 }
                                 else     //Cesta delsi nez 1 den
                                 {
-                                    hodinPrvniDen = 24 - navstiveneStaty[i].DatumPrijezdu.Hour;
-                                    hodinPosledniDen = navstiveneStaty[i].DatumOdjezdu.Hour;
+                                    hodinPrvniDen = 24 - navstiveneStaty[i].DatumCasPrijedzu.Hour;
+                                    hodinPosledniDen = navstiveneStaty[i].DatumCasOdjezdu.Hour;
                                 }
-
                                 double zakladniSazba=0;
                                 int den = 0;            
                                 zkratit = 0;
+                                bool posledniDen;
                                 do
                                 {
+                                    posledniDen = false;
                                     if (den == 0)   //Při prvním dni
                                     {
                                         if (hodinPrvniDen > 18)
@@ -480,6 +524,7 @@ namespace Cestovni_nahrady
                                     }
                                     else if (den == navstiveneStaty[i].CasVeState.Days) //Při posledním dni, pouze pokud je více dní
                                     {
+                                        posledniDen = true;
                                         if (hodinPosledniDen > 18)
                                         {
                                             zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno;
@@ -509,14 +554,18 @@ namespace Cestovni_nahrady
                                         if (zkratit > 1) zkratit = 1;       //25% stravneho
                                         cenaZaZahranicniStravne += zakladniSazba - zakladniSazba * zkratit;
                                     }
-                                    ++den;      //Posunu den
-                                    ++denCelkove;
-                                } while (den < navstiveneStaty[i].CasVeState.Days + 1);
+                                    if (!posledniDen)
+                                    {
+                                        ++den;      //Posunu den ale jen pokud není poslední protože pokud je poslední, potřebuji si toto datum ještě nechat  
+                                        ++denCelkove; //pro vykonání cesty v jiném státě ve zbytku tohoto dne
+                                    }
+
+                                } while (den < navstiveneStaty[i].CasVeState.Days + 1&&!posledniDen);
                             }
                            //MessageBox.Show(cenaZaZahranicniStravne.ToString());
 
                             //Pote co bude dojizdet ze zahranici
-                            cenaZaTuzemskouCestu += CenaZaTuzemskouCestu(navstiveneStaty[navstiveneStaty.Length-1].DatumOdjezdu, konecCesty, sektor,
+                            cenaZaTuzemskouCestu += CenaZaTuzemskouCestu(navstiveneStaty[navstiveneStaty.Length-1].DatumCasOdjezdu, konecCesty, sektor,
                             jidelZaDen, priSekt5az12, priSekt12az18, priSekt18aVic, verSekt5az12, verSekt12az18, verSekt18aVic);
 
                             staty = "";

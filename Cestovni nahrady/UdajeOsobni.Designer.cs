@@ -44,35 +44,37 @@
             // 
             // dtpDatumKonceCesty
             // 
-            this.dtpDatumKonceCesty.Location = new System.Drawing.Point(201, 293);
+            this.dtpDatumKonceCesty.Location = new System.Drawing.Point(235, 241);
             this.dtpDatumKonceCesty.Name = "dtpDatumKonceCesty";
             this.dtpDatumKonceCesty.Size = new System.Drawing.Size(200, 20);
             this.dtpDatumKonceCesty.TabIndex = 50;
+            this.dtpDatumKonceCesty.ValueChanged += new System.EventHandler(this.dtpDatumKonceCesty_ValueChanged);
             // 
             // labelKonecCesty
             // 
             this.labelKonecCesty.AutoSize = true;
-            this.labelKonecCesty.Location = new System.Drawing.Point(74, 294);
+            this.labelKonecCesty.Location = new System.Drawing.Point(74, 247);
             this.labelKonecCesty.Name = "labelKonecCesty";
-            this.labelKonecCesty.Size = new System.Drawing.Size(112, 13);
+            this.labelKonecCesty.Size = new System.Drawing.Size(145, 13);
             this.labelKonecCesty.TabIndex = 59;
-            this.labelKonecCesty.Text = "Konec služební cesty:";
+            this.labelKonecCesty.Text = "Konec služební cesty (v ČR):";
             // 
             // dtpDatumZacatkuCesty
             // 
-            this.dtpDatumZacatkuCesty.Location = new System.Drawing.Point(201, 154);
+            this.dtpDatumZacatkuCesty.Location = new System.Drawing.Point(235, 149);
             this.dtpDatumZacatkuCesty.Name = "dtpDatumZacatkuCesty";
             this.dtpDatumZacatkuCesty.Size = new System.Drawing.Size(200, 20);
             this.dtpDatumZacatkuCesty.TabIndex = 49;
+            this.dtpDatumZacatkuCesty.ValueChanged += new System.EventHandler(this.dtpDatumZacatkuCesty_ValueChanged);
             // 
             // labelZacatekCesty
             // 
             this.labelZacatekCesty.AutoSize = true;
             this.labelZacatekCesty.Location = new System.Drawing.Point(74, 155);
             this.labelZacatekCesty.Name = "labelZacatekCesty";
-            this.labelZacatekCesty.Size = new System.Drawing.Size(121, 13);
+            this.labelZacatekCesty.Size = new System.Drawing.Size(154, 13);
             this.labelZacatekCesty.TabIndex = 58;
-            this.labelZacatekCesty.Text = "Začátek služební cesty:";
+            this.labelZacatekCesty.Text = "Začátek služební cesty (v ČR):";
             // 
             // labelDatNar
             // 
@@ -125,20 +127,22 @@
             // dtpCasZacatkuCesty
             // 
             this.dtpCasZacatkuCesty.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtpCasZacatkuCesty.Location = new System.Drawing.Point(201, 180);
+            this.dtpCasZacatkuCesty.Location = new System.Drawing.Point(235, 175);
             this.dtpCasZacatkuCesty.Name = "dtpCasZacatkuCesty";
             this.dtpCasZacatkuCesty.Size = new System.Drawing.Size(200, 20);
             this.dtpCasZacatkuCesty.TabIndex = 61;
+            this.dtpCasZacatkuCesty.ValueChanged += new System.EventHandler(this.dtpCasZacatkuCesty_ValueChanged);
             // 
             // dtpCasKonceCesty
             // 
             this.dtpCasKonceCesty.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtpCasKonceCesty.Location = new System.Drawing.Point(201, 319);
+            this.dtpCasKonceCesty.Location = new System.Drawing.Point(235, 267);
             this.dtpCasKonceCesty.Name = "dtpCasKonceCesty";
             this.dtpCasKonceCesty.Size = new System.Drawing.Size(200, 20);
             this.dtpCasKonceCesty.TabIndex = 62;
+            this.dtpCasKonceCesty.ValueChanged += new System.EventHandler(this.dtpCasKonceCesty_ValueChanged);
             // 
-            // Udaje1
+            // UdajeOsobni
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -154,7 +158,7 @@
             this.Controls.Add(this.labelPrijmeni);
             this.Controls.Add(this.textBoxJmeno);
             this.Controls.Add(this.labelJmeno);
-            this.Name = "Udaje1";
+            this.Name = "UdajeOsobni";
             this.Size = new System.Drawing.Size(532, 393);
             this.ResumeLayout(false);
             this.PerformLayout();

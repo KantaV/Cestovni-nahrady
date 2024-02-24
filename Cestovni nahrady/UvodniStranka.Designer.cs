@@ -116,9 +116,10 @@
             this.ClientSize = new System.Drawing.Size(601, 437);
             this.Controls.Add(this.panelNavigacniBtny);
             this.Controls.Add(this.panelMenu);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "UvodniStranka";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Cestovní náhrady";
             this.panelMenu.ResumeLayout(false);
             this.panelNavigacniBtny.ResumeLayout(false);
             this.ResumeLayout(false);

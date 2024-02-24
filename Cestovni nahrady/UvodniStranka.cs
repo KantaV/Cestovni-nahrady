@@ -499,14 +499,14 @@ namespace Cestovni_nahrady
                                     posledniDen = false;
                                     if (den == 0)   //Při prvním dni
                                     {
-                                        if (hodinPrvniDen > 18)
+                                        if (hodinPrvniDen >= 18)
                                         {
                                             zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno;
                                             zkratit = jidelZaDen[denCelkove] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
                                             if (zkratit > 1) zkratit = 1;       //25% stravneho
                                             cenaZaZahranicniStravne += zakladniSazba - zakladniSazba * zkratit;
                                         }
-                                        else if (hodinPrvniDen > 12)
+                                        else if (hodinPrvniDen >= 12)
                                         {
                                             zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno*((double)2 /3);
 
@@ -514,7 +514,7 @@ namespace Cestovni_nahrady
                                             if (zkratit > 1) zkratit = 1;       //35% stravneho
                                             cenaZaZahranicniStravne += zakladniSazba - zakladniSazba * zkratit;
                                         }
-                                        else if (hodinPrvniDen > 1)
+                                        else if (hodinPrvniDen >= 1)
                                         {
                                             zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno*((double)1/3);
                                             zkratit = jidelZaDen[denCelkove] * 0.7;    //pri rozsahu 5 az 12 hodin se za kazde jidlo odecita 
@@ -525,21 +525,21 @@ namespace Cestovni_nahrady
                                     else if (den == navstiveneStaty[i].CasVeState.Days) //Při posledním dni, pouze pokud je více dní
                                     {
                                         posledniDen = true;
-                                        if (hodinPosledniDen > 18)
+                                        if (hodinPosledniDen >= 18)
                                         {
                                             zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno;
                                             zkratit = jidelZaDen[denCelkove] * 0.25;    //pri rozsahu 18 a vice hodin se za kazde jidlo odecita 
                                             if (zkratit > 1) zkratit = 1;       //25% stravneho
                                             cenaZaZahranicniStravne += zakladniSazba - zakladniSazba * zkratit;
                                         }
-                                        else if (hodinPosledniDen > 12)
+                                        else if (hodinPosledniDen >= 12)
                                         {
                                             zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno * ((double)2 / 3);
                                             zkratit = jidelZaDen[denCelkove] * 0.35;    //pri rozsahu 12 az 18 hodin se za kazde jidlo odecita 
                                             if (zkratit > 1) zkratit = 1;       //35% stravneho
                                             cenaZaZahranicniStravne += zakladniSazba - zakladniSazba * zkratit;
                                         }
-                                        else if (hodinPosledniDen > 5)
+                                        else if (hodinPosledniDen >= 1)
                                         {
                                             zakladniSazba = navstiveneStaty[i].CenaZaDenVeStatePrevedeno * ((double)1 / 3);
                                             zkratit = jidelZaDen[denCelkove] * 0.7;    //pri rozsahu 5 az 12 hodin se za kazde jidlo odecita 

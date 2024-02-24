@@ -255,9 +255,11 @@ namespace Cestovni_nahrady
                         string nazevZeme = "";
                         DateTime prijezdDoZeme = DateTime.Now, odjezdZeZeme = DateTime.Now;
                         if (udajeZahranicniCesta.zahranici.Controls[0] is Panel) CasVeState((udajeZahranicniCesta.zahranici.Controls[0] as Panel), out nazevZeme, out prijezdDoZeme, out odjezdZeZeme);
-                        string[] stringUdajeOState = nazevZeme.Split(' ');
-                        navstiveneStaty[0] = new NavstivenyStat(stringUdajeOState[0], int.Parse(stringUdajeOState[stringUdajeOState.Length - 2]), stringUdajeOState[stringUdajeOState.Length - 1], prijezdDoZeme, odjezdZeZeme);
-                        MessageBox.Show(navstiveneStaty[0].NazevStatu + " " + navstiveneStaty[0].CasVeState);
+                        string nazevStatu = nazevZeme.Substring(0, nazevZeme.Length - 7);
+                        int cena = int.Parse(nazevZeme.Substring(nazevZeme.Length-6, 2));
+                        string mena = nazevZeme.Substring(nazevZeme.Length-3, 3);
+                        navstiveneStaty[0]=new NavstivenyStat(nazevStatu, cena,mena,prijezdDoZeme,odjezdZeZeme);
+
 
                         //Otestuju příjezd do první zahraniční země
                         if (zacatekCesty > navstiveneStaty[0].DatumCasPrijedzu)
@@ -273,8 +275,10 @@ namespace Cestovni_nahrady
                             prijezdDoZeme = DateTime.Now;
                             odjezdZeZeme = DateTime.Now;
                             if (udajeZahranicniCesta.zahranici.Controls[i] is Panel) CasVeState((udajeZahranicniCesta.zahranici.Controls[i] as Panel), out nazevZeme, out prijezdDoZeme, out odjezdZeZeme);
-                            stringUdajeOState = nazevZeme.Split(' ');
-                            navstiveneStaty[i] = new NavstivenyStat(stringUdajeOState[0], int.Parse(stringUdajeOState[stringUdajeOState.Length - 2]), stringUdajeOState[stringUdajeOState.Length - 1], prijezdDoZeme, odjezdZeZeme);
+                            nazevStatu = nazevZeme.Substring(0, nazevZeme.Length - 7);
+                            cena = int.Parse(nazevZeme.Substring(nazevZeme.Length - 6, 2));
+                            mena = nazevZeme.Substring(nazevZeme.Length - 3, 3);
+                            navstiveneStaty[i] = new NavstivenyStat(nazevStatu, cena, mena, prijezdDoZeme, odjezdZeZeme);
                             if (!navstiveneStaty[i].UdajeJsouSpravne) dataJsouSpravne = false;
                             if (navstiveneStaty[i - 1].DatumCasOdjezdu > navstiveneStaty[i].DatumCasPrijedzu)
                             {
@@ -282,7 +286,7 @@ namespace Cestovni_nahrady
                                 MessageBox.Show("Příjezd do " + navstiveneStaty[i].NazevStatu + " nemůže být před odjezdem z " + navstiveneStaty[i - 1].NazevStatu);
                             }
                             
-                            MessageBox.Show(navstiveneStaty[i].NazevStatu + " " + navstiveneStaty[i].CasVeState);
+                            //MessageBox.Show(navstiveneStaty[i].NazevStatu + " " + navstiveneStaty[i].CasVeState);
                         }
 
                         //Otestuju odjezd z poslední zahraniční země
@@ -584,7 +588,7 @@ namespace Cestovni_nahrady
                             staty = "";
                             foreach (NavstivenyStat stat in navstiveneStaty)
                             {
-                                staty+= stat.NazevStatu+", ";
+                                staty += stat.NazevStatu+", ";
                             }
                             char[] koncoveZnaky = { ' ', ',' };
                             staty = staty.Trim(koncoveZnaky);

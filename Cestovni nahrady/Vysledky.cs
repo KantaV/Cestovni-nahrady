@@ -39,6 +39,7 @@ namespace Cestovni_nahrady
                     {
                         panelUzivatele = new Panel();
                         panelUzivatele.Height = 200;
+                        panelUzivatele.AutoSize= true;
                         panelUzivatele.Location = new Point(50,100+ (i *250));
 
                         Label labelNadpisVysledek = new Label();
@@ -161,6 +162,7 @@ namespace Cestovni_nahrady
                         {
                             panelUzivatele = new Panel();
                             panelUzivatele.Height = 200;
+                            panelUzivatele.AutoSize = true;
                             panelUzivatele.Location = new Point(50, 100);
 
                             Label labelJmeno = new Label();

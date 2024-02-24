@@ -195,30 +195,43 @@ namespace Cestovni_nahrady
         {
             if(vysledky.Visible)
             {
-                vysledky.VymazVse();
+                bool byloSmazano;
+                vysledky.VymazVse(out byloSmazano);
+                if (byloSmazano)
+                {
+                    panelMenu.Show();
+                    vysledky.Hide();
+                    panelNavigacniBtny.Hide();
+                    buttonDalsi.Text = "Další";
+                    buttonDalsi.Show();
+                }
+
             }
             else if (nastaveni.Visible)  //Funkce pro ulozeni nastaveni
             {
-
-                //Zapsat nastaveni do souboru aby hodnoty zustaly i po vypnuti aplikace
-                using (FileStream fs = new FileStream("nastaveni.dat", FileMode.Create, FileAccess.Write))
+                AnoNeDialog anoNeDialog = new AnoNeDialog("Přejete si uložit data?");
+                if(anoNeDialog.ShowDialog() == DialogResult.OK)
                 {
-                    BinaryWriter bw = new BinaryWriter(fs);
-                    //Privatni
-                    bw.Write((double)nastaveni.numericupordown5az12Priv.Value);
-                    bw.Write((double)nastaveni.numericUpDown12az18Priv.Value);
-                    bw.Write((double)nastaveni.numericUpDown18aVicePriv.Value);
-                    //Verejny
-                    bw.Write((double)nastaveni.numericUp5az12Ver.Value);
-                    bw.Write((double)nastaveni.numericUp12az18Ver.Value);
-                    bw.Write((double)nastaveni.numericUp18aViceVer.Value);
+                    //Zapsat nastaveni do souboru aby hodnoty zustaly i po vypnuti aplikace
+                    using (FileStream fs = new FileStream("nastaveni.dat", FileMode.Create, FileAccess.Write))
+                    {
+                        BinaryWriter bw = new BinaryWriter(fs);
+                        //Privatni
+                        bw.Write((double)nastaveni.numericupordown5az12Priv.Value);
+                        bw.Write((double)nastaveni.numericUpDown12az18Priv.Value);
+                        bw.Write((double)nastaveni.numericUpDown18aVicePriv.Value);
+                        //Verejny
+                        bw.Write((double)nastaveni.numericUp5az12Ver.Value);
+                        bw.Write((double)nastaveni.numericUp12az18Ver.Value);
+                        bw.Write((double)nastaveni.numericUp18aViceVer.Value);
+                    }
+                    //Update rozhrani
+                    nastaveni.Hide();
+                    panelNavigacniBtny.Hide();
+                    buttonDalsi.Text = "Další";
+                    panelMenu.Show();
                 }
-                
-                //Update rozhrani
-                nastaveni.Hide();
-                panelNavigacniBtny.Hide();
-                buttonDalsi.Text = "Další";
-                panelMenu.Show();
+
             }
             else                //Pro obsluhovani vypoctu a udajovych stranek
             {

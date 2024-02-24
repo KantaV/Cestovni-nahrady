@@ -20,7 +20,6 @@ namespace Cestovni_nahrady
             InitializeComponent();
 
             ////Upozornit uživatele pokud se jeho nastavení nevejde do vytyčených hranic
-            ///////////////!!!!!!!!!Aktualizovat min a max hodnoty aby byly aktuální už mi je po novým roce posunuli lol
             try
             {
                 //Načtení proběhne podle hodnot v souboru
@@ -44,13 +43,13 @@ namespace Cestovni_nahrady
                 {
                     BinaryWriter bw = new BinaryWriter(fs);
                     //Hodnoty pro privatni sektor
-                    bw.Write(129.0);
-                    bw.Write(196.0);
-                    bw.Write(307.0);
+                    bw.Write(140.0);
+                    bw.Write(212.0);
+                    bw.Write(333.0);
                     //Hodnoty pro verejny sektor
-                    bw.Write(129.0);
-                    bw.Write(196.0);
-                    bw.Write(307.0);
+                    bw.Write(140.0);
+                    bw.Write(212.0);
+                    bw.Write(333.0);
                 }           
             }
         }

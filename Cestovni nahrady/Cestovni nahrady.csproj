@@ -103,11 +103,11 @@
     <Compile Include="Vysledky.Designer.cs">
       <DependentUpon>Vysledky.cs</DependentUpon>
     </Compile>
-    <Compile Include="VymazVseDialog.cs">
+    <Compile Include="AnoNeDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VymazVseDialog.Designer.cs">
-      <DependentUpon>VymazVseDialog.cs</DependentUpon>
+    <Compile Include="AnoNeDialog.Designer.cs">
+      <DependentUpon>AnoNeDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Zahranici.cs">
       <SubType>UserControl</SubType>
@@ -148,8 +148,8 @@
     <EmbeddedResource Include="Vysledky.resx">
       <DependentUpon>Vysledky.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VymazVseDialog.resx">
-      <DependentUpon>VymazVseDialog.cs</DependentUpon>
+    <EmbeddedResource Include="AnoNeDialog.resx">
+      <DependentUpon>AnoNeDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Zahranici.resx">
       <DependentUpon>Zahranici.cs</DependentUpon>

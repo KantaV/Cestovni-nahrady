@@ -10,13 +10,14 @@ using System.Windows.Forms;
 
 namespace Cestovni_nahrady
 {
-    public partial class VymazVseDialog : Form
+    public partial class AnoNeDialog : Form
     {
 
-        public VymazVseDialog(string zprava)
+        public AnoNeDialog(string zprava)
         {
             InitializeComponent();
-            labelVymazVse.Text = zprava;
+            labelZprava.Text = zprava;
         }
+
     }
 }

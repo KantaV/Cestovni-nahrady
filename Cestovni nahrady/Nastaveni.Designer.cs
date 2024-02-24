@@ -54,12 +54,12 @@
             // 
             this.numericUp18aViceVer.Location = new System.Drawing.Point(145, 283);
             this.numericUp18aViceVer.Maximum = new decimal(new int[] {
-            367,
+            398,
             0,
             0,
             0});
             this.numericUp18aViceVer.Minimum = new decimal(new int[] {
-            307,
+            333,
             0,
             0,
             0});
@@ -67,7 +67,7 @@
             this.numericUp18aViceVer.Size = new System.Drawing.Size(120, 20);
             this.numericUp18aViceVer.TabIndex = 27;
             this.numericUp18aViceVer.Value = new decimal(new int[] {
-            307,
+            333,
             0,
             0,
             0});
@@ -76,12 +76,12 @@
             // 
             this.numericUp12az18Ver.Location = new System.Drawing.Point(145, 248);
             this.numericUp12az18Ver.Maximum = new decimal(new int[] {
-            236,
+            256,
             0,
             0,
             0});
             this.numericUp12az18Ver.Minimum = new decimal(new int[] {
-            196,
+            212,
             0,
             0,
             0});
@@ -89,7 +89,7 @@
             this.numericUp12az18Ver.Size = new System.Drawing.Size(120, 20);
             this.numericUp12az18Ver.TabIndex = 26;
             this.numericUp12az18Ver.Value = new decimal(new int[] {
-            196,
+            212,
             0,
             0,
             0});
@@ -98,12 +98,12 @@
             // 
             this.numericUp5az12Ver.Location = new System.Drawing.Point(145, 212);
             this.numericUp5az12Ver.Maximum = new decimal(new int[] {
-            153,
+            166,
             0,
             0,
             0});
             this.numericUp5az12Ver.Minimum = new decimal(new int[] {
-            129,
+            140,
             0,
             0,
             0});
@@ -111,7 +111,7 @@
             this.numericUp5az12Ver.Size = new System.Drawing.Size(120, 20);
             this.numericUp5az12Ver.TabIndex = 25;
             this.numericUp5az12Ver.Value = new decimal(new int[] {
-            129,
+            140,
             0,
             0,
             0});
@@ -161,7 +161,7 @@
             0,
             0});
             this.numericUpDown18aVicePriv.Minimum = new decimal(new int[] {
-            307,
+            333,
             0,
             0,
             0});
@@ -169,7 +169,7 @@
             this.numericUpDown18aVicePriv.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown18aVicePriv.TabIndex = 20;
             this.numericUpDown18aVicePriv.Value = new decimal(new int[] {
-            307,
+            333,
             0,
             0,
             0});
@@ -183,7 +183,7 @@
             0,
             0});
             this.numericUpDown12az18Priv.Minimum = new decimal(new int[] {
-            196,
+            212,
             0,
             0,
             0});
@@ -191,7 +191,7 @@
             this.numericUpDown12az18Priv.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown12az18Priv.TabIndex = 19;
             this.numericUpDown12az18Priv.Value = new decimal(new int[] {
-            196,
+            212,
             0,
             0,
             0});
@@ -205,7 +205,7 @@
             0,
             0});
             this.numericupordown5az12Priv.Minimum = new decimal(new int[] {
-            129,
+            140,
             0,
             0,
             0});
@@ -213,7 +213,7 @@
             this.numericupordown5az12Priv.Size = new System.Drawing.Size(120, 20);
             this.numericupordown5az12Priv.TabIndex = 18;
             this.numericupordown5az12Priv.Value = new decimal(new int[] {
-            129,
+            140,
             0,
             0,
             0});

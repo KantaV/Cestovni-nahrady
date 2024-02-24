@@ -120,13 +120,15 @@ namespace Cestovni_nahrady
        
         }
 
-        public void VymazVse()
+        public void VymazVse(out bool byloSmazano)
         {
-            VymazVseDialog vymazVseDialog = new VymazVseDialog("Opravdu si přejete vymazat vše?");
+            AnoNeDialog vymazVseDialog = new AnoNeDialog("Opravdu si přejete vymazat vše?");
             if (vymazVseDialog.ShowDialog() == DialogResult.OK)
             {
+                byloSmazano = true;
                 File.Delete("uzivatele.dat");
             }
+            else byloSmazano = false;
         }
 
         public void VygenerujPosledni(Label labelNadpis)

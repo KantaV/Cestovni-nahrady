@@ -210,6 +210,7 @@ namespace Cestovni_nahrady
             else if (nastaveni.Visible)  //Funkce pro ulozeni nastaveni
             {
                 AnoNeDialog anoNeDialog = new AnoNeDialog("Přejete si uložit data?");
+                anoNeDialog.Text = "Uložit data";
                 if(anoNeDialog.ShowDialog() == DialogResult.OK)
                 {
                     //Zapsat nastaveni do souboru aby hodnoty zustaly i po vypnuti aplikace

@@ -124,6 +124,7 @@ namespace Cestovni_nahrady
         public void VymazVse(out bool byloSmazano)
         {
             AnoNeDialog vymazVseDialog = new AnoNeDialog("Opravdu si přejete vymazat vše?");
+            vymazVseDialog.Text = "Vymazat vše";
             if (vymazVseDialog.ShowDialog() == DialogResult.OK)
             {
                 byloSmazano = true;

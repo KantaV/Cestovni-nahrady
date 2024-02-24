@@ -244,7 +244,7 @@ namespace Cestovni_nahrady
                     udajeZahranicniCesta.labelCelkZacatekCesty.Text ="Celkový začátek cesty: "+ zacatekCesty.ToString();
                     udajeZahranicniCesta.labelCelkKonecCesty.Text ="Celkový konec cesty: "+ konecCesty.ToString();
                 }
-                else if (indexStranky ==1)
+                else if (indexStranky == 1)
                 {
                     //Aktivuje se při příchodu na třetí stránku
                     navstiveneStaty = new NavstivenyStat[udajeZahranicniCesta.pocet];

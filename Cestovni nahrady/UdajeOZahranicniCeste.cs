@@ -20,11 +20,10 @@ namespace Cestovni_nahrady
         public int pocet;
         public UserControl zahranici;
 
-        private void numericUpDownPocetZemi_ValueChanged(object sender, EventArgs e)    //Přidat něco jako button s pluskem který bude přidávat a odebírat země
+        private void numericUpDownPocetZemi_ValueChanged(object sender, EventArgs e)   
         {
             pocet = int.Parse(numericUpDownPocetZemi.Value.ToString());
             zahranici1.Vygeneruj(pocet);
-            zahranici = zahranici1;
         }
     }
 }

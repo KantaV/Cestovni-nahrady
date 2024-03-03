@@ -27,11 +27,11 @@ namespace Cestovni_nahrady
             string url = "https://www.mfcr.cz/cs/kontrola-a-regulace/legislativa/legislativni-dokumenty/2022/vyhlaska-c-462-2021-sb-49677";
 
             // Stežení obsahu webu
-            string htmlObsah = DownloadHtml(url);
-            staty = ParseHtml(htmlObsah);
+            string htmlObsah = StahniHtml(url);
+            staty = VyberData(htmlObsah);
         }
 
-        private static string DownloadHtml(string url)
+        private static string StahniHtml(string url)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -39,7 +39,7 @@ namespace Cestovni_nahrady
             }
         }
 
-        private static List<string> ParseHtml(string htmlContent)
+        private static List<string> VyberData(string htmlContent)
         {
             List<string> staty = new List<string>();
 
@@ -54,7 +54,7 @@ namespace Cestovni_nahrady
             {
                 foreach (var node in castiWebu)
                 {
-                    // Vyberu jednotlive objekty z webu pomoci hledani stylu
+                    // Vyberu jednotlive objekty z webu pomoci hledani stylu na webove strance
                     string nazevStatu = HttpUtility.HtmlDecode(node.SelectSingleNode(".//td[@class='leftAlign']")?.InnerText?.Trim());
                     string mena = HttpUtility.HtmlDecode(node.SelectSingleNode(".//td[@class='centerAlign']")?.InnerText?.Trim());
 
@@ -64,7 +64,7 @@ namespace Cestovni_nahrady
                     // Naplnim promennou, pokud nastane selhani nastavi se na 0
                     if (!int.TryParse(styleTag, out cenaStatu))
                     {
-                        cenaStatu = 0; // or any other default value
+                        cenaStatu = 0; 
                     }
 
                     // Kontrola jestli se naslo jmeno statu

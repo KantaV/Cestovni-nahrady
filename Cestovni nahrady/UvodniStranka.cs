@@ -19,7 +19,7 @@ namespace Cestovni_nahrady
         {
             InitializeComponent();
             panelNavigacniBtny.Hide();
-            //Nastavení musím inicializovat zde abych s ním mohl pracovat i pokud nastavení nebylo otevřeno
+            //Nastavení musím inicializovat zde abych s ním mohl pracovatv kódu i pokud nastavení nebylo otevřeno
             nastaveni = new Nastaveni();
             this.Controls.Add(nastaveni);
             nastaveni.Hide();

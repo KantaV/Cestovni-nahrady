@@ -24,7 +24,7 @@ namespace Cestovni_nahrady
         {
             if (comboBoxTypPohonnychHmot.SelectedIndex == 3) labelSpotrebovano.Text = "Spotřebováno v kilowatthodinách:";
             else labelSpotrebovano.Text = "Spotřebováno v litrech:";
-            if (comboBoxTypPohonnychHmot.SelectedIndex == 4)    //index 4 je LPG plyn
+            if (comboBoxTypPohonnychHmot.SelectedIndex == 4)    //index 4 je ostatní takže uživatel může zadat pouze hodnotu z účtenky
             {
                 comboBoxZpsbVypoctuPohHmot.SelectedIndex = 1;
                 comboBoxZpsbVypoctuPohHmot.Enabled= false;

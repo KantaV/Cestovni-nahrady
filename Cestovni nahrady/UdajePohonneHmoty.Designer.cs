@@ -40,6 +40,7 @@
             this.textBoxPocetNajetychKm = new System.Windows.Forms.TextBox();
             this.labelSpotrebovano = new System.Windows.Forms.Label();
             this.numericUpDownSpotreba = new System.Windows.Forms.NumericUpDown();
+            this.labelVarovani = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSpotreba)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,7 +51,7 @@
             this.comboBoxZpsbVypoctuPohHmot.Items.AddRange(new object[] {
             "Dle zákona",
             "Dle účtenky"});
-            this.comboBoxZpsbVypoctuPohHmot.Location = new System.Drawing.Point(217, 95);
+            this.comboBoxZpsbVypoctuPohHmot.Location = new System.Drawing.Point(217, 135);
             this.comboBoxZpsbVypoctuPohHmot.Name = "comboBoxZpsbVypoctuPohHmot";
             this.comboBoxZpsbVypoctuPohHmot.Size = new System.Drawing.Size(121, 21);
             this.comboBoxZpsbVypoctuPohHmot.TabIndex = 55;
@@ -59,7 +60,7 @@
             // labelTypPohHmt
             // 
             this.labelTypPohHmt.AutoSize = true;
-            this.labelTypPohHmt.Location = new System.Drawing.Point(26, 189);
+            this.labelTypPohHmt.Location = new System.Drawing.Point(26, 229);
             this.labelTypPohHmt.Name = "labelTypPohHmt";
             this.labelTypPohHmt.Size = new System.Drawing.Size(104, 13);
             this.labelTypPohHmt.TabIndex = 59;
@@ -75,7 +76,7 @@
             "Vlastním automobilem s přivěsem",
             "Vlastní motorkou",
             "Vlastním nákladním vozem, autobusem, traktorem"});
-            this.comboBoxZpusobPrepravy.Location = new System.Drawing.Point(83, 24);
+            this.comboBoxZpusobPrepravy.Location = new System.Drawing.Point(83, 64);
             this.comboBoxZpusobPrepravy.Name = "comboBoxZpusobPrepravy";
             this.comboBoxZpusobPrepravy.Size = new System.Drawing.Size(255, 21);
             this.comboBoxZpusobPrepravy.TabIndex = 54;
@@ -84,7 +85,7 @@
             // labelPrumerCena
             // 
             this.labelPrumerCena.AutoSize = true;
-            this.labelPrumerCena.Location = new System.Drawing.Point(26, 274);
+            this.labelPrumerCena.Location = new System.Drawing.Point(26, 314);
             this.labelPrumerCena.Name = "labelPrumerCena";
             this.labelPrumerCena.Size = new System.Drawing.Size(82, 13);
             this.labelPrumerCena.TabIndex = 57;
@@ -93,7 +94,7 @@
             // textBoxPrumernaPohonneHmotyCena
             // 
             this.textBoxPrumernaPohonneHmotyCena.Enabled = false;
-            this.textBoxPrumernaPohonneHmotyCena.Location = new System.Drawing.Point(218, 271);
+            this.textBoxPrumernaPohonneHmotyCena.Location = new System.Drawing.Point(218, 311);
             this.textBoxPrumernaPohonneHmotyCena.Name = "textBoxPrumernaPohonneHmotyCena";
             this.textBoxPrumernaPohonneHmotyCena.Size = new System.Drawing.Size(120, 20);
             this.textBoxPrumernaPohonneHmotyCena.TabIndex = 56;
@@ -108,8 +109,8 @@
             "Natural 98",
             "Nafta",
             "Elektřina",
-            "LPG (plyn)"});
-            this.comboBoxTypPohonnychHmot.Location = new System.Drawing.Point(217, 186);
+            "Ostatní"});
+            this.comboBoxTypPohonnychHmot.Location = new System.Drawing.Point(217, 226);
             this.comboBoxTypPohonnychHmot.Name = "comboBoxTypPohonnychHmot";
             this.comboBoxTypPohonnychHmot.Size = new System.Drawing.Size(121, 21);
             this.comboBoxTypPohonnychHmot.TabIndex = 58;
@@ -118,7 +119,7 @@
             // labelZpusobVypoctu
             // 
             this.labelZpusobVypoctu.AutoSize = true;
-            this.labelZpusobVypoctu.Location = new System.Drawing.Point(26, 103);
+            this.labelZpusobVypoctu.Location = new System.Drawing.Point(26, 143);
             this.labelZpusobVypoctu.Name = "labelZpusobVypoctu";
             this.labelZpusobVypoctu.Size = new System.Drawing.Size(87, 13);
             this.labelZpusobVypoctu.TabIndex = 53;
@@ -127,7 +128,7 @@
             // labelCestoval
             // 
             this.labelCestoval.AutoSize = true;
-            this.labelCestoval.Location = new System.Drawing.Point(26, 27);
+            this.labelCestoval.Location = new System.Drawing.Point(26, 67);
             this.labelCestoval.Name = "labelCestoval";
             this.labelCestoval.Size = new System.Drawing.Size(51, 13);
             this.labelCestoval.TabIndex = 52;
@@ -136,7 +137,7 @@
             // labelPocetKm
             // 
             this.labelPocetKm.AutoSize = true;
-            this.labelPocetKm.Location = new System.Drawing.Point(26, 72);
+            this.labelPocetKm.Location = new System.Drawing.Point(26, 112);
             this.labelPocetKm.Name = "labelPocetKm";
             this.labelPocetKm.Size = new System.Drawing.Size(98, 13);
             this.labelPocetKm.TabIndex = 51;
@@ -144,7 +145,7 @@
             // 
             // textBoxPocetNajetychKm
             // 
-            this.textBoxPocetNajetychKm.Location = new System.Drawing.Point(217, 69);
+            this.textBoxPocetNajetychKm.Location = new System.Drawing.Point(217, 109);
             this.textBoxPocetNajetychKm.Name = "textBoxPocetNajetychKm";
             this.textBoxPocetNajetychKm.Size = new System.Drawing.Size(100, 20);
             this.textBoxPocetNajetychKm.TabIndex = 50;
@@ -152,7 +153,7 @@
             // labelSpotrebovano
             // 
             this.labelSpotrebovano.AutoSize = true;
-            this.labelSpotrebovano.Location = new System.Drawing.Point(26, 229);
+            this.labelSpotrebovano.Location = new System.Drawing.Point(26, 269);
             this.labelSpotrebovano.Name = "labelSpotrebovano";
             this.labelSpotrebovano.Size = new System.Drawing.Size(97, 13);
             this.labelSpotrebovano.TabIndex = 60;
@@ -160,15 +161,28 @@
             // 
             // numericUpDownSpotreba
             // 
-            this.numericUpDownSpotreba.Location = new System.Drawing.Point(218, 229);
+            this.numericUpDownSpotreba.Location = new System.Drawing.Point(218, 269);
             this.numericUpDownSpotreba.Name = "numericUpDownSpotreba";
             this.numericUpDownSpotreba.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownSpotreba.TabIndex = 61;
+            // 
+            // labelVarovani
+            // 
+            this.labelVarovani.AutoSize = true;
+            this.labelVarovani.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelVarovani.ForeColor = System.Drawing.Color.Red;
+            this.labelVarovani.Location = new System.Drawing.Point(25, 11);
+            this.labelVarovani.Name = "labelVarovani";
+            this.labelVarovani.Size = new System.Drawing.Size(446, 40);
+            this.labelVarovani.TabIndex = 62;
+            this.labelVarovani.Text = "Údaje o pohonných hmotách na této stránce zadávejte\r\npouze z tuzemské cesty! (Ces" +
+    "ty v ČR)";
             // 
             // UdajePohonneHmoty
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.labelVarovani);
             this.Controls.Add(this.numericUpDownSpotreba);
             this.Controls.Add(this.labelSpotrebovano);
             this.Controls.Add(this.comboBoxZpsbVypoctuPohHmot);
@@ -202,5 +216,6 @@
         public System.Windows.Forms.TextBox textBoxPocetNajetychKm;
         private System.Windows.Forms.Label labelSpotrebovano;
         public System.Windows.Forms.NumericUpDown numericUpDownSpotreba;
+        private System.Windows.Forms.Label labelVarovani;
     }
 }

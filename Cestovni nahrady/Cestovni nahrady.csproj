@@ -96,7 +96,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Uzivatel.cs" />
     <Compile Include="Vysledky.cs">
       <SubType>UserControl</SubType>
     </Compile>

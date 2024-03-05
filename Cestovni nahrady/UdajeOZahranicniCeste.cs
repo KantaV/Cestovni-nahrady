@@ -24,6 +24,8 @@ namespace Cestovni_nahrady
         {
             pocet = int.Parse(numericUpDownPocetZemi.Value.ToString());
             zahranici1.Vygeneruj(pocet);
+            //zahranici1 je na tomto formulari, zahranici je objekt ktery predavam do hlavniho formulare
+            zahranici = zahranici1;
         }
     }
 }

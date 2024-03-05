@@ -23,25 +23,21 @@ namespace Cestovni_nahrady
         public string NazevStatu
         {
             get { return nazevStatu;}
-            set { nazevStatu = value;}
         }
 
         public TimeSpan CasVeState
         { 
             get { return casVeState;}
-            set { casVeState = value;}
         }
 
         public DateTime DatumCasPrijedzu
         {
             get { return datumCasPrijezdu;}
-            set { datumCasPrijezdu = value;}
         }
 
         public DateTime DatumCasOdjezdu
         {
             get { return datumCasOdjedzu;}
-            set { datumCasOdjedzu = value;}
         }
 
         public double CenaZaDenVeStatePrevedeno
@@ -107,26 +103,18 @@ namespace Cestovni_nahrady
 
        private double ZiskejKurz(string url)
         {
+            string htmlObsah;
             // Stežení obsahu webu
-            string htmlObsah = DownloadHtml(url);
-            return ParseHtml(htmlObsah);
-        }
-
-        private static string DownloadHtml(string url)
-        {
             using (HttpClient client = new HttpClient())
             {
-                return client.GetStringAsync(url).Result;
+                htmlObsah= client.GetStringAsync(url).Result;
             }
-        }
 
-        private static double ParseHtml(string htmlContent)
-        {
             double kurz = 0;
 
             HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
             doc.OptionDefaultStreamEncoding = System.Text.Encoding.UTF8;
-            doc.LoadHtml(htmlContent);
+            doc.LoadHtml(htmlObsah);
 
             // Vyberu span se třídou "clrred"
             var clrredNode = doc.DocumentNode.SelectSingleNode("//span[@class='clrred']");
@@ -135,11 +123,11 @@ namespace Cestovni_nahrady
             {
                 kurz = double.Parse(PrevedTeckyNaCarky(clrredNode.InnerText?.Trim()));
             }
-
             return kurz;
-        }
+       }
 
-        private static string PrevedTeckyNaCarky(string vstup)
+
+        private string PrevedTeckyNaCarky(string vstup)
         {
             //Tato metoda je potřeba protože string desetinneho cisla ve tvaru
             // 5.156416 nelze prevest, je potreba 5,156416

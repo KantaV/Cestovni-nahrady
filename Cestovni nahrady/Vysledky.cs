@@ -103,13 +103,6 @@ namespace Cestovni_nahrady
                         this.Controls.Add(panelUzivatele);
                     }
                 }
-               /* Button buttonVymaz = new Button();
-                buttonVymaz.Text = "Vymaž vše";
-                buttonVymaz.Width = 75;
-                buttonVymaz.Height = 30;
-                buttonVymaz.Location = new Point(150, i * 200);
-                this.Controls.Add(buttonVymaz);
-                buttonVymaz.BringToFront();*/
 
                 labelNadpis.Text = "Výsledky";
             }

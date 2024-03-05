@@ -20,6 +20,60 @@ namespace Cestovni_nahrady
             comboBoxZpusobPrepravy.SelectedIndex = 0;
         }
 
+        public double CenaZaPohonneHmoty(double zakladniNahrada)
+        {
+            //Účtuji pohonné hmoty jedině pokud zaměstnanec cestoval svým vozem
+            if (comboBoxZpusobPrepravy.SelectedIndex != 0)
+            {
+                double najetychKm = double.Parse(textBoxPocetNajetychKm.Text);
+                double cenaZaPohonneHmoty = 0;
+                PohonneHmoty pohonnaHmota;
+
+
+                //Podle zákona
+                if (comboBoxZpsbVypoctuPohHmot.SelectedIndex == 0)
+                {
+                    pohonnaHmota = new PohonneHmoty(comboBoxTypPohonnychHmot.Text,
+                    double.Parse(numericUpDownSpotreba.Value.ToString()));
+                }
+                else  //Podle účtenky
+                {
+                    pohonnaHmota = new PohonneHmoty(double.Parse(numericUpDownSpotreba.Value.ToString()),
+                    double.Parse(textBoxPrumernaPohonneHmotyCena.Text));
+                }
+                switch (comboBoxZpusobPrepravy.SelectedIndex)
+                {
+                    case 1: //Vlastní automobil
+                        {
+                            cenaZaPohonneHmoty += zakladniNahrada * najetychKm;
+                            break;
+                        }
+                    case 2: //Vlastní automobil s přívěsem
+                        {
+                            cenaZaPohonneHmoty += (zakladniNahrada * 1.15) * najetychKm;
+                            break;
+                        }
+                    case 3: //Vlastní motorkou
+                        {
+                            cenaZaPohonneHmoty += 1.4 * najetychKm;
+                            break;
+                        }
+                    case 4: //Vlastním nákladním vozem, autobusem, traktorem
+                        {
+                            cenaZaPohonneHmoty += (zakladniNahrada * 2) * najetychKm;
+                            break;
+                        }
+                    default:
+                        MessageBox.Show("Chyba");
+                        break;
+                }
+                cenaZaPohonneHmoty += pohonnaHmota.CenaZaPohonneHmoty();
+                //MessageBox.Show(cenaZaPohonneHmoty.ToString());
+                return cenaZaPohonneHmoty;
+            }
+            else return 0;
+        }
+
         private void comboBoxTypPohonnychHmot_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxTypPohonnychHmot.SelectedIndex == 3) labelSpotrebovano.Text = "Spotřebováno v kilowatthodinách:";

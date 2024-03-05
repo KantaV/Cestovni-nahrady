@@ -183,6 +183,8 @@ namespace Cestovni_nahrady
         private double verSekt12az18;
         private double verSekt18aVic;
 
+        double zakladniNahradaZa1Km;
+
         private DateTime zacatekCesty;
         private DateTime konecCesty;
         private TimeSpan delkaCesty;
@@ -225,6 +227,8 @@ namespace Cestovni_nahrady
                         bw.Write((double)nastaveni.numericUp5az12Ver.Value);
                         bw.Write((double)nastaveni.numericUp12az18Ver.Value);
                         bw.Write((double)nastaveni.numericUp18aViceVer.Value);
+                        //Zakladni nahrada za 1km
+                        bw.Write((double)nastaveni.numericUpDownZakladniNahrada.Value);
                     }
                     //Update rozhrani
                     nastaveni.Hide();
@@ -336,6 +340,8 @@ namespace Cestovni_nahrady
                             verSekt5az12 = br.ReadDouble();
                             verSekt12az18 = br.ReadDouble();
                             verSekt18aVic = br.ReadDouble();
+                            //Zakladni nahrada za 1km
+                            zakladniNahradaZa1Km= br.ReadDouble();
                         }
                     }
                     catch (FileNotFoundException)
@@ -352,6 +358,8 @@ namespace Cestovni_nahrady
                             bw.Write(129.0);
                             bw.Write(196.0);
                             bw.Write(307.0);
+                            //Zakladni nahrada za 1km
+                            bw.Write(5.6);
                         }
                         priSekt5az12 = 129;
                         priSekt12az18 = 196;
@@ -360,6 +368,8 @@ namespace Cestovni_nahrady
                         verSekt5az12 = 129;
                         verSekt12az18 = 196;
                         verSekt18aVic = 307;
+
+                        zakladniNahradaZa1Km = 5.6;
                     }
 
                     try
@@ -375,20 +385,7 @@ namespace Cestovni_nahrady
                         if (udajeStravne.comboBoxStravneSektor.SelectedIndex == 0) sektor = "privatni";
                         else sektor = "verejny";
 
-                        PohonneHmoty pohonnaHmota;
-                        int[] jidelZaDen;
-                        jidelZaDen = new int[delkaCesty.Days + 1];
-                        int pocetNalezenychNumericUpDownu = 0;
-                        //Naplnim pole jidel za den, kazdy index pole je jeden den
-                        for (int i = 0; i < udajeStravne.jidlaZaDen1.Controls.Count; i++)
-                        {
-                            if (udajeStravne.jidlaZaDen1.Controls[i] is NumericUpDown)
-                            {
-                                if (udajeStravne.checkBoxBezplatneJidlo.Checked) jidelZaDen[pocetNalezenychNumericUpDownu] = int.Parse((udajeStravne.jidlaZaDen1.Controls[i] as NumericUpDown).Value.ToString());
-                                else jidelZaDen[pocetNalezenychNumericUpDownu] = 0;
-                                pocetNalezenychNumericUpDownu++;
-                            }
-                        }
+                        int[] jidelZaDen=udajeStravne.jidlaZaDen1.NaplnPoleJidlaZaDen(delkaCesty.Days, udajeStravne.checkBoxBezplatneJidlo.Checked);
 
                         //Finální výpočty
                         double cenaZaPohonneHmoty = 0;
@@ -398,52 +395,55 @@ namespace Cestovni_nahrady
                         double cenaZaZahranicniStravne=0;
                         if (tuzemskaCesta)
                         {
-                            //Účtuji pohonné hmoty jedině pokud zaměstnanec cestoval svým vozem
-                            if (udajePohonneHmoty.comboBoxZpusobPrepravy.SelectedIndex != 0)
-                            {
-                                double najetychKm = double.Parse(udajePohonneHmoty.textBoxPocetNajetychKm.Text);
 
-                                //Podle zákona
-                                if (udajePohonneHmoty.comboBoxZpsbVypoctuPohHmot.SelectedIndex == 0)
-                                {
-                                    pohonnaHmota = new PohonneHmoty(udajePohonneHmoty.comboBoxTypPohonnychHmot.Text,
-                                    double.Parse(udajePohonneHmoty.numericUpDownSpotreba.Value.ToString()));
-                                }
-                                else  //Podle účtenky
-                                {
-                                    pohonnaHmota = new PohonneHmoty(double.Parse(udajePohonneHmoty.numericUpDownSpotreba.Value.ToString()),
-                                    double.Parse(udajePohonneHmoty.textBoxPrumernaPohonneHmotyCena.Text));
-                                }
-                                double zakladniNahrada = 5.6;
-                                switch (udajePohonneHmoty.comboBoxZpusobPrepravy.SelectedIndex)
-                                {
-                                    case 1: //Vlastní automobil
-                                        {
-                                            cenaZaPohonneHmoty += zakladniNahrada * najetychKm;
-                                            break;
-                                        }
-                                    case 2: //Vlastní automobil s přívěsem
-                                        {
-                                            cenaZaPohonneHmoty += (zakladniNahrada * 1.15) * najetychKm;
-                                            break;
-                                        }
-                                    case 3: //Vlastní motorkou
-                                        {
-                                            cenaZaPohonneHmoty += 1.4 * najetychKm;
-                                            break;
-                                        }
-                                    case 4: //Vlastním nákladním vozem, autobusem, traktorem
-                                        {
-                                            cenaZaPohonneHmoty += (zakladniNahrada * 2) * najetychKm;
-                                            break;
-                                        }
-                                    default:
-                                        MessageBox.Show("Chyba");
-                                        break;
-                                }
-                                cenaZaPohonneHmoty += pohonnaHmota.CenaZaPohonneHmoty();
-                                //MessageBox.Show(cenaZaPohonneHmoty.ToString());
-                            }
+
+                            //Účtuji pohonné hmoty jedině pokud zaměstnanec cestoval svým vozem
+                            /* if (udajePohonneHmoty.comboBoxZpusobPrepravy.SelectedIndex != 0)
+                             {
+                                 double najetychKm = double.Parse(udajePohonneHmoty.textBoxPocetNajetychKm.Text);
+
+                                 //Podle zákona
+                                 if (udajePohonneHmoty.comboBoxZpsbVypoctuPohHmot.SelectedIndex == 0)
+                                 {
+                                     pohonnaHmota = new PohonneHmoty(udajePohonneHmoty.comboBoxTypPohonnychHmot.Text,
+                                     double.Parse(udajePohonneHmoty.numericUpDownSpotreba.Value.ToString()));
+                                 }
+                                 else  //Podle účtenky
+                                 {
+                                     pohonnaHmota = new PohonneHmoty(double.Parse(udajePohonneHmoty.numericUpDownSpotreba.Value.ToString()),
+                                     double.Parse(udajePohonneHmoty.textBoxPrumernaPohonneHmotyCena.Text));
+                                 }
+                                 double zakladniNahrada = 5.6;
+                                 switch (udajePohonneHmoty.comboBoxZpusobPrepravy.SelectedIndex)
+                                 {
+                                     case 1: //Vlastní automobil
+                                         {
+                                             cenaZaPohonneHmoty += zakladniNahrada * najetychKm;
+                                             break;
+                                         }
+                                     case 2: //Vlastní automobil s přívěsem
+                                         {
+                                             cenaZaPohonneHmoty += (zakladniNahrada * 1.15) * najetychKm;
+                                             break;
+                                         }
+                                     case 3: //Vlastní motorkou
+                                         {
+                                             cenaZaPohonneHmoty += 1.4 * najetychKm;
+                                             break;
+                                         }
+                                     case 4: //Vlastním nákladním vozem, autobusem, traktorem
+                                         {
+                                             cenaZaPohonneHmoty += (zakladniNahrada * 2) * najetychKm;
+                                             break;
+                                         }
+                                     default:
+                                         MessageBox.Show("Chyba");
+                                         break;
+                                 }
+                                 cenaZaPohonneHmoty += pohonnaHmota.CenaZaPohonneHmoty();
+                                 //MessageBox.Show(cenaZaPohonneHmoty.ToString());
+                             }*/
+                            cenaZaPohonneHmoty = udajePohonneHmoty.CenaZaPohonneHmoty(zakladniNahradaZa1Km);
                             double cenaZaStravne= CenaZaTuzemskouCestu(zacatekCesty, konecCesty, sektor, jidelZaDen, priSekt5az12,
                                 priSekt12az18, priSekt18aVic, verSekt5az12, verSekt12az18, verSekt18aVic);
                             //MessageBox.Show("Proplatit" + cenaZaPohonneHmoty+cenaZaStravne);

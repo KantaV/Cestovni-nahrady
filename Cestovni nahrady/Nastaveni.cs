@@ -34,6 +34,8 @@ namespace Cestovni_nahrady
                     numericUp5az12Ver.Value = new decimal(br.ReadDouble());
                     numericUp12az18Ver.Value = new decimal(br.ReadDouble());
                     numericUp18aViceVer.Value = new decimal(br.ReadDouble());
+                    //Zakladni hodnota za km
+                    numericUpDownZakladniNahrada.Value = new decimal(br.ReadDouble());
                 }
             }
             catch (FileNotFoundException)
@@ -50,6 +52,8 @@ namespace Cestovni_nahrady
                     bw.Write(140.0);
                     bw.Write(212.0);
                     bw.Write(333.0);
+                    //Zakladni hodnota za km
+                    bw.Write(5.6);
                 }           
             }
         }

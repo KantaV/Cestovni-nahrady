@@ -42,16 +42,20 @@
             this.labelPriv12az18Nastav = new System.Windows.Forms.Label();
             this.labelPriv5az12Nastav = new System.Windows.Forms.Label();
             this.labelPrivSektNastav = new System.Windows.Forms.Label();
+            this.labelZaklNahr = new System.Windows.Forms.Label();
+            this.numericUpDownZakladniNahrada = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.numericUp18aViceVer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUp12az18Ver)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUp5az12Ver)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown18aVicePriv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12az18Priv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericupordown5az12Priv)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownZakladniNahrada)).BeginInit();
             this.SuspendLayout();
             // 
             // numericUp18aViceVer
             // 
+            this.numericUp18aViceVer.DecimalPlaces = 2;
             this.numericUp18aViceVer.Location = new System.Drawing.Point(145, 283);
             this.numericUp18aViceVer.Maximum = new decimal(new int[] {
             398,
@@ -74,6 +78,7 @@
             // 
             // numericUp12az18Ver
             // 
+            this.numericUp12az18Ver.DecimalPlaces = 2;
             this.numericUp12az18Ver.Location = new System.Drawing.Point(145, 248);
             this.numericUp12az18Ver.Maximum = new decimal(new int[] {
             256,
@@ -96,6 +101,7 @@
             // 
             // numericUp5az12Ver
             // 
+            this.numericUp5az12Ver.DecimalPlaces = 2;
             this.numericUp5az12Ver.Location = new System.Drawing.Point(145, 212);
             this.numericUp5az12Ver.Maximum = new decimal(new int[] {
             166,
@@ -154,6 +160,7 @@
             // 
             // numericUpDown18aVicePriv
             // 
+            this.numericUpDown18aVicePriv.DecimalPlaces = 2;
             this.numericUpDown18aVicePriv.Location = new System.Drawing.Point(145, 120);
             this.numericUpDown18aVicePriv.Maximum = new decimal(new int[] {
             10000,
@@ -176,6 +183,7 @@
             // 
             // numericUpDown12az18Priv
             // 
+            this.numericUpDown12az18Priv.DecimalPlaces = 2;
             this.numericUpDown12az18Priv.Location = new System.Drawing.Point(145, 85);
             this.numericUpDown12az18Priv.Maximum = new decimal(new int[] {
             1000,
@@ -198,6 +206,7 @@
             // 
             // numericupordown5az12Priv
             // 
+            this.numericupordown5az12Priv.DecimalPlaces = 2;
             this.numericupordown5az12Priv.Location = new System.Drawing.Point(145, 49);
             this.numericupordown5az12Priv.Maximum = new decimal(new int[] {
             10000,
@@ -254,10 +263,39 @@
             this.labelPrivSektNastav.TabIndex = 14;
             this.labelPrivSektNastav.Text = "Nastavení privátního sektoru:";
             // 
+            // labelZaklNahr
+            // 
+            this.labelZaklNahr.AutoSize = true;
+            this.labelZaklNahr.Location = new System.Drawing.Point(343, 26);
+            this.labelZaklNahr.Name = "labelZaklNahr";
+            this.labelZaklNahr.Size = new System.Drawing.Size(160, 13);
+            this.labelZaklNahr.TabIndex = 28;
+            this.labelZaklNahr.Text = "Zálkadní náhrada za 1 ujetý km:";
+            // 
+            // numericUpDownZakladniNahrada
+            // 
+            this.numericUpDownZakladniNahrada.DecimalPlaces = 2;
+            this.numericUpDownZakladniNahrada.Location = new System.Drawing.Point(346, 49);
+            this.numericUpDownZakladniNahrada.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numericUpDownZakladniNahrada.Name = "numericUpDownZakladniNahrada";
+            this.numericUpDownZakladniNahrada.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDownZakladniNahrada.TabIndex = 29;
+            this.numericUpDownZakladniNahrada.Value = new decimal(new int[] {
+            56,
+            0,
+            0,
+            65536});
+            // 
             // Nastaveni
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.numericUpDownZakladniNahrada);
+            this.Controls.Add(this.labelZaklNahr);
             this.Controls.Add(this.numericUp18aViceVer);
             this.Controls.Add(this.numericUp12az18Ver);
             this.Controls.Add(this.numericUp5az12Ver);
@@ -280,6 +318,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown18aVicePriv)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12az18Priv)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericupordown5az12Priv)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownZakladniNahrada)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -300,5 +339,7 @@
         public System.Windows.Forms.NumericUpDown numericUpDown18aVicePriv;
         public System.Windows.Forms.NumericUpDown numericUpDown12az18Priv;
         public System.Windows.Forms.NumericUpDown numericupordown5az12Priv;
+        private System.Windows.Forms.Label labelZaklNahr;
+        public System.Windows.Forms.NumericUpDown numericUpDownZakladniNahrada;
     }
 }

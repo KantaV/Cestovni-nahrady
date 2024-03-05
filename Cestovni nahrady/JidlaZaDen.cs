@@ -36,5 +36,22 @@ namespace Cestovni_nahrady
                 this.Controls.Add(numericUpDownPocetJidel);
             }
         }
+
+        public int[] NaplnPoleJidlaZaDen(int delkaCesty,bool jeBezplatneJidlo)
+        {
+            int[] jidelZaDen = new int[delkaCesty+ 1];
+            int pocetNalezenychNumericUpDownu = 0;
+            //Naplnim pole jidel za den, kazdy index pole je jeden den
+            for (int i = 0; i < this.Controls.Count; i++)
+            {
+                if (this.Controls[i] is NumericUpDown)
+                {
+                    if (jeBezplatneJidlo) jidelZaDen[pocetNalezenychNumericUpDownu] = int.Parse((this.Controls[i] as NumericUpDown).Value.ToString());
+                    else jidelZaDen[pocetNalezenychNumericUpDownu] = 0;
+                    pocetNalezenychNumericUpDownu++;
+                }
+            }
+            return jidelZaDen;
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace Cestovni_nahrady
         private double cenaZaLneboKW;
         private double spotrebovano;
 
-        public PohonneHmoty(string pohonnaHmota,double spotrebovano)        //Později brát data odjinud
+        public PohonneHmoty(string pohonnaHmota,double spotrebovano)      
         {
             this.pohonnaHmota= pohonnaHmota;
             this.spotrebovano= spotrebovano;
@@ -31,6 +31,7 @@ namespace Cestovni_nahrady
                     this.cenaZaLneboKW = 6;
                     break;
                 default:
+                    this.cenaZaLneboKW = 0;
                     break;
             }
         }

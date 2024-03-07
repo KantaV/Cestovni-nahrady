@@ -270,7 +270,7 @@
             this.labelZaklNahr.Name = "labelZaklNahr";
             this.labelZaklNahr.Size = new System.Drawing.Size(160, 13);
             this.labelZaklNahr.TabIndex = 28;
-            this.labelZaklNahr.Text = "Zálkadní náhrada za 1 ujetý km:";
+            this.labelZaklNahr.Text = "Základní náhrada za 1 ujetý km:";
             // 
             // numericUpDownZakladniNahrada
             // 

@@ -108,6 +108,7 @@ namespace Cestovni_nahrady
             //Schovat menu
             panelMenu.Hide();
             stranky[indexStranky].Show();
+            //Zobrazit navigační buttony
             panelNavigacniBtny.Show();
 
         }
@@ -225,15 +226,10 @@ namespace Cestovni_nahrady
                         //Zakladni nahrada za 1km
                         bw.Write((double)nastaveni.numericUpDownZakladniNahrada.Value);
                     }
-                    //Update rozhrani
-                    nastaveni.Hide();
-                    panelNavigacniBtny.Hide();
-                    buttonDalsi.Text = "Další";
-                    panelMenu.Show();
                 }
 
             }
-            else                //Pro obsluhovani vypoctu a udajovych stranek
+            else     //Pro obsluhovani vypoctu a udajovych stranek
             {
                 dataJsouSpravne = true;
                 if (indexStranky == 0)

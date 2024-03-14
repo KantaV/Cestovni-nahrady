@@ -299,7 +299,7 @@ namespace Cestovni_nahrady
 
                     delkaCesty = konecCesty - zacatekCesty;
                     //Spočítání délky cesty abych získal počet dní
-                    udajeStravne.Vygeneruj(delkaCesty.Days+1);
+                    udajeStravne.jidlaZaDen1.Vygeneruj(delkaCesty.Days+1,zacatekCesty);
                     //Změna textu buttonu
                     buttonDalsi.Text = "Vypočítej";
                 }
@@ -396,15 +396,33 @@ namespace Cestovni_nahrady
                                 using (FileStream fs = new FileStream("uzivatele.dat", FileMode.Append, FileAccess.Write))
                                 {
                                     BinaryWriter bw = new BinaryWriter(fs);
-                                    bw.Write(jmeno);
-                                    bw.Write(prijmeni);
-                                    bw.Write(datNar.Date.ToString("d.M.yyyy"));
-                                    bw.Write(tuzemskaCesta);
-                                    bw.Write(cenaZaTuzemskouCestu);
-                                    bw.Write((double)0);
-                                    bw.Write("Žádné");
+                                    bw.Write(jmeno);   //string
+                                    bw.Write(prijmeni);    //string
+                                    bw.Write(datNar.Date.ToString("d.M.yyyy"));    //string
+                                    bw.Write(zacatekCesty.Date.ToShortDateString()); //string
+                                    bw.Write(konecCesty.Date.ToShortDateString());   //string
+                                    bw.Write((int)delkaCesty.TotalDays);   //int
+                                    bw.Write("Žádné");  //string
+
+                                    bw.Write(sektor);   //string
+                                    bw.Write(udajeStravne.checkBoxBezplatneJidlo.Checked);  //bool
+
+                                    bw.Write(cenaZaTuzemskouCestu); //double
+                                    bw.Write((double)0);  //double
                                     double cenaCelkem = cenaZaTuzemskouCestu + cenaZaZahranicniStravne;
-                                    bw.Write(cenaCelkem);
+                                    bw.Write(cenaCelkem);   //double
+
+
+
+
+
+                                    /* bw.Write(jmeno);
+                                     bw.Write(prijmeni);
+                                     bw.Write(datNar.Date.ToString("d.M.yyyy"));
+                                     bw.Write(tuzemskaCesta);
+                                     bw.Write(cenaZaTuzemskouCestu);
+                                     bw.Write((double)0);
+                                     bw.Write(cenaCelkem);*/
                                 }
                             }
                             catch (FileNotFoundException)
@@ -412,15 +430,21 @@ namespace Cestovni_nahrady
                                 using (FileStream fs = new FileStream("uzivatele.dat", FileMode.Create, FileAccess.Write))
                                 {
                                     BinaryWriter bw = new BinaryWriter(fs);
-                                    bw.Write(jmeno);
-                                    bw.Write(prijmeni);
-                                    bw.Write(datNar.Date.ToString("d.M.yyyy"));
-                                    bw.Write(tuzemskaCesta);
-                                    bw.Write(cenaZaTuzemskouCestu);
-                                    bw.Write((double)0);
-                                    bw.Write("Žádné");
+                                    bw.Write(jmeno);   //string
+                                    bw.Write(prijmeni);    //string
+                                    bw.Write(datNar.Date.ToString("d.M.yyyy"));    //string
+                                    bw.Write(zacatekCesty.Date.ToShortDateString()); //string
+                                    bw.Write(konecCesty.Date.ToShortDateString());   //string
+                                    bw.Write((int)delkaCesty.TotalDays);   //int
+                                    bw.Write("Žádné");  //string
+
+                                    bw.Write(sektor);   //string
+                                    bw.Write(udajeStravne.checkBoxBezplatneJidlo.Checked);  //bool
+
+                                    bw.Write(cenaZaTuzemskouCestu); //double
+                                    bw.Write((double)0);  //double
                                     double cenaCelkem = cenaZaTuzemskouCestu + cenaZaZahranicniStravne;
-                                    bw.Write(cenaCelkem);
+                                    bw.Write(cenaCelkem);   //double
                                 }
                             }
 
@@ -542,15 +566,21 @@ namespace Cestovni_nahrady
                                 using (FileStream fs = new FileStream("uzivatele.dat", FileMode.Append, FileAccess.Write))
                                 {
                                     BinaryWriter bw = new BinaryWriter(fs);
-                                    bw.Write(jmeno);
-                                    bw.Write(prijmeni);
-                                    bw.Write(datNar.Date.ToString("d.M.yyyy"));
-                                    bw.Write(tuzemskaCesta);
-                                    bw.Write(cenaZaTuzemskouCestu);
-                                    bw.Write(cenaZaZahranicniStravne);
-                                    bw.Write(staty);
+                                     bw.Write(jmeno);   //string
+                                     bw.Write(prijmeni);    //string
+                                     bw.Write(datNar.Date.ToString("d.M.yyyy"));    //string
+                                     bw.Write(zacatekCesty.Date.ToShortDateString()); //string
+                                     bw.Write(konecCesty.Date.ToShortDateString());   //string
+                                    bw.Write((int)delkaCesty.TotalDays);   //int
+                                    bw.Write(staty);   //string
+
+                                    bw.Write(sektor);   //string
+                                    bw.Write(udajeStravne.checkBoxBezplatneJidlo.Checked);  //bool
+
+                                    bw.Write(cenaZaTuzemskouCestu); //double
+                                    bw.Write(cenaZaZahranicniStravne);  //double
                                     double cenaCelkem = cenaZaTuzemskouCestu + cenaZaZahranicniStravne;
-                                    bw.Write(cenaCelkem);
+                                    bw.Write(cenaCelkem);   //double
                                 }
                             }
                             catch (FileNotFoundException)
@@ -558,15 +588,22 @@ namespace Cestovni_nahrady
                                 using (FileStream fs = new FileStream("uzivatele.dat", FileMode.Create, FileAccess.Write))
                                 {
                                     BinaryWriter bw = new BinaryWriter(fs);
-                                    bw.Write(jmeno);
-                                    bw.Write(prijmeni);
-                                    bw.Write(datNar.Date.ToString("d.M.yyyy"));
-                                    bw.Write(tuzemskaCesta);
-                                    bw.Write(cenaZaTuzemskouCestu);
-                                    bw.Write(cenaZaZahranicniStravne);
-                                    bw.Write(staty);
+                                    bw.Write(jmeno);   //string
+                                    bw.Write(prijmeni);    //string
+                                    bw.Write(datNar.Date.ToString("d.M.yyyy"));    //string
+                                    bw.Write(zacatekCesty.Date.ToShortDateString()); //string
+                                    bw.Write(konecCesty.Date.ToShortDateString());   //string
+                                    bw.Write((int)delkaCesty.TotalDays);   //int
+                                    bw.Write(staty);   //string
+
+ 
+                                    bw.Write(sektor);   //string
+                                    bw.Write(udajeStravne.checkBoxBezplatneJidlo.Checked);  //bool
+
+                                    bw.Write(cenaZaTuzemskouCestu); //double
+                                    bw.Write(cenaZaZahranicniStravne);  //double
                                     double cenaCelkem = cenaZaTuzemskouCestu + cenaZaZahranicniStravne;
-                                    bw.Write(cenaCelkem);
+                                    bw.Write(cenaCelkem);   //double
                                 }
                             }
                         }

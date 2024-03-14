@@ -20,11 +20,6 @@ namespace Cestovni_nahrady
             comboBoxStravneSektor.SelectedIndex = 0;
         }
 
-        public void Vygeneruj(int pocet)
-        {
-            jidlaZaDen1.Vygeneruj(pocet);
-        }
-
         private void checkBoxBezplatneJidlo_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBoxBezplatneJidlo.Checked)

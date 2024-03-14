@@ -50,54 +50,57 @@ namespace Cestovni_nahrady
 
                         Label labelJmeno = new Label();
                         labelJmeno.AutoSize = true;
-                        labelJmeno.Text = "Jméno: " + br.ReadString();
+                        labelJmeno.Text = "Jméno a příjmení: " + br.ReadString()+" "+br.ReadString();
                         labelJmeno.Location = new Point(0, 40);
-
-                        Label labelPrijmeni = new Label();
-                        labelPrijmeni.AutoSize = true;
-                        labelPrijmeni.Text = "Příjmení: " + br.ReadString();
-                        labelPrijmeni.Location = new Point(0, 60 );
 
                         Label labelDatNar = new Label();
                         labelDatNar.AutoSize = true;
                         labelDatNar.Text = "Datum narození: " + br.ReadString();
-                        labelDatNar.Location = new Point(0, 80);
+                        labelDatNar.Location = new Point(0, 60 );
 
-                        Label labelTuzemskaCesta = new Label();
-                        labelTuzemskaCesta.AutoSize = true;
-                        if (br.ReadBoolean()) labelTuzemskaCesta.Text = "Tuzemská cesta: Ano";
-                        else labelTuzemskaCesta.Text = "Tuzemská cesta: Ne";
-                        labelTuzemskaCesta.Location = new Point(0, 100 );
-
-                        Label labelCenaZaTuzCestu = new Label();
-                        labelCenaZaTuzCestu.AutoSize = true;
-                        labelCenaZaTuzCestu.Text = "Cena za tuzemskou cestu: " + br.ReadDouble() + " Kč";
-                        labelCenaZaTuzCestu.Location = new Point(0, 120 );
-
-                        Label labelCenaZaZahCestu = new Label();
-                        labelCenaZaZahCestu.AutoSize = true;
-                        labelCenaZaZahCestu.Text = "Cena za zahraniční cestu: " + br.ReadDouble()+" Kč";
-                        labelCenaZaZahCestu.Location = new Point(0, 140 );
+                        Label labelDatPrijezdOdjezd = new Label();
+                        labelDatPrijezdOdjezd.AutoSize = true;
+                        labelDatPrijezdOdjezd.Text = "Datum odjezdu - datum příjezdu: " + br.ReadString()+" - "+br.ReadString()+" (Počet dní: "+br.ReadInt32()+")";
+                        labelDatPrijezdOdjezd.Location = new Point(0, 80);
 
                         Label labelNavstivStaty = new Label();
                         labelNavstivStaty.AutoSize = true;
                         labelNavstivStaty.Text = "Navštívené zahraniční státy: " + br.ReadString();
-                        labelNavstivStaty.Location = new Point(0, 160 );
+                        labelNavstivStaty.Location = new Point(0, 100);
 
+
+
+                        Label labelSektor=new Label();
+                        labelSektor.AutoSize = true;
+                        if(br.ReadString()=="privatni") labelSektor.Text = "Sektor: privátní," + (br.ReadBoolean() ? " byla poskytnuta strava" : " nebyla poskytnuta strava");
+                        else labelSektor.Text = "Sektor: veřejný," + (br.ReadBoolean() ? " byla poskytnuta strava" : " nebyla poskytnuta strava");
+                        labelSektor.Location = new Point(0, 160);
+
+                        Label labelCenaZaTuzemskouCestu= new Label();
+                        labelCenaZaTuzemskouCestu.AutoSize = true;
+                        labelCenaZaTuzemskouCestu.Text = "Cena za tuzemskou cestu: " + br.ReadDouble()+" Kč";
+                        labelCenaZaTuzemskouCestu.Location = new Point(0, 180);
+
+                        Label labelCenaZaZahCestu = new Label();
+                        labelCenaZaZahCestu.AutoSize = true;
+                        labelCenaZaZahCestu.Text = "Cena za zahraniční cestu: " + br.ReadDouble()+" Kč";
+                        labelCenaZaZahCestu.Location = new Point(0, 200 );
+
+                    
                         Label labelCenaCelkem = new Label();
                         labelCenaCelkem.AutoSize = true;
                         labelCenaCelkem.Text = "Celková cena: " + br.ReadDouble()+" Kč";
-                        labelCenaCelkem.Location = new Point(0, 180  );
+                        labelCenaCelkem.Location = new Point(0, 220  );
                         ++i;
 
                         panelUzivatele.Controls.Add(labelNadpisVysledek);
                         panelUzivatele.Controls.Add(labelJmeno);
-                        panelUzivatele.Controls.Add(labelPrijmeni);
                         panelUzivatele.Controls.Add(labelDatNar);
-                        panelUzivatele.Controls.Add(labelTuzemskaCesta);
-                        panelUzivatele.Controls.Add(labelCenaZaTuzCestu);
-                        panelUzivatele.Controls.Add(labelCenaZaZahCestu);
+                        panelUzivatele.Controls.Add(labelDatPrijezdOdjezd);
                         panelUzivatele.Controls.Add(labelNavstivStaty);
+                        panelUzivatele.Controls.Add(labelSektor);
+                        panelUzivatele.Controls.Add(labelCenaZaTuzemskouCestu);
+                        panelUzivatele.Controls.Add(labelCenaZaZahCestu);
                         panelUzivatele.Controls.Add(labelCenaCelkem);
 
                         this.Controls.Add(panelUzivatele);
@@ -140,12 +143,17 @@ namespace Cestovni_nahrady
                         br.ReadString();    //Jmeno
                         br.ReadString();    //Prijemni  
                         br.ReadString();    //Datum narozeni
-                        br.ReadBoolean();   //Jedna se o tuzemskou cestu
-                        br.ReadDouble();    //Cena tuz cesta
-                        br.ReadDouble();    //Cena zahr cesta
+                        br.ReadString();    //Zacatek cesty
+                        br.ReadString();    //Konec cesty
+                        br.ReadInt32();    //Delka cesty
                         br.ReadString();    //Navstivene staty
-                        br.ReadDouble();    //Celkem cena
+                        br.ReadString();
+                        br.ReadBoolean();
+                        br.ReadDouble();
+                        br.ReadDouble();
+                        br.ReadDouble();
                         ++pocetVysledku;
+
                     }
 
                     br.BaseStream.Position = 0;
@@ -157,56 +165,58 @@ namespace Cestovni_nahrady
                             panelUzivatele = new Panel();
                             panelUzivatele.Height = 200;
                             panelUzivatele.AutoSize = true;
-                            panelUzivatele.Location = new Point(50, 100);
+                            panelUzivatele.Location = new Point(50, 70);
 
                             Label labelJmeno = new Label();
                             labelJmeno.AutoSize = true;
-                            labelJmeno.Text = "Jméno: " + br.ReadString();
-                            labelJmeno.Location = new Point(0, 0);
-
-                            Label labelPrijmeni = new Label();
-                            labelPrijmeni.AutoSize = true;
-                            labelPrijmeni.Text = "Příjmení: " + br.ReadString();
-                            labelPrijmeni.Location = new Point(0, 20);
+                            labelJmeno.Text = "Jméno a příjmení: " + br.ReadString() + " " + br.ReadString();
+                            labelJmeno.Location = new Point(0, 40);
 
                             Label labelDatNar = new Label();
                             labelDatNar.AutoSize = true;
                             labelDatNar.Text = "Datum narození: " + br.ReadString();
-                            labelDatNar.Location = new Point(0, 40);
+                            labelDatNar.Location = new Point(0, 60);
 
-                            Label labelTuzemskaCesta = new Label();
-                            labelTuzemskaCesta.AutoSize = true;
-                            if (br.ReadBoolean()) labelTuzemskaCesta.Text = "Tuzemská cesta: Ano";
-                            else labelTuzemskaCesta.Text = "Tuzemská cesta: Ne";
-                            labelTuzemskaCesta.Location = new Point(0, 60);
+                            Label labelDatPrijezdOdjezd = new Label();
+                            labelDatPrijezdOdjezd.AutoSize = true;
+                            labelDatPrijezdOdjezd.Text = "Datum odjezdu - datum příjezdu: " + br.ReadString() + " - " + br.ReadString() + " (Počet dní: " + br.ReadInt32() + ")";
+                            labelDatPrijezdOdjezd.Location = new Point(0, 80);
 
-                            Label labelCenaZaTuzCestu = new Label();
-                            labelCenaZaTuzCestu.AutoSize = true;
-                            labelCenaZaTuzCestu.Text = "Cena za tuzemskou cestu: " + br.ReadDouble() + " Kč";
-                            labelCenaZaTuzCestu.Location = new Point(0, 80);
+                            Label labelVypocetSpotreba = new Label();
+                            labelVypocetSpotreba.AutoSize = true;
+                            labelVypocetSpotreba.Text = "Spotřebováno * cena za litr/kw: " + br.ReadDouble() + " * " + br.ReadDouble() + " = " + br.ReadDouble();
+                            labelVypocetSpotreba.Location = new Point(0, 140);
+
+                            Label labelSektor = new Label();
+                            labelSektor.AutoSize = true;
+                            if (br.ReadString() == "privatni") labelSektor.Text = "Sektor: privátní," + (br.ReadBoolean() ? " byla poskytnuta strava" : " nebyla poskytnuta strava");
+                            else labelSektor.Text = "Sektor: veřejný," + (br.ReadBoolean() ? " byla poskytnuta strava" : " nebyla poskytnuta strava");
+                            labelSektor.Location = new Point(0, 160);
+
+                            Label labelCenaZaTuzemskouCestu = new Label();
+                            labelCenaZaTuzemskouCestu.AutoSize = true;
+                            labelCenaZaTuzemskouCestu.Text = "Cena za tuzemskou cestu: " + br.ReadDouble() + " Kč";
+                            labelCenaZaTuzemskouCestu.Location = new Point(0, 180);
 
                             Label labelCenaZaZahCestu = new Label();
                             labelCenaZaZahCestu.AutoSize = true;
                             labelCenaZaZahCestu.Text = "Cena za zahraniční cestu: " + br.ReadDouble() + " Kč";
-                            labelCenaZaZahCestu.Location = new Point(0, 100);
+                            labelCenaZaZahCestu.Location = new Point(0, 200);
 
-                            Label labelNavstivStaty = new Label();
-                            labelNavstivStaty.AutoSize = true;
-                            labelNavstivStaty.Text = "Navštívené zahraniční státy: " + br.ReadString();
-                            labelNavstivStaty.Location = new Point(0, 120);
 
                             Label labelCenaCelkem = new Label();
                             labelCenaCelkem.AutoSize = true;
                             labelCenaCelkem.Text = "Celková cena: " + br.ReadDouble() + " Kč";
-                            labelCenaCelkem.Location = new Point(0, 140);
+                            labelCenaCelkem.Location = new Point(0, 220);
+                            ++i;
 
                             panelUzivatele.Controls.Add(labelJmeno);
-                            panelUzivatele.Controls.Add(labelPrijmeni);
                             panelUzivatele.Controls.Add(labelDatNar);
-                            panelUzivatele.Controls.Add(labelTuzemskaCesta);
-                            panelUzivatele.Controls.Add(labelCenaZaTuzCestu);
+                            panelUzivatele.Controls.Add(labelDatPrijezdOdjezd);
+                            panelUzivatele.Controls.Add(labelVypocetSpotreba);
+                            panelUzivatele.Controls.Add(labelSektor);
+                            panelUzivatele.Controls.Add(labelCenaZaTuzemskouCestu);
                             panelUzivatele.Controls.Add(labelCenaZaZahCestu);
-                            panelUzivatele.Controls.Add(labelNavstivStaty);
                             panelUzivatele.Controls.Add(labelCenaCelkem);
 
                             this.Controls.Add(panelUzivatele);
@@ -216,11 +226,15 @@ namespace Cestovni_nahrady
                             br.ReadString();    //Jmeno
                             br.ReadString();    //Prijemni  
                             br.ReadString();    //Datum narozeni
-                            br.ReadBoolean();   //Jedna se o tuzemskou cestu
-                            br.ReadDouble();    //Cena tuz cesta
-                            br.ReadDouble();    //Cena zahr cesta
+                            br.ReadString();    //Zacatek cesty
+                            br.ReadString();    //Konec cesty
+                            br.ReadInt32();    //Delka cesty
                             br.ReadString();    //Navstivene staty
-                            br.ReadDouble();    //Celkem cena
+                            br.ReadString();
+                            br.ReadBoolean();
+                            br.ReadDouble();
+                            br.ReadDouble();
+                            br.ReadDouble();
                         }
                         ++i;
                     }

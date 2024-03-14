@@ -12,6 +12,7 @@ namespace Cestovni_nahrady
         private double cenaZaLneboKW;
         private double spotrebovano;
 
+
         public PohonneHmoty(string pohonnaHmota,double spotrebovano)      
         {
             this.pohonnaHmota= pohonnaHmota;

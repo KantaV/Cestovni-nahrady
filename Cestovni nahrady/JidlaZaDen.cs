@@ -17,20 +17,20 @@ namespace Cestovni_nahrady
             InitializeComponent();
         }
 
-        public void Vygeneruj(int pocet)
+        public void Vygeneruj(int pocet,DateTime datumZacatku)
         {
             this.Controls.Clear();
 
             for(int i = 0; i < pocet; i++)
             {
                 Label labelPocetJidel=new Label();
-                labelPocetJidel.Size= new Size(160, 15);
+                labelPocetJidel.AutoSize = true;
                 labelPocetJidel.Location = new Point(5, 10 + (i * 30));
-                labelPocetJidel.Text = "Počet bezplatných jídel " + (i+1) + ". den: ";
+                labelPocetJidel.Text = "Počet bezplatných jídel " + datumZacatku.Date.AddDays(i).ToShortDateString();
 
                 NumericUpDown numericUpDownPocetJidel = new NumericUpDown();
                 numericUpDownPocetJidel.Size = new Size(120, 20);
-                numericUpDownPocetJidel.Location = new Point(175, 5 + (i * 30));
+                numericUpDownPocetJidel.Location = new Point(225, 5 + (i * 30));
 
                 this.Controls.Add(labelPocetJidel);
                 this.Controls.Add(numericUpDownPocetJidel);

@@ -255,7 +255,7 @@ namespace Cestovni_nahrady
                         int cena = int.Parse(nazevZeme.Substring(nazevZeme.Length-6, 2));
                         string mena = nazevZeme.Substring(nazevZeme.Length-3, 3);
                         navstiveneStaty[0]=new NavstivenyStat(nazevStatu, cena,mena,prijezdDoZeme,odjezdZeZeme);
-
+                        dataJsouSpravne = navstiveneStaty[0].UdajeJsouSpravne;
 
                         //Otestuju příjezd do první zahraniční země
                         if (zacatekCesty > navstiveneStaty[0].DatumCasPrijedzu)
@@ -275,7 +275,7 @@ namespace Cestovni_nahrady
                             cena = int.Parse(nazevZeme.Substring(nazevZeme.Length - 6, 2));
                             mena = nazevZeme.Substring(nazevZeme.Length - 3, 3);
                             navstiveneStaty[i] = new NavstivenyStat(nazevStatu, cena, mena, prijezdDoZeme, odjezdZeZeme);
-                            if (!navstiveneStaty[i].UdajeJsouSpravne) dataJsouSpravne = false;
+                            dataJsouSpravne =navstiveneStaty[i].UdajeJsouSpravne;
                             if (navstiveneStaty[i - 1].DatumCasOdjezdu > navstiveneStaty[i].DatumCasPrijedzu)
                             {
                                 dataJsouSpravne = false;
@@ -460,11 +460,19 @@ namespace Cestovni_nahrady
                             int hodinPrvniDen = 0;
                             int hodinPosledniDen = 0;
                             cenaZaZahranicniStravne = 0;
-
+                            int dnyNavic = 1;
 
                             for (int i = 0; i < navstiveneStaty.Length; i++)
                             {
-                                if (navstiveneStaty[i].DatumCasPrijedzu.Date == navstiveneStaty[i].DatumCasOdjezdu.Date)  //Pokud se jedna o jednodenni cestu
+                                dnyNavic = 1;
+                                if (navstiveneStaty[i].CasVeState.TotalHours < 24)
+                                {
+                                    dnyNavic= 2;    //pokud cesta netrva 24 hodin ale muzeme mit napr prvni den 2 hodiny cesty a druhy 19, vlastnost .Days na vrati hodnotu dni 0, 
+                                                    //i kdyz ve skutecnosti potrebujeme pocitat se dny dvema
+                                    hodinPrvniDen = 24 - navstiveneStaty[i].DatumCasPrijedzu.Hour;
+                                    hodinPosledniDen = navstiveneStaty[i].DatumCasOdjezdu.Hour;
+                                }
+                                else if (navstiveneStaty[i].DatumCasPrijedzu.Date == navstiveneStaty[i].DatumCasOdjezdu.Date)  //Pokud se jedna o jednodenni cestu
                                 {
                                     hodinPrvniDen = navstiveneStaty[i].DatumCasOdjezdu.Hour - navstiveneStaty[i].DatumCasPrijedzu.Hour;
                                     hodinPosledniDen = 0;
@@ -544,7 +552,7 @@ namespace Cestovni_nahrady
                                         ++denCelkove; //pro vykonání cesty v jiném státě ve zbytku tohoto dne
                                     }
 
-                                } while (den < navstiveneStaty[i].CasVeState.Days + 1&&!posledniDen);
+                                } while (den < navstiveneStaty[i].CasVeState.Days + dnyNavic&&!posledniDen);
                             }
                            //MessageBox.Show(cenaZaZahranicniStravne.ToString());
 

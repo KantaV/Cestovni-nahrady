@@ -464,28 +464,37 @@ namespace Cestovni_nahrady
 
                             for (int i = 0; i < navstiveneStaty.Length; i++)
                             {
+                                int dniVeState = navstiveneStaty[i].CasVeState.Days;
+                                double zakladniSazba = 0;
+                                int den = 0;
+                                zkratit = 0;
+                                bool posledniDen;
+
+
                                 dnyNavic = 1;
-                                if (navstiveneStaty[i].CasVeState.TotalHours < 24)
+                                if (navstiveneStaty[i].DatumCasOdjezdu.TimeOfDay < navstiveneStaty[i].DatumCasPrijedzu.TimeOfDay)
                                 {
-                                    dnyNavic= 2;    //pokud cesta netrva 24 hodin ale muzeme mit napr prvni den 2 hodiny cesty a druhy 19, vlastnost .Days na vrati hodnotu dni 0, 
-                                                    //i kdyz ve skutecnosti potrebujeme pocitat se dny dvema
-                                    hodinPrvniDen = 24 - navstiveneStaty[i].DatumCasPrijedzu.Hour;
-                                    hodinPosledniDen = navstiveneStaty[i].DatumCasOdjezdu.Hour;
+                                    dniVeState += 1;
                                 }
-                                else if (navstiveneStaty[i].DatumCasPrijedzu.Date == navstiveneStaty[i].DatumCasOdjezdu.Date)  //Pokud se jedna o jednodenni cestu
+
+                            
+                                if (navstiveneStaty[i].DatumCasPrijedzu.Date == navstiveneStaty[i].DatumCasOdjezdu.Date)  //Pokud se jedna o jednodenni cestu
                                 {
                                     hodinPrvniDen = navstiveneStaty[i].DatumCasOdjezdu.Hour - navstiveneStaty[i].DatumCasPrijedzu.Hour;
                                     hodinPosledniDen = 0;
+                                }
+                                else if (navstiveneStaty[i].CasVeState.TotalHours < 24)
+                                {
+                                    dnyNavic = 2;    //pokud cesta netrva 24 hodin ale muzeme mit napr prvni den 2 hodiny cesty a druhy 19, vlastnost .Days na vrati hodnotu dni 0, 
+                                                     //i kdyz ve skutecnosti potrebujeme pocitat se dny dvema
+                                    hodinPrvniDen = 24 - navstiveneStaty[i].DatumCasPrijedzu.Hour;
+                                    hodinPosledniDen = navstiveneStaty[i].DatumCasOdjezdu.Hour;
                                 }
                                 else     //Cesta delsi nez 1 den
                                 {
                                     hodinPrvniDen = 24 - navstiveneStaty[i].DatumCasPrijedzu.Hour;
                                     hodinPosledniDen = navstiveneStaty[i].DatumCasOdjezdu.Hour;
                                 }
-                                double zakladniSazba=0;
-                                int den = 0;            
-                                zkratit = 0;
-                                bool posledniDen;
                                 do
                                 {
                                     posledniDen = false;
@@ -514,7 +523,7 @@ namespace Cestovni_nahrady
                                             cenaZaZahranicniStravne += zakladniSazba - zakladniSazba * zkratit;
                                         }
                                     }
-                                    else if (den == navstiveneStaty[i].CasVeState.Days) //Při posledním dni, pouze pokud je více dní
+                                    else if (den == dniVeState) //Při posledním dni, pouze pokud je více dní
                                     {
                                         posledniDen = true;
                                         if (hodinPosledniDen >= 18)
@@ -551,8 +560,8 @@ namespace Cestovni_nahrady
                                         ++den;      //Posunu den ale jen pokud není poslední protože pokud je poslední, potřebuji si toto datum ještě nechat  
                                         ++denCelkove; //pro vykonání cesty v jiném státě ve zbytku tohoto dne
                                     }
-
-                                } while (den < navstiveneStaty[i].CasVeState.Days + dnyNavic&&!posledniDen);
+                                    MessageBox.Show(navstiveneStaty[i].NazevStatu + cenaZaZahranicniStravne);
+                                } while (den < dniVeState + dnyNavic&&!posledniDen);
                             }
                            //MessageBox.Show(cenaZaZahranicniStravne.ToString());
 
@@ -792,7 +801,7 @@ namespace Cestovni_nahrady
         * 
         * https://www.uctovani.net/kalkulacka-zahranicni-cesty-stravne-kapesne.php
         * https://money.cz/novinky-a-tipy/mzdy-a-personalistika/cestovni-nahrady-2022-kolik-zaplatite-kdyz-zamestnance-vyslete-na-sluzebni-cestu/
-        * https://www.mfcr.cz/cs/kontrola-a-regulace/legislativa/legislativni-dokumenty/2022/vyhlaska-c-462-2021-sb-49677
+        * https://www.mfcr.cz/cs/kontrola-a-regulace/legislativa/legislativni-dokumenty/2023/vyhlaska-c-341-2023-sb-53892
         * https://blog.videolektor.cz/stravne-pri-soubehu-tuzemske-a-zahranicni-pracovni-cesty/
         * https://ppropo.mpsv.cz/XXII23Cestovninahradyprizahranic
         * https://www.behounek.eu/l/sazby-cestovnich-nahrad/

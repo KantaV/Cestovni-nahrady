@@ -24,7 +24,7 @@ namespace Cestovni_nahrady
 
         private void StazeniDat()
         {
-            string url = "https://www.mfcr.cz/cs/kontrola-a-regulace/legislativa/legislativni-dokumenty/2022/vyhlaska-c-462-2021-sb-49677";
+            string url = "https://www.mfcr.cz/cs/kontrola-a-regulace/legislativa/legislativni-dokumenty/2023/vyhlaska-c-341-2023-sb-53892";
 
             // Stežení obsahu webu
             string htmlObsah = StahniHtml(url);

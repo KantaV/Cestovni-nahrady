@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.AxHost;
 
 namespace Cestovni_nahrady
 {
@@ -275,7 +276,7 @@ namespace Cestovni_nahrady
                             cena = int.Parse(nazevZeme.Substring(nazevZeme.Length - 6, 2));
                             mena = nazevZeme.Substring(nazevZeme.Length - 3, 3);
                             navstiveneStaty[i] = new NavstivenyStat(nazevStatu, cena, mena, prijezdDoZeme, odjezdZeZeme);
-                            dataJsouSpravne =navstiveneStaty[i].UdajeJsouSpravne;
+                            if(dataJsouSpravne) dataJsouSpravne =navstiveneStaty[i].UdajeJsouSpravne;   //podmínka aby se nemohla proměnná opravit nedobře
                             if (navstiveneStaty[i - 1].DatumCasOdjezdu > navstiveneStaty[i].DatumCasPrijedzu)
                             {
                                 dataJsouSpravne = false;
@@ -386,71 +387,15 @@ namespace Cestovni_nahrady
                         double cenaZaZahranicniStravne=0;
                         if (tuzemskaCesta)
                         {
+                            staty = "Žádné";
                             cenaZaPohonneHmoty = udajePohonneHmoty.CenaZaPohonneHmoty(zakladniNahradaZa1Km);
                             double cenaZaStravne= CenaZaTuzemskouCestu(zacatekCesty, konecCesty, sektor, jidelZaDen, priSekt5az12,
                                 priSekt12az18, priSekt18aVic, verSekt5az12, verSekt12az18, verSekt18aVic);
                             cenaZaTuzemskouCestu = cenaZaPohonneHmoty + cenaZaStravne;
-
-                            try
-                            {
-                                using (FileStream fs = new FileStream("uzivatele.dat", FileMode.Append, FileAccess.Write))
-                                {
-                                    BinaryWriter bw = new BinaryWriter(fs);
-                                    bw.Write(jmeno);   //string
-                                    bw.Write(prijmeni);    //string
-                                    bw.Write(datNar.Date.ToString("d.M.yyyy"));    //string
-                                    bw.Write(zacatekCesty.Date.ToShortDateString()); //string
-                                    bw.Write(konecCesty.Date.ToShortDateString());   //string
-                                    bw.Write((int)delkaCesty.TotalDays);   //int
-                                    bw.Write("Žádné");  //string
-
-                                    bw.Write(sektor);   //string
-                                    bw.Write(udajeStravne.checkBoxBezplatneJidlo.Checked);  //bool
-
-                                    bw.Write(cenaZaTuzemskouCestu); //double
-                                    bw.Write((double)0);  //double
-                                    double cenaCelkem = cenaZaTuzemskouCestu + cenaZaZahranicniStravne;
-                                    bw.Write(cenaCelkem);   //double
-
-
-
-
-
-                                    /* bw.Write(jmeno);
-                                     bw.Write(prijmeni);
-                                     bw.Write(datNar.Date.ToString("d.M.yyyy"));
-                                     bw.Write(tuzemskaCesta);
-                                     bw.Write(cenaZaTuzemskouCestu);
-                                     bw.Write((double)0);
-                                     bw.Write(cenaCelkem);*/
-                                }
-                            }
-                            catch (FileNotFoundException)
-                            {
-                                using (FileStream fs = new FileStream("uzivatele.dat", FileMode.Create, FileAccess.Write))
-                                {
-                                    BinaryWriter bw = new BinaryWriter(fs);
-                                    bw.Write(jmeno);   //string
-                                    bw.Write(prijmeni);    //string
-                                    bw.Write(datNar.Date.ToString("d.M.yyyy"));    //string
-                                    bw.Write(zacatekCesty.Date.ToShortDateString()); //string
-                                    bw.Write(konecCesty.Date.ToShortDateString());   //string
-                                    bw.Write((int)delkaCesty.TotalDays);   //int
-                                    bw.Write("Žádné");  //string
-
-                                    bw.Write(sektor);   //string
-                                    bw.Write(udajeStravne.checkBoxBezplatneJidlo.Checked);  //bool
-
-                                    bw.Write(cenaZaTuzemskouCestu); //double
-                                    bw.Write((double)0);  //double
-                                    double cenaCelkem = cenaZaTuzemskouCestu + cenaZaZahranicniStravne;
-                                    bw.Write(cenaCelkem);   //double
-                                }
-                            }
-
                         }
                         else //Zahraniční cesta
                         {
+                            cenaZaPohonneHmoty = udajePohonneHmoty.CenaZaPohonneHmoty(zakladniNahradaZa1Km);
                             TimeSpan casNezOpustilCesko = navstiveneStaty[0].DatumCasPrijedzu-zacatekCesty;
                             //Nez dojede do zahranici
                             cenaZaTuzemskouCestu = CenaZaTuzemskouCestu(zacatekCesty, navstiveneStaty[0].DatumCasPrijedzu, sektor,
@@ -461,6 +406,7 @@ namespace Cestovni_nahrady
                             int hodinPosledniDen = 0;
                             cenaZaZahranicniStravne = 0;
                             int dnyNavic = 1;
+                            staty = "";
 
                             for (int i = 0; i < navstiveneStaty.Length; i++)
                             {
@@ -485,7 +431,8 @@ namespace Cestovni_nahrady
                                 }
                                 else if (navstiveneStaty[i].CasVeState.TotalHours < 24)
                                 {
-                                    dnyNavic = 2;    //pokud cesta netrva 24 hodin ale muzeme mit napr prvni den 2 hodiny cesty a druhy 19, vlastnost .Days na vrati hodnotu dni 0, 
+                                    dnyNavic = 2;    //pokud cesta netrva 24 hodin ale muzeme mit napr prvni den 2 hodiny cesty a druhy 19,
+                                                     //vlastnost .Days na vrati hodnotu dni 0, 
                                                      //i kdyz ve skutecnosti potrebujeme pocitat se dny dvema
                                     hodinPrvniDen = 24 - navstiveneStaty[i].DatumCasPrijedzu.Hour;
                                     hodinPosledniDen = navstiveneStaty[i].DatumCasOdjezdu.Hour;
@@ -560,68 +507,64 @@ namespace Cestovni_nahrady
                                         ++den;      //Posunu den ale jen pokud není poslední protože pokud je poslední, potřebuji si toto datum ještě nechat  
                                         ++denCelkove; //pro vykonání cesty v jiném státě ve zbytku tohoto dne
                                     }
-                                    MessageBox.Show(navstiveneStaty[i].NazevStatu + cenaZaZahranicniStravne);
                                 } while (den < dniVeState + dnyNavic&&!posledniDen);
+                                staty += navstiveneStaty[i].NazevStatu + ", ";
                             }
-                           //MessageBox.Show(cenaZaZahranicniStravne.ToString());
+                            //MessageBox.Show(cenaZaZahranicniStravne.ToString());
 
                             //Pote co bude dojizdet ze zahranici
-                            cenaZaTuzemskouCestu += CenaZaTuzemskouCestu(navstiveneStaty[navstiveneStaty.Length-1].DatumCasOdjezdu, konecCesty, sektor,
-                            jidelZaDen, priSekt5az12, priSekt12az18, priSekt18aVic, verSekt5az12, verSekt12az18, verSekt18aVic);
-
-                            staty = "";
-                            foreach (NavstivenyStat stat in navstiveneStaty)
-                            {
-                                staty += stat.NazevStatu+", ";
-                            }
+                            cenaZaTuzemskouCestu += CenaZaTuzemskouCestu(navstiveneStaty[navstiveneStaty.Length-1].DatumCasOdjezdu,
+                            konecCesty, sektor,jidelZaDen, priSekt5az12, priSekt12az18, priSekt18aVic, verSekt5az12, verSekt12az18,
+                            verSekt18aVic);
+                            cenaZaTuzemskouCestu += cenaZaPohonneHmoty;
                             char[] koncoveZnaky = { ' ', ',' };
                             staty = staty.Trim(koncoveZnaky);
+                        }
 
 
-                            try
+                        try
+                        {
+                            using (FileStream fs = new FileStream("uzivatele.dat", FileMode.Append, FileAccess.Write))
                             {
-                                using (FileStream fs = new FileStream("uzivatele.dat", FileMode.Append, FileAccess.Write))
-                                {
-                                    BinaryWriter bw = new BinaryWriter(fs);
-                                     bw.Write(jmeno);   //string
-                                     bw.Write(prijmeni);    //string
-                                     bw.Write(datNar.Date.ToString("d.M.yyyy"));    //string
-                                     bw.Write(zacatekCesty.Date.ToShortDateString()); //string
-                                     bw.Write(konecCesty.Date.ToShortDateString());   //string
-                                    bw.Write((int)delkaCesty.TotalDays);   //int
-                                    bw.Write(staty);   //string
+                                BinaryWriter bw = new BinaryWriter(fs);
+                                bw.Write(jmeno);   //string
+                                bw.Write(prijmeni);    //string
+                                bw.Write(datNar.Date.ToString("d.M.yyyy"));    //string
+                                bw.Write(zacatekCesty.Date.ToShortDateString()); //string
+                                bw.Write(konecCesty.Date.ToShortDateString());   //string
+                                bw.Write((int)delkaCesty.TotalDays + 1);   //int
+                                bw.Write(staty);   //string
 
-                                    bw.Write(sektor);   //string
-                                    bw.Write(udajeStravne.checkBoxBezplatneJidlo.Checked);  //bool
+                                bw.Write(sektor);   //string
+                                bw.Write(udajeStravne.checkBoxBezplatneJidlo.Checked);  //bool
 
-                                    bw.Write(cenaZaTuzemskouCestu); //double
-                                    bw.Write(cenaZaZahranicniStravne);  //double
-                                    double cenaCelkem = cenaZaTuzemskouCestu + cenaZaZahranicniStravne;
-                                    bw.Write(cenaCelkem);   //double
-                                }
+                                bw.Write(cenaZaTuzemskouCestu); //double
+                                bw.Write(cenaZaZahranicniStravne);  //double
+                                double cenaCelkem = cenaZaTuzemskouCestu + cenaZaZahranicniStravne;
+                                bw.Write(cenaCelkem);   //double
                             }
-                            catch (FileNotFoundException)
+                        }
+                        catch (FileNotFoundException)
+                        {
+                            using (FileStream fs = new FileStream("uzivatele.dat", FileMode.Create, FileAccess.Write))
                             {
-                                using (FileStream fs = new FileStream("uzivatele.dat", FileMode.Create, FileAccess.Write))
-                                {
-                                    BinaryWriter bw = new BinaryWriter(fs);
-                                    bw.Write(jmeno);   //string
-                                    bw.Write(prijmeni);    //string
-                                    bw.Write(datNar.Date.ToString("d.M.yyyy"));    //string
-                                    bw.Write(zacatekCesty.Date.ToShortDateString()); //string
-                                    bw.Write(konecCesty.Date.ToShortDateString());   //string
-                                    bw.Write((int)delkaCesty.TotalDays);   //int
-                                    bw.Write(staty);   //string
+                                BinaryWriter bw = new BinaryWriter(fs);
+                                bw.Write(jmeno);   //string
+                                bw.Write(prijmeni);    //string
+                                bw.Write(datNar.Date.ToString("d.M.yyyy"));    //string
+                                bw.Write(zacatekCesty.Date.ToShortDateString()); //string
+                                bw.Write(konecCesty.Date.ToShortDateString());   //string
+                                bw.Write((int)delkaCesty.TotalDays + 1);   //int
+                                bw.Write(staty);   //string
 
- 
-                                    bw.Write(sektor);   //string
-                                    bw.Write(udajeStravne.checkBoxBezplatneJidlo.Checked);  //bool
 
-                                    bw.Write(cenaZaTuzemskouCestu); //double
-                                    bw.Write(cenaZaZahranicniStravne);  //double
-                                    double cenaCelkem = cenaZaTuzemskouCestu + cenaZaZahranicniStravne;
-                                    bw.Write(cenaCelkem);   //double
-                                }
+                                bw.Write(sektor);   //string
+                                bw.Write(udajeStravne.checkBoxBezplatneJidlo.Checked);  //bool
+
+                                bw.Write(cenaZaTuzemskouCestu); //double
+                                bw.Write(cenaZaZahranicniStravne);  //double
+                                double cenaCelkem = cenaZaTuzemskouCestu + cenaZaZahranicniStravne;
+                                bw.Write(cenaCelkem);   //double
                             }
                         }
 
@@ -659,7 +602,7 @@ namespace Cestovni_nahrady
             double vyplatitPenez = 0;
             if (delkaCesty.TotalHours < 24) //Pokud cesta netrva pres 24 hodin ale neni v jeden den
             {
-                hodinPrvniDen = delkaCesty.Hours;
+                hodinPrvniDen = (int)delkaCesty.TotalHours;
                 //MessageBox.Show(hodinPrvniDen.ToString());
             }
             else if (zacatekTuzemskeCesty.Date == konecTuzemskeCesty.Date)  //Pokud se jedna o jednodenni cestu

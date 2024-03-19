@@ -388,14 +388,14 @@ namespace Cestovni_nahrady
                         if (tuzemskaCesta)
                         {
                             staty = "Žádné";
-                            cenaZaPohonneHmoty = udajePohonneHmoty.CenaZaPohonneHmoty(zakladniNahradaZa1Km);
+                            cenaZaPohonneHmoty = udajePohonneHmoty.CenaZaPohonneHmoty(zakladniNahradaZa1Km,out dataJsouSpravne);
                             double cenaZaStravne= CenaZaTuzemskouCestu(zacatekCesty, konecCesty, sektor, jidelZaDen, priSekt5az12,
                                 priSekt12az18, priSekt18aVic, verSekt5az12, verSekt12az18, verSekt18aVic);
                             cenaZaTuzemskouCestu = cenaZaPohonneHmoty + cenaZaStravne;
                         }
                         else //Zahraniční cesta
                         {
-                            cenaZaPohonneHmoty = udajePohonneHmoty.CenaZaPohonneHmoty(zakladniNahradaZa1Km);
+                            cenaZaPohonneHmoty = udajePohonneHmoty.CenaZaPohonneHmoty(zakladniNahradaZa1Km,out dataJsouSpravne);
                             TimeSpan casNezOpustilCesko = navstiveneStaty[0].DatumCasPrijedzu-zacatekCesty;
                             //Nez dojede do zahranici
                             cenaZaTuzemskouCestu = CenaZaTuzemskouCestu(zacatekCesty, navstiveneStaty[0].DatumCasPrijedzu, sektor,
@@ -568,16 +568,19 @@ namespace Cestovni_nahrady
                             }
                         }
 
-                        stranky[indexStranky].Hide();
-                        indexStranky = 0;
-                        vysledky = new Vysledky(true);
-                        this.Controls.Add(vysledky);
-                        vysledky.Show();
-                        panelMenu.Hide();
-                        panelNavigacniBtny.Show();
-                        buttonDalsi.Hide();
-                        buttonDalsi.Text = "Další";
-
+                        if (dataJsouSpravne)
+                        {
+                            stranky[indexStranky].Hide();
+                            indexStranky = 0;
+                            vysledky = new Vysledky(true);
+                            this.Controls.Add(vysledky);
+                            vysledky.Show();
+                            panelMenu.Hide();
+                            panelNavigacniBtny.Show();
+                            buttonDalsi.Hide();
+                            buttonDalsi.Text = "Další";
+                        }
+                     
                     }
                     catch (Exception exception)
                     {

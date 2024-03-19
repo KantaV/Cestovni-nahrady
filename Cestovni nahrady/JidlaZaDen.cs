@@ -29,6 +29,7 @@ namespace Cestovni_nahrady
                 labelPocetJidel.Text = "Počet bezplatných jídel " + datumZacatku.Date.AddDays(i).ToShortDateString();
 
                 NumericUpDown numericUpDownPocetJidel = new NumericUpDown();
+                numericUpDownPocetJidel.Maximum = 3; ;
                 numericUpDownPocetJidel.Size = new Size(120, 20);
                 numericUpDownPocetJidel.Location = new Point(225, 5 + (i * 30));
 

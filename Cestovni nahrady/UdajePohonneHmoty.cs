@@ -20,12 +20,22 @@ namespace Cestovni_nahrady
             comboBoxZpusobPrepravy.SelectedIndex = 0;
         }
 
-        public double CenaZaPohonneHmoty(double zakladniNahrada)
+        public double CenaZaPohonneHmoty(double zakladniNahrada,out bool udajeJsouSpravne)
         {
+            udajeJsouSpravne= true;
             //Účtuji pohonné hmoty jedině pokud zaměstnanec cestoval svým vozem
             if (comboBoxZpusobPrepravy.SelectedIndex != 0)
             {
-                double najetychKm = double.Parse(textBoxPocetNajetychKm.Text);
+                double najetychKm=0;
+                try
+                {
+                    najetychKm = double.Parse(textBoxPocetNajetychKm.Text);
+                }
+                catch (FormatException)
+                {
+                    MessageBox.Show("Zadej platný počet najetých km!");
+                    udajeJsouSpravne = false;
+                }
                 double cenaZaPohonneHmoty = 0;
                 PohonneHmoty pohonnaHmota;
 
@@ -38,8 +48,19 @@ namespace Cestovni_nahrady
                 }
                 else  //Podle účtenky
                 {
-                    pohonnaHmota = new PohonneHmoty(double.Parse(numericUpDownSpotreba.Value.ToString()),
-                    double.Parse(textBoxPrumernaPohonneHmotyCena.Text));
+                    double prumernaPohHmotCena = 0;
+                    try
+                    {
+                        prumernaPohHmotCena = double.Parse(textBoxPrumernaPohonneHmotyCena.Text);
+
+                    }
+                    catch (FormatException)
+                    {
+                        MessageBox.Show("Zadej platný průměr ceny pohonné hmoty!");
+                        udajeJsouSpravne = false;
+
+                    }
+                    pohonnaHmota = new PohonneHmoty(double.Parse(numericUpDownSpotreba.Value.ToString()),prumernaPohHmotCena);
                 }
                 switch (comboBoxZpusobPrepravy.SelectedIndex)
                 {

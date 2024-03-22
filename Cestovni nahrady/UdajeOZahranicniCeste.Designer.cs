@@ -30,7 +30,7 @@
         {
             this.numericUpDownPocetZemi = new System.Windows.Forms.NumericUpDown();
             this.labelPocetZemi = new System.Windows.Forms.Label();
-            this.zahranici1 = new Cestovni_nahrady.Zahranici();
+            this.zahranici = new Cestovni_nahrady.Zahranici();
             this.labelCelkZacatekCesty = new System.Windows.Forms.Label();
             this.labelCelkKonecCesty = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPocetZemi)).BeginInit();
@@ -53,13 +53,13 @@
             this.labelPocetZemi.TabIndex = 39;
             this.labelPocetZemi.Text = "Počet navštívených zahraničních zemí:";
             // 
-            // zahranici1
+            // zahranici
             // 
-            this.zahranici1.AutoScroll = true;
-            this.zahranici1.Location = new System.Drawing.Point(3, 30);
-            this.zahranici1.Name = "zahranici1";
-            this.zahranici1.Size = new System.Drawing.Size(594, 323);
-            this.zahranici1.TabIndex = 40;
+            this.zahranici.AutoScroll = true;
+            this.zahranici.Location = new System.Drawing.Point(3, 30);
+            this.zahranici.Name = "zahranici";
+            this.zahranici.Size = new System.Drawing.Size(594, 323);
+            this.zahranici.TabIndex = 40;
             // 
             // labelCelkZacatekCesty
             // 
@@ -85,7 +85,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.labelCelkKonecCesty);
             this.Controls.Add(this.labelCelkZacatekCesty);
-            this.Controls.Add(this.zahranici1);
+            this.Controls.Add(this.zahranici);
             this.Controls.Add(this.numericUpDownPocetZemi);
             this.Controls.Add(this.labelPocetZemi);
             this.Name = "UdajeOZahranicniCeste";
@@ -97,11 +97,10 @@
         }
 
         #endregion
-
-        private Zahranici zahranici1;
         private System.Windows.Forms.Label labelPocetZemi;
         public System.Windows.Forms.NumericUpDown numericUpDownPocetZemi;
         public System.Windows.Forms.Label labelCelkZacatekCesty;
         public System.Windows.Forms.Label labelCelkKonecCesty;
+        public Zahranici zahranici;
     }
 }

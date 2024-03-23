@@ -35,6 +35,7 @@ namespace Cestovni_nahrady
             {
                 MessageBox.Show("Konec cesty nemůže nastat před jejím začátkem!");
                 dtpDatumKonceCesty.Value = dtpDatumZacatkuCesty.Value;
+                dtpCasKonceCesty.Value = dtpCasZacatkuCesty.Value;
             }
         }
 
@@ -44,6 +45,7 @@ namespace Cestovni_nahrady
             {
                 MessageBox.Show("Začátek cesty nemůže nastat před jejím koncem!");
                 dtpDatumZacatkuCesty.Value = dtpDatumKonceCesty.Value;
+                dtpCasZacatkuCesty.Value = dtpCasKonceCesty.Value;
             }
         }
 

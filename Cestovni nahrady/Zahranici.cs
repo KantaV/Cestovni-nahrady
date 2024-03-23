@@ -87,6 +87,7 @@ namespace Cestovni_nahrady
             {
                 panelZeme = new Panel();
                 panelZeme.Width = 500;
+                panelZeme.Name = "panelZeme" + i;
                 panelZeme.Height = 150;
                 panelZeme.Location = new Point(10, (panelZeme.Height + 10) * i);
 
@@ -137,36 +138,61 @@ namespace Cestovni_nahrady
                 labelOdjezd.Size = new Size(40, 13);
                 labelOdjezd.TabIndex = 5;
                 labelOdjezd.Text = "Odjezd:";
-                // 
-                // dateTimePicker pro datum prijezdu
-                // 
-                datumPrijezdu.Location = new Point(51, 63);
-                datumPrijezdu.Name = "dateTimePicker1";
-                datumPrijezdu.Size = new Size(200, 20);
-                datumPrijezdu.TabIndex = 1;
-                // 
-                // dateTimePicker pro cas prijezdu
-                // 
-                casPrijezdu.Format = DateTimePickerFormat.Time;
-                casPrijezdu.Location = new Point(257, 63);
-                casPrijezdu.Name = "dateTimePicker2";
-                casPrijezdu.Size = new Size(200, 20);
-                casPrijezdu.TabIndex = 2;
+                if (i > 0)  //prijezdy po prvnim budou mi vlastnost enabled na false aby nesly upravit
+                {
+                    // 
+                    // dateTimePicker pro datum prijezdu
+                    // 
+                    datumPrijezdu.Location = new Point(51, 63);
+                    datumPrijezdu.Name = "dateTimePickerDatumPrijezdu";
+                    datumPrijezdu.Size = new Size(200, 20);
+                    datumPrijezdu.Enabled = false;
+                    datumPrijezdu.TabIndex = 1;
+                    // 
+                    // dateTimePicker pro cas prijezdu
+                    // 
+                    casPrijezdu.Format = DateTimePickerFormat.Time;
+                    casPrijezdu.Location = new Point(257, 63);
+                    casPrijezdu.Name = "dateTimePickerCasPrijezdu";
+                    casPrijezdu.Size = new Size(200, 20);
+                    casPrijezdu.Enabled = false;
+                    casPrijezdu.TabIndex = 2;
+                }
+                else
+                {
+                    // 
+                    // dateTimePicker pro datum prijezdu
+                    // 
+                    datumPrijezdu.Location = new Point(51, 63);
+                    datumPrijezdu.Name = "dateTimePickerDatumPrijezdu";
+                    datumPrijezdu.Size = new Size(200, 20);
+                    datumPrijezdu.TabIndex = 1;
+                    // 
+                    // dateTimePicker pro cas prijezdu
+                    // 
+                    casPrijezdu.Format = DateTimePickerFormat.Time;
+                    casPrijezdu.Location = new Point(257, 63);
+                    casPrijezdu.Name = "dateTimePickerCasPrijezdu";
+                    casPrijezdu.Size = new Size(200, 20);
+                    casPrijezdu.TabIndex = 2;
+                }
                 // 
                 // dateTimePicker pro datum odjezdu
                 // 
                 datumOdjezdu.Location = new Point(51, 96);
-                datumOdjezdu.Name = "dateTimePicker3";
+                datumOdjezdu.Name = "dateTimePickerDatumOdjezd";
                 datumOdjezdu.Size = new Size(200, 20);
                 datumOdjezdu.TabIndex = 3;
+                datumOdjezdu.ValueChanged += PrenastavHodnotu;
                 // 
                 // dateTimePicker pro cas odjezdu
                 // 
                 casOdjezdu.Format = DateTimePickerFormat.Time;
                 casOdjezdu.Location = new Point(257, 96);
-                casOdjezdu.Name = "dateTimePicker4";
+                casOdjezdu.Name = "dateTimePickerCasOdjezd";
                 casOdjezdu.Size = new Size(200, 20);
                 casOdjezdu.TabIndex = 4;
+                casOdjezdu.ValueChanged += PrenastavHodnotu;
 
 
                 panelZeme.Controls.Add(comboBoxVyberZeme);
@@ -187,5 +213,39 @@ namespace Cestovni_nahrady
             }
 
         }
+
+        private void PrenastavHodnotu(object sender, EventArgs e)
+        {
+            DateTimePicker zmenenyDTP = (DateTimePicker)sender; // najdu si původní datetimepicker
+
+            // najdu si jeho nadřazený panel
+            Panel panelRodic = (Panel)zmenenyDTP.Parent;
+
+            // ziskam si index nadřazeného panelu
+            int indexPanelu = int.Parse(panelRodic.Name.Replace("panelZeme", ""));
+
+            // zkontroluju jestli to není poslední panel
+            if (indexPanelu < this.Controls.Count - 1)
+            {
+                // najdu následující panel
+                Panel nasledujiciPanel = (Panel)this.Controls.Find("panelZeme" + (indexPanelu + 1), true)[0];
+
+                DateTimePicker nasledujiciPrijezd;
+                if (zmenenyDTP.Name== "dateTimePickerDatumOdjezd")
+                {
+                    // najdu v něm datetimepicker podle názvu
+                    nasledujiciPrijezd = (DateTimePicker)nasledujiciPanel.Controls.Find("dateTimePickerDatumPrijezdu", true)[0];
+
+                }
+                else
+                {
+                    nasledujiciPrijezd = (DateTimePicker)nasledujiciPanel.Controls.Find("dateTimePickerCasPrijezdu", true)[0];
+                }
+
+                // přiřadím mu jeho hodnotu
+                nasledujiciPrijezd.Value = zmenenyDTP.Value;
+            }
+        }
+
     }
 }

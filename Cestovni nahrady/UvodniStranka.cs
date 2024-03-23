@@ -184,6 +184,7 @@ namespace Cestovni_nahrady
         private DateTime zacatekCesty;
         private DateTime konecCesty;
         private TimeSpan delkaCesty;
+        private int dniNaCeste;
 
         private NavstivenyStat[] navstiveneStaty;
         private bool tuzemskaCesta = true;
@@ -300,7 +301,10 @@ namespace Cestovni_nahrady
 
                     delkaCesty = konecCesty - zacatekCesty;
                     //Spočítání délky cesty abych získal počet dní
-                    udajeStravne.jidlaZaDen1.Vygeneruj(delkaCesty.Days+1,zacatekCesty);
+                    if (konecCesty.TimeOfDay<zacatekCesty.TimeOfDay&&zacatekCesty.Date!=konecCesty.Date) dniNaCeste = delkaCesty.Days + 2;
+                    else dniNaCeste = delkaCesty.Days+1;
+                    udajeStravne.jidlaZaDen1.Vygeneruj(dniNaCeste, zacatekCesty);
+
                     //Změna textu buttonu
                     buttonDalsi.Text = "Vypočítej";
                 }
@@ -377,7 +381,7 @@ namespace Cestovni_nahrady
                         if (udajeStravne.comboBoxStravneSektor.SelectedIndex == 0) sektor = "privatni";
                         else sektor = "verejny";
 
-                        int[] jidelZaDen=udajeStravne.jidlaZaDen1.NaplnPoleJidlaZaDen(delkaCesty.Days, udajeStravne.checkBoxBezplatneJidlo.Checked);
+                        int[] jidelZaDen=udajeStravne.jidlaZaDen1.NaplnPoleJidlaZaDen(dniNaCeste, udajeStravne.checkBoxBezplatneJidlo.Checked);
 
                         //Finální výpočty
                         double cenaZaPohonneHmoty = 0;
@@ -532,7 +536,7 @@ namespace Cestovni_nahrady
                                 bw.Write(datNar.Date.ToString("d.M.yyyy"));    //string
                                 bw.Write(zacatekCesty.Date.ToShortDateString()); //string
                                 bw.Write(konecCesty.Date.ToShortDateString());   //string
-                                bw.Write((int)delkaCesty.TotalDays + 1);   //int
+                                bw.Write(dniNaCeste);   //int
                                 bw.Write(staty);   //string
 
                                 bw.Write(sektor);   //string
@@ -554,7 +558,7 @@ namespace Cestovni_nahrady
                                 bw.Write(datNar.Date.ToString("d.M.yyyy"));    //string
                                 bw.Write(zacatekCesty.Date.ToShortDateString()); //string
                                 bw.Write(konecCesty.Date.ToShortDateString());   //string
-                                bw.Write((int)delkaCesty.TotalDays + 1);   //int
+                                bw.Write(dniNaCeste);   //int
                                 bw.Write(staty);   //string
 
 
@@ -602,16 +606,29 @@ namespace Cestovni_nahrady
             TimeSpan delkaCesty = konecTuzemskeCesty - zacatekTuzemskeCesty;
             int hodinPrvniDen = 0;
             int hodinPosledniDen = 0;
+            int dniNavic = 0;
             double vyplatitPenez = 0;
-            if (delkaCesty.TotalHours < 24) //Pokud cesta netrva pres 24 hodin ale neni v jeden den
-            {
-                hodinPrvniDen = (int)delkaCesty.TotalHours;
-                //MessageBox.Show(hodinPrvniDen.ToString());
-            }
-            else if (zacatekTuzemskeCesty.Date == konecTuzemskeCesty.Date)  //Pokud se jedna o jednodenni cestu
+
+        
+
+            if (zacatekTuzemskeCesty.Date == konecTuzemskeCesty.Date)  //Pokud se jedna o jednodenni cestu
             {
                 hodinPrvniDen = konecTuzemskeCesty.Hour - zacatekTuzemskeCesty.Hour;
                 hodinPosledniDen = 0;
+            }
+            else if (delkaCesty.TotalHours < 24) //Pokud cesta netrva pres 24 hodin ale neni v jeden den
+            {
+                //hodinPrvniDen = (int)delkaCesty.TotalHours;
+                hodinPrvniDen = 24 - zacatekTuzemskeCesty.Hour;
+                hodinPosledniDen = konecTuzemskeCesty.Hour;
+                dniNavic += 1;
+                //MessageBox.Show(hodinPrvniDen.ToString());
+            }
+            else if (konecTuzemskeCesty.TimeOfDay < zacatekTuzemskeCesty.TimeOfDay)
+            {
+                dniNavic += 1;
+                hodinPrvniDen = 24 - zacatekTuzemskeCesty.Hour;
+                hodinPosledniDen = konecTuzemskeCesty.Hour;
             }
             else                    //Cesta delsi nez 1 den
             {
@@ -647,7 +664,7 @@ namespace Cestovni_nahrady
                             vyplatitPenez += priSekt5az12 - priSekt5az12 * zkratit;
                         }
                     }
-                    else if (den == delkaCesty.Days) //Při posledním dni, pouze pokud je více dní
+                    else if (den == delkaCesty.Days + dniNavic) //Při posledním dni, pouze pokud je více dní
                     {
                         if (hodinPosledniDen >= 18)
                         {
@@ -699,7 +716,7 @@ namespace Cestovni_nahrady
                             vyplatitPenez += verSekt5az12 - verSekt5az12 * zkratit;
                         }
                     }
-                    else if (den == delkaCesty.Days) //Při posledním dni, pouze pokud je více dní
+                    else if (den == delkaCesty.Days + dniNavic) //Při posledním dni, pouze pokud je více dní
                     {
                         if (hodinPosledniDen >= 18)
                         {
@@ -729,7 +746,7 @@ namespace Cestovni_nahrady
 
                 }
                 ++den;      //Posunu den
-            } while (den < delkaCesty.Days + 1);
+            } while (den < delkaCesty.Days +1+dniNavic);
             return vyplatitPenez;
         }
 

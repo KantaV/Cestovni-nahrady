@@ -41,13 +41,13 @@
             this.labelNadpisUzivetele.TabIndex = 7;
             this.labelNadpisUzivetele.Text = "Spočítané cesty";
             // 
-            // Uzivatele
+            // Vysledky
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.Controls.Add(this.labelNadpisUzivetele);
-            this.Name = "Uzivatele";
+            this.Name = "Vysledky";
             this.Size = new System.Drawing.Size(532, 393);
             this.ResumeLayout(false);
             this.PerformLayout();

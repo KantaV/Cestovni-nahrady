@@ -254,9 +254,9 @@ namespace Cestovni_nahrady
                         DateTime prijezdDoZeme = DateTime.Now, odjezdZeZeme = DateTime.Now;
                         if (udajeZahranicniCesta.zahranici.Controls[0] is Panel) CasVeState((udajeZahranicniCesta.zahranici.Controls[0] as Panel), out nazevZeme, out prijezdDoZeme, out odjezdZeZeme);
                         string nazevStatu = nazevZeme.Substring(0, nazevZeme.Length - 7);
-                        int cena = int.Parse(nazevZeme.Substring(nazevZeme.Length-6, 2));
-                        string mena = nazevZeme.Substring(nazevZeme.Length-3, 3);
-                        navstiveneStaty[0]=new NavstivenyStat(nazevStatu, cena,mena,prijezdDoZeme,odjezdZeZeme);
+                        int cena = int.Parse(nazevZeme.Substring(nazevZeme.Length - 6, 2));
+                        string mena = nazevZeme.Substring(nazevZeme.Length - 3, 3);
+                        navstiveneStaty[0] = new NavstivenyStat(nazevStatu, cena, mena, prijezdDoZeme, odjezdZeZeme);
                         dataJsouSpravne = navstiveneStaty[0].UdajeJsouSpravne;
 
                         //Otestuju příjezd do první zahraniční země
@@ -277,23 +277,24 @@ namespace Cestovni_nahrady
                             cena = int.Parse(nazevZeme.Substring(nazevZeme.Length - 6, 2));
                             mena = nazevZeme.Substring(nazevZeme.Length - 3, 3);
                             navstiveneStaty[i] = new NavstivenyStat(nazevStatu, cena, mena, prijezdDoZeme, odjezdZeZeme);
-                            if(dataJsouSpravne) dataJsouSpravne =navstiveneStaty[i].UdajeJsouSpravne;   //podmínka aby se nemohla proměnná opravit nedobře
+                            if (dataJsouSpravne) dataJsouSpravne = navstiveneStaty[i].UdajeJsouSpravne;   //podmínka aby se nemohla proměnná opravit nedobře
                             if (navstiveneStaty[i - 1].DatumCasOdjezdu > navstiveneStaty[i].DatumCasPrijedzu)
                             {
                                 dataJsouSpravne = false;
                                 MessageBox.Show("Příjezd do " + navstiveneStaty[i].NazevStatu + " nemůže být před odjezdem z " + navstiveneStaty[i - 1].NazevStatu);
                             }
-                            
+
                             //MessageBox.Show(navstiveneStaty[i].NazevStatu + " " + navstiveneStaty[i].CasVeState);
                         }
 
                         //Otestuju odjezd z poslední zahraniční země
-                        if (konecCesty < navstiveneStaty[navstiveneStaty.Length-1].DatumCasOdjezdu)
+                        if (konecCesty < navstiveneStaty[navstiveneStaty.Length - 1].DatumCasOdjezdu)
                         {
                             dataJsouSpravne = false;
-                            MessageBox.Show("Datum odjezdu ze země " + navstiveneStaty[navstiveneStaty.Length-1].NazevStatu + " nemůže být po ÚPLNÉM konci cesty!");
+                            MessageBox.Show("Datum odjezdu ze země " + navstiveneStaty[navstiveneStaty.Length - 1].NazevStatu + " nemůže být po ÚPLNÉM konci cesty!");
                         }
                     }
+                    else tuzemskaCesta = true;
                 }
                 else if (indexStranky == 2)
                 {
